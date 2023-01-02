@@ -103,8 +103,15 @@ export const singUpMutation = () => {
       nickName: string;
     }
   >(
-    ({ email, passWord, nickName }) =>
-      graphqlFetcher(ADD_USER, { email, nickName, passWord }),
+    ({
+      email,
+      passWord,
+      nickName,
+    }: {
+      email: string;
+      passWord: string;
+      nickName: string;
+    }) => graphqlFetcher(ADD_USER, { email, nickName, passWord }),
     {
       onMutate: () => {},
       onSuccess: ({ addUser }) => {

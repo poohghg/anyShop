@@ -15,13 +15,33 @@ const reg_email =
   /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
 const reg_passWord = /^.*(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 
+export const test = async () => {
+  try {
+    const data = await axios.post(
+      "http://localhost:8000/graphql",
+      {
+        query: `
+        mutation LOGIN($email: String!, $passWord: String!) {
+        login(email: $email, passWord: $passWord) {
+          email
+          nickName
+          token
+        }
+      }
+      `,
+        variables: { email: "poohghg@naver.com", passWord: "qwer1234!@" },
+      },
+      { withCredentials: true },
+    );
+    return data;
+  } catch (error) {}
+};
+
 const LoginPage = () => {
-  const [cookies, setCookie] = useCookies(["test"]); // 쿠키 훅
+  // const [cookies, setCookie] = useCookies(["test"]); // 쿠키 훅
   const form = useRef<HTMLFormElement>(null);
   const { mutate: login, data, error } = loginMutation();
-
-  // console.log("data", data);
-  // console.log("error", error?.message);
+  // const { mutate: login, data, error } = useMutation(() => test());
 
   const handelLogin = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -30,31 +50,9 @@ const LoginPage = () => {
 
     if (!reg_email.test(email!.value)) return email!.focus();
     if (!reg_passWord.test(passWord!.value)) return passWord!.focus();
-    login({ email: email!.value, passWord: passWord!.value });
+    // login({ email: email!.value, passWord: passWord!.value });
   };
-  console.log("cookies", cookies);
 
-  const test = async () => {
-    try {
-      const data = await axios.post(
-        "http://localhost:8000/graphql",
-        {
-          query: `
-          mutation LOGIN($email: String!, $passWord: String!) {
-        login(email: $email, passWord: $passWord) {
-          email
-          nickName
-          token
-        }
-      }
-    `,
-          variables: { email: "poohghg@naver.com", passWord: "qwer1234!@" },
-        },
-        { withCredentials: true },
-      );
-      return data;
-    } catch (error) {}
-  };
   const { mutate: aa } = useMutation(() => test());
 
   useEffect(() => {}, []);
@@ -65,8 +63,9 @@ const LoginPage = () => {
         axios
       </Button>
       <Button
-        onClick={() =>
-          login({ email: "poohghg@naver.com", passWord: "qwer1234!@" })
+        onClick={
+          // () => login()
+          () => login({ email: "poohghg@naver.com", passWord: "qwer1234!@" })
         }
         type="submit"
       >

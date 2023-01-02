@@ -13,6 +13,8 @@ import { uuidv4 } from "@firebase/util";
     typeDefs: schema,
     resolvers: resolvers,
     context: async ({ req, res }) => {
+      // res.set("Access-Control-Allow-Credentials", "true");
+      // res.set("Access-Control-Allow-Origin", req.headers.origin);
       let user = {};
       console.log("cookie", req.headers.cookie);
       await res.cookie(uuidv4(), "1", {
@@ -33,6 +35,7 @@ import { uuidv4 } from "@firebase/util";
     origin: ["http://localhost:3000", "https://studio.apollographql.com"],
     credentials: true,
   };
+
   // app.use(cors(corsOptions));
   app.use(cookieParser());
   await server.start();

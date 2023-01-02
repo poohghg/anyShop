@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
+    "@types/node": "^18.11.18",
     "@types/redux-persist": "^4.3.1",
     "axios": "^1.2.0",
     "fetch-cookie": "^2.1.0",
     "graphql-request": "^5.0.0",
     "graphql-tag": "^2.12.6",
     "node-fetch": "^3.3.0",
+    "node-fetch-cookies": "^2.0.4",
     "react": "^18.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
@@ -25,6 +27,7 @@
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
     "styled-components": "^5.3.6",
+    "typescript-require": "^0.3.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
