@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { graphqlFetcher } from "./../queryClient";
-import { useMutation } from "react-query";
+import { auth, authFetcher, graphqlFetcher, QueryKeys } from "./../queryClient";
+import { useMutation, useQuery } from "react-query";
 import { gql } from "graphql-tag";
 import { setUserInfo } from "../redux/userReducer";
+
+// interface authTo
 
 export interface User {
   email: string;
@@ -86,23 +88,34 @@ export const DELETE_PRODUCT = gql`
   }
 `;
 
+export const GET_TOKEN = `
+  query GET_TOKEN() {
+    getToken()
+  }
+`;
+
 export default GET_USER;
 
 // API
+
+type Token = string;
+
+export const useGetToken = () => {
+  const navi = useNavigate;
+  return useQuery<{ token: string }>(
+    [QueryKeys.USER, "token"],
+    () => authFetcher(GET_TOKEN),
+    {
+      refetchOnMount: true,
+      onSuccess: (data) => {},
+    },
+  );
+};
+
 export const singUpMutation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  return useMutation<
-    {
-      addUser: User;
-    },
-    Error,
-    {
-      email: string;
-      passWord: string;
-      nickName: string;
-    }
-  >(
+  return useMutation(
     ({
       email,
       passWord,
@@ -114,7 +127,7 @@ export const singUpMutation = () => {
     }) => graphqlFetcher(ADD_USER, { email, nickName, passWord }),
     {
       onMutate: () => {},
-      onSuccess: ({ addUser }) => {
+      onSuccess: ({ addUser }: { addUser: User }) => {
         dispatch(setUserInfo({ ...addUser }));
       },
       onError: (error) => {
@@ -140,6 +153,7 @@ export const loginMutation = () => {
   >(({ email, passWord }) => graphqlFetcher(LOGIN, { email, passWord }), {
     onMutate: () => {},
     onSuccess: ({ login }) => {
+      auth.defaults.headers.common["Authorization"] = `Bearer ${login.token}`;
       // dispatch(setUserInfo({ ...login }));
     },
     onError: (error) => {

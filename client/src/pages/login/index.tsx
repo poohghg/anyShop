@@ -6,7 +6,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { useCookies } from "react-cookie";
 import { useMutation } from "react-query";
 import styled from "styled-components";
 import { loginMutation } from "../../graphql/gqlUser";
@@ -38,10 +37,8 @@ export const test = async () => {
 };
 
 const LoginPage = () => {
-  // const [cookies, setCookie] = useCookies(["test"]); // 쿠키 훅
   const form = useRef<HTMLFormElement>(null);
   const { mutate: login, data, error } = loginMutation();
-  // const { mutate: login, data, error } = useMutation(() => test());
 
   const handelLogin = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -50,13 +47,11 @@ const LoginPage = () => {
 
     if (!reg_email.test(email!.value)) return email!.focus();
     if (!reg_passWord.test(passWord!.value)) return passWord!.focus();
-    // login({ email: email!.value, passWord: passWord!.value });
+    login({ email: email!.value, passWord: passWord!.value });
   };
 
   const { mutate: aa } = useMutation(() => test());
-
   useEffect(() => {}, []);
-
   return (
     <Main>
       <Button onClick={() => aa()} type="submit">

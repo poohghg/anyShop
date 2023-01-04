@@ -13,10 +13,8 @@ import { uuidv4 } from "@firebase/util";
     typeDefs: schema,
     resolvers: resolvers,
     context: async ({ req, res }) => {
-      // res.set("Access-Control-Allow-Credentials", "true");
-      // res.set("Access-Control-Allow-Origin", req.headers.origin);
       let user = {};
-      console.log("cookie", req.headers.cookie);
+      // console.log("cookie", req.headers.cookie);
       await res.cookie(uuidv4(), "1", {
         maxAge: 1000 * 600,
         httpOnly: true,
