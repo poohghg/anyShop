@@ -4,14 +4,18 @@ import { auth, authFetcher, graphqlFetcher, QueryKeys } from "./../queryClient";
 import { useMutation, useQuery } from "react-query";
 import { gql } from "graphql-tag";
 import { setUserInfo } from "../redux/userReducer";
+import { AxiosError, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 
 // interface authTo
 
 export interface User {
   email: string;
   nickName: string;
-  token: string;
+  token?: string;
 }
+
+// type USERINFO = Omit<User, "token">;
 
 export type Users = User[];
 
@@ -37,7 +41,7 @@ export const CHECK_EMAIL = gql`
   }
 `;
 
-export const LOGIN = gql`
+export const LOGIN = `
   mutation LOGIN($email: String!, $passWord: String!) {
     login(email: $email, passWord: $passWord) {
       email
@@ -97,20 +101,22 @@ export const GET_TOKEN = `
 export default GET_USER;
 
 // API
-
-type Token = string;
-
-export const useGetToken = () => {
-  const navi = useNavigate;
-  return useQuery<{ token: string }>(
-    [QueryKeys.USER, "token"],
-    () => authFetcher(GET_TOKEN),
-    {
-      refetchOnMount: true,
-      onSuccess: (data) => {},
-    },
-  );
-};
+// export const useGetToken = () => {
+//   const navi = useNavigate();
+//   return useQuery<AxiosResponse<{ token: string }>, Error>(
+//     [QueryKeys.USER, "token"],
+//     () => authFetcher(GET_TOKEN),
+//     {
+//       refetchOnMount: true,
+//       onSuccess: ({ data }) => {
+//         if (data.token)
+//           auth.defaults.headers.common[
+//             "Authorization"
+//           ] = `Bearer ${data.token}`;
+//       },
+//     },
+//   );
+// };
 
 export const singUpMutation = () => {
   const dispatch = useDispatch();
@@ -141,24 +147,26 @@ export const singUpMutation = () => {
 export const loginMutation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  return useMutation<
+  return useMutation(
+    ({ email, passWord }: { email: string; passWord: string }) =>
+      authFetcher(LOGIN, { email, passWord }),
     {
-      login: User;
+      onMutate: () => {},
+      onSuccess: ({ login }: { login: User }) => {
+        if (login.token) {
+          auth.defaults.headers.post["authorization"] = `Bearer ${login.token}`;
+          delete login.token;
+          dispatch(setUserInfo({ ...login }));
+        }
+      },
+      onError: (error: AxiosError) => {
+        toast("이메일을 확인해주세요.", {
+          type: "error",
+          closeOnClick: false,
+        });
+        console.log("타니?", error.message);
+      },
+      onSettled: () => {},
     },
-    Error,
-    {
-      email: string;
-      passWord: string;
-    }
-  >(({ email, passWord }) => graphqlFetcher(LOGIN, { email, passWord }), {
-    onMutate: () => {},
-    onSuccess: ({ login }) => {
-      auth.defaults.headers.common["Authorization"] = `Bearer ${login.token}`;
-      // dispatch(setUserInfo({ ...login }));
-    },
-    onError: (error) => {
-      // if (error) error.message = "error";
-    },
-    onSettled: () => {},
-  });
+  );
 };

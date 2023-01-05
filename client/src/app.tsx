@@ -11,6 +11,7 @@ import store, { persistor, RootState } from "./redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import "./style/fonts.css";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const element = useRoutes(routes);
@@ -23,6 +24,14 @@ const App = () => {
           <QueryClientProvider client={queryClient}>
             {element}
             <ReactQueryDevtools initialIsOpen={false} />
+            <ToastContainer
+              className="toast"
+              position="bottom-center"
+              autoClose={1000}
+              hideProgressBar={true}
+              pauseOnHover={false}
+              closeButton={false}
+            />
           </QueryClientProvider>
         </ThemeProvider>
       </PersistGate>

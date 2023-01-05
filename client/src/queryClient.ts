@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { RequestDocument, request, GraphQLClient } from "graphql-request";
 import { QueryClient } from "react-query";
 import Ax from "./modules/axios";
@@ -12,7 +12,15 @@ interface FetcherConfig {
   params?: { [key: string]: any };
 }
 
+interface GqlAxiosResponse extends AxiosResponse {
+  data: {
+    data?: {};
+    errors?: any[];
+  };
+}
+
 const BASE_URL = import.meta.env.VITE_SERVER_URL;
+
 export const QueryKeys = {
   PRODUCTS: "PRODUCTS",
   CART: "CART",
@@ -56,11 +64,6 @@ export const graphqlFetcher = async (
 
 export const auth = axios.create({
   baseURL: `${BASE_URL}/graphql`,
-  headers: {
-    options: {
-      withCredentials: true,
-    },
-  },
 });
 
 auth.interceptors.request.use((config: AxiosRequestConfig) => {
@@ -68,13 +71,21 @@ auth.interceptors.request.use((config: AxiosRequestConfig) => {
   // config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
-auth.defaults.headers.common["Content-Type"] = "application/json";
 
 export const authFetcher = async (query: string, variables: {} = {}) => {
-  return await auth.post("", {
-    data: {
-      query,
-      variables,
-    },
-  });
+  try {
+    const res = await auth.post(
+      "",
+      {
+        query,
+        variables,
+      },
+      { withCredentials: true },
+    );
+    const data = res.data;
+    if (data.errors && data.errors.length) throw data?.errors[0];
+    return res.data.data;
+  } catch (error) {
+    throw error;
+  }
 };

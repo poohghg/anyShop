@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { sign, verify } from "jsonwebtoken";
 
-const EXPIRE_REFRESH_TOKEN = 1000 * 60 * 60 * 24 * 30;
+const EXPIRE_REFRESH_TOKEN = 1000 * 60 * 60 * 24;
 
 export const generateAccessToken = ({
   id,
@@ -16,7 +16,7 @@ export const generateAccessToken = ({
   });
 };
 
-export const verifyAccessToken = (token: string) => {
+export const verifyAccessToken = (token: string = "") => {
   return verify(token, process.env.JWT_SECRET_KEY!);
 };
 
@@ -29,11 +29,11 @@ export const generateRefreshToken = () => {
 
 export const setRefreshTokenInCookie = (res: Response) => {
   const token = generateRefreshToken();
-  res.cookie("accessToken", token, {
+  res.cookie("refreshToken", token, {
     httpOnly: true,
-    expires: new Date(Date.now() + 9000000000),
     secure: true,
-    // maxAge: EXPIRE_REFRESH_TOKEN,
-    // sa,
+    maxAge: EXPIRE_REFRESH_TOKEN,
+    // maxAge: 1000 * 600,
+    sameSite: "none",
   });
 };

@@ -19,6 +19,7 @@ import {
 
 import { db } from "../firebase";
 import { Product, Resolver } from "./types";
+import { GraphQLError } from "graphql";
 
 const userResolver: Resolver = {
   Query: {
@@ -34,7 +35,7 @@ const userResolver: Resolver = {
     login: async (parent, { email, passWord }, context) => {
       const q = query(collection(db, "user"), where("email", "==", email));
       const snapshot = await getDocs(q);
-      if (!snapshot.size) throw new Error("email");
+      if (!snapshot.size) throw new GraphQLError("email");
 
       let token;
       let nickName;
@@ -51,7 +52,7 @@ const userResolver: Resolver = {
         if (await compare(passWord, d.passWord)) {
           token = generateAccessToken({ id: d.id, nickName: d.nickName });
           nickName = d.nickName;
-          // setRefreshTokenInCookie(context.res);
+          setRefreshTokenInCookie(context.res);
         }
       }
       if (!token) throw new Error("passWord");

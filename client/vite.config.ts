@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [
     react({
       include: "**/*.tsx",
+      jsxRuntime: "classic",
     }),
   ],
   server: { port: 3000 },

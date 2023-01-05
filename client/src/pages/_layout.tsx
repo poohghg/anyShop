@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import Gnb from "../components/gnb";
+import "react-toastify/dist/ReactToastify.css";
 
 const Layout: React.FC = () => {
   return (

@@ -5,7 +5,6 @@ import schema from "./schema";
 import resolvers from "./resolvers";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { uuidv4 } from "@firebase/util";
 
 (async () => {
   const port = 8000;
@@ -13,14 +12,13 @@ import { uuidv4 } from "@firebase/util";
     typeDefs: schema,
     resolvers: resolvers,
     context: async ({ req, res }) => {
+      const token = req.headers?.authorization?.substring(7) ?? "";
       let user = {};
-      // console.log("cookie", req.headers.cookie);
-      await res.cookie(uuidv4(), "1", {
-        maxAge: 1000 * 600,
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-      });
+      if (!token) {
+        return { req, res, user };
+      }
+      console.log("token:", token);
+      console.log("token>>>", verifyAccessToken(token));
       return { req, res };
     },
   });
