@@ -15,13 +15,11 @@ export type Resolver = {
   };
 };
 
-export type User =
-  | {
-      nickName: string;
-      email: String;
-      token?: string;
-    }
-  | {};
+export type User = {
+  nickName?: string;
+  email?: String;
+  token?: string;
+};
 
 export type Product = {
   id: string;

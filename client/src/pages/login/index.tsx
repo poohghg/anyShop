@@ -1,7 +1,7 @@
-import axios from "axios";
-import { SyntheticEvent, useEffect, useRef } from "react";
+import { SyntheticEvent, useRef } from "react";
+import { toast } from "react-toastify";
 import styled from "styled-components";
-import { loginMutation, User } from "../../graphql/gqlUser";
+import { useLoginMutation } from "../../graphql/gqlUser";
 
 const reg_email =
   /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
@@ -9,28 +9,33 @@ const reg_passWord = /^.*(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 
 const LoginPage = () => {
   const form = useRef<HTMLFormElement>(null);
-  const { mutate: login, data, error } = loginMutation();
+  const { mutate: login } = useLoginMutation();
 
   const handelLogin = (e: SyntheticEvent) => {
     e.preventDefault();
     const email = form.current!.querySelector<HTMLInputElement>("#email");
     const passWord = form.current!.querySelector<HTMLInputElement>("#passWord");
 
-    if (!reg_email.test(email!.value)) return email!.focus();
-    if (!reg_passWord.test(passWord!.value)) return passWord!.focus();
+    if (!reg_email.test(email!.value)) {
+      toast("이메일을 확인해주세요.", {
+        type: "info",
+        closeOnClick: false,
+      });
+      return email!.focus();
+    }
+    if (!reg_passWord.test(passWord!.value)) {
+      toast("비밀번호를 확인해주세요.", {
+        type: "info",
+        closeOnClick: false,
+      });
+      return passWord!.focus();
+    }
     login({ email: email!.value, passWord: passWord!.value });
   };
 
+  console.log(document.referrer);
   return (
     <Main>
-      <Button
-        onClick={() =>
-          login({ email: "poohghg@naver.com", passWord: "qwer1234!@" })
-        }
-        type="submit"
-      >
-        request
-      </Button>
       <Title>안녕하세요</Title>
       <SubTitle>아이디와 비밀번호를 입력해주세요.</SubTitle>
       <form ref={form}>

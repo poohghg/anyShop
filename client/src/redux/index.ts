@@ -12,7 +12,7 @@ const persistConfig = {
   key: "root", // localStorage key
   storage, // localStorage
   // 제외할 리듀서
-  blacklist: [],
+  blacklist: ["userReducer"],
 };
 
 const rootReducer = combineReducers({
@@ -28,8 +28,8 @@ const store = configureStore({
 });
 
 export default store;
-export const persistor = persistStore(store); // persist store 내보내기
 
+export const persistor = persistStore(store); // persist store 내보내기
 // 타입스크립트 타입관련
 // https://redux-toolkit.js.org/usage/usage-with-typescript
 export type RootState = ReturnType<typeof store.getState>;

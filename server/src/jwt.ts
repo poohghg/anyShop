@@ -1,7 +1,15 @@
 import { Response } from "express";
-import { sign, verify } from "jsonwebtoken";
+import { sign, verify, VerifyErrors } from "jsonwebtoken";
 
-const EXPIRE_REFRESH_TOKEN = 1000 * 60 * 60 * 24;
+type MyToken = {
+  userId: string;
+  email: string;
+  iat: number;
+  exp: number;
+};
+
+const EXPIRE_TOKEN = 1000 * 60 * 60 * 24;
+const EXPIRE_REFRESH_TOKEN = 1000 * 60 * 60 * 24 * 7;
 
 export const generateAccessToken = ({
   id,
@@ -10,30 +18,33 @@ export const generateAccessToken = ({
   id: string;
   nickName: string;
 }) => {
-  return sign({ userCd: id, nickName }, process.env.JWT_SECRET_KEY!, {
+  return sign({ user: { userId: id, nickName } }, process.env.JWT_SECRET_KEY!, {
     algorithm: "HS256",
-    expiresIn: "1 days",
+    expiresIn: EXPIRE_TOKEN,
   });
 };
-
-export const verifyAccessToken = (token: string = "") => {
-  return verify(token, process.env.JWT_SECRET_KEY!);
-};
-
-export const generateRefreshToken = () => {
-  return sign({}, process.env.JWT_SECRET_KEY!, {
+// 리플레쉬 토큰은 유저Id 키값을 저장하여 추후 디비에서 조회한다.
+export const generateRefreshToken = (userId: string) => {
+  return sign({ userId }, process.env.JWT_SECRET_KEY!, {
     algorithm: "HS256",
     expiresIn: EXPIRE_REFRESH_TOKEN,
   });
 };
 
-export const setRefreshTokenInCookie = (res: Response) => {
-  const token = generateRefreshToken();
-  res.cookie("refreshToken", token, {
+export const verifyAccessToken = (token: string = "") => {
+  return verify(token, process.env.JWT_SECRET_KEY!, (error, data) => {
+    if (error) return error;
+    return data;
+  });
+};
+
+export const setRefreshTokenInCookie = (res: Response, userId: string) => {
+  const refreshToken = generateRefreshToken(userId);
+  res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: true,
     maxAge: EXPIRE_REFRESH_TOKEN,
-    // maxAge: 1000 * 600,
     sameSite: "none",
   });
+  return refreshToken;
 };

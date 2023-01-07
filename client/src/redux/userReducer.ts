@@ -6,13 +6,11 @@ import { User } from "../graphql/gqlUser";
 interface UserType {
   email: string;
   nickName: string;
-  token: string;
 }
 
 const initialState: UserType = {
   email: "",
   nickName: "",
-  token: "",
 };
 
 const slice = createSlice({
@@ -24,18 +22,15 @@ const slice = createSlice({
       action: PayloadAction<{
         email?: string;
         nickName?: string;
-        token?: string;
       }>,
     ) => {
-      const { email, nickName, token } = action.payload;
+      const { email, nickName } = action.payload;
       if (email) state.email = email;
       if (nickName) state.nickName = nickName;
-      if (token) state.token = token;
     },
     logOut: (state) => {
       state.email = "";
       state.nickName = "";
-      state.token = "";
     },
   },
 });

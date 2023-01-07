@@ -7,6 +7,7 @@ const userSchema = gql`
     nickName: String!
   }
   extend type Query {
+    user: User!
     checkEmail(email: String!): Boolean!
   }
   extend type Mutation {

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { auth, authFetcher, graphqlFetcher, QueryKeys } from "./../queryClient";
 import { useMutation, useQuery } from "react-query";
@@ -18,22 +18,6 @@ export interface User {
 // type USERINFO = Omit<User, "token">;
 
 export type Users = User[];
-
-const GET_USER = gql`
-  query GET_PRODUCTS($email: String!) {
-    checkEmail(email: $email) {
-      id
-      imageUrl
-      price
-      title
-      description
-      createdAt
-      category
-      rate
-      hit
-    }
-  }
-`;
 
 export const CHECK_EMAIL = gql`
   query GET_PRODUCTS($email: String!) {
@@ -92,9 +76,13 @@ export const DELETE_PRODUCT = gql`
   }
 `;
 
-export const GET_TOKEN = `
-  query GET_TOKEN() {
-    getToken()
+export const GET_USER = `
+  query GET_USER {
+    user {
+      email
+      nickName
+      token
+    }  
   }
 `;
 
@@ -144,7 +132,7 @@ export const singUpMutation = () => {
   );
 };
 
-export const loginMutation = () => {
+export const useLoginMutation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return useMutation(
@@ -158,13 +146,14 @@ export const loginMutation = () => {
           delete login.token;
           dispatch(setUserInfo({ ...login }));
         }
+        navigate(-1);
       },
       onError: (error: AxiosError) => {
         toast("이메일을 확인해주세요.", {
           type: "error",
           closeOnClick: false,
         });
-        console.log("타니?", error.message);
+        // console.log("타니?", error.message);
       },
       onSettled: () => {},
     },

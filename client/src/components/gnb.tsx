@@ -1,6 +1,8 @@
 import { memo } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { logOut } from "../redux/userReducer";
 
 interface Path {
   to: string;
@@ -15,18 +17,21 @@ const paths: Path[] = [
 ];
 
 const Gnb = () => {
-  // console.log(useLocation());
   const { pathname } = useLocation();
+  const distPatch = useDispatch();
   return (
     <Navbar>
-      <div>Logo</div>
       <MenuUl>
+        <Logo>Logo</Logo>
         {paths.map((path) => (
           <PathItem key={path.to} isActive={`/${path.to}` === pathname}>
             <Link to={path.to}>{path.pathName}</Link>
           </PathItem>
         ))}
       </MenuUl>
+      <div>
+        <button onClick={() => distPatch(logOut())}>로그아웃</button>
+      </div>
     </Navbar>
   );
 };
@@ -45,23 +50,20 @@ const Navbar = styled.nav`
   align-items: center;
   background-color: rgba(28, 39, 51, 255);
   padding: 0 2rem;
-  /* * {
-    color: #fff;
-    font-size: 1.3rem;
-    font-weight: 300;
-  } */
-  /* font-size: ${({ theme }) => theme.fonts.size.sm}; */
 `;
 
 const MenuUl = styled.ul`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
   gap: 1rem;
   :hover {
     color: #fff;
   }
+`;
+
+const Logo = styled.span`
+  margin-right: 2.5rem;
 `;
 
 const PathItem = styled.li<{ isActive: boolean }>`

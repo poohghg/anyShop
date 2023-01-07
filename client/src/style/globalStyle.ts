@@ -38,16 +38,14 @@ const GlobalStyle = createGlobalStyle`
     bottom:0 ;
     transform:translate(-50%,-50%) ;
     width: fit-content ;
-    /* max-width:350px ; */
     opacity:0.85 ;
-    /* padding:1rem */
+    border-radius:35px ;
     & div{  
       display:flex ;
       align-items:center ;
       justify-content:center ;
       font-size:0.9rem ;
-      text-align:center !important ;
-      /* padding: 0.5rem; */
+      font-weight:600 ;
     }
     .Toastify__toast-body > div:last-child{
       flex: none ;
