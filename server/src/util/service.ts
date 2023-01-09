@@ -12,11 +12,16 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { User } from "../resolvers/types";
 
-export const getUserInfo = async (userId: string) => {
+export const getUserInfo = async (userId: string): Promise<User> => {
   const snapshot = await getDoc(doc(db, "user", userId));
-  console.log("snp", snapshot.data());
+  const data = snapshot.data();
+
   return {
-    id: snapshot.id,
+    userId,
+    nickName: data?.nickName,
+    userTy: data?.userTy,
+    email: data?.email,
   };
 };

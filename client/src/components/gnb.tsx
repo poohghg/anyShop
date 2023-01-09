@@ -1,13 +1,15 @@
 import { memo } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { logOut } from "../redux/userReducer";
+import useUser from "../hoc/useUser";
+import { RootState } from "../redux";
 
 interface Path {
   to: string;
   pathName: string;
 }
+
 const paths: Path[] = [
   { to: "", pathName: "홈" },
   { to: "products", pathName: "상품" },
@@ -18,7 +20,10 @@ const paths: Path[] = [
 
 const Gnb = () => {
   const { pathname } = useLocation();
-  const distPatch = useDispatch();
+  const { onLogOut } = useUser();
+  const { userId, userTy } = useSelector(
+    (state: RootState) => state.userReducer,
+  );
   return (
     <Navbar>
       <MenuUl>
@@ -30,7 +35,9 @@ const Gnb = () => {
         ))}
       </MenuUl>
       <div>
-        <button onClick={() => distPatch(logOut())}>로그아웃</button>
+        {userId !== "" ? (
+          <button onClick={() => onLogOut()}>로그아웃</button>
+        ) : null}
       </div>
     </Navbar>
   );

@@ -3,18 +3,18 @@ import { useQuery } from "react-query";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import Gnb from "../components/gnb";
-import GET_USER from "../graphql/gqlUser";
-import { authFetcher, QueryKeys } from "../queryClient";
+import GET_USER, { User } from "../graphql/gqlUser";
+import useUser from "../hoc/useUser";
+import { auth, authFetcher, QueryKeys } from "../queryClient";
 
 const Layout: React.FC = () => {
+  const { onLogin } = useUser();
   useQuery([QueryKeys.USER, "AUTH"], () => authFetcher(GET_USER), {
-    // onSuccess: () => {},
+    onSuccess: ({ user }: { user: User }) => {
+      onLogin(user);
+    },
   });
-  // getUserINfo
-  // useEffect(() => {
-  //   console.log("Layout");
-  // }, []);
-  console.log("Layout");
+
   return (
     <>
       <Gnb />

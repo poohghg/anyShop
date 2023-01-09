@@ -1,15 +1,11 @@
 import { getUserInfo } from "./util/service";
-import { verifyAccessToken } from "./jwt";
+import { verifyToken } from "./jwt";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import schema from "./schema";
 import resolvers from "./resolvers";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-
-interface UserPayload {
-  id: string;
-}
 
 (async () => {
   const port = 8000;
@@ -19,25 +15,21 @@ interface UserPayload {
 
     context: async ({ req, res }) => {
       const token = req.headers.authorization?.substring(7) ?? "";
-      let user = {};
-      if (!token) {
-        const refreshToken = req.cookies?.refreshToken;
-        console.log("refreshToken", refreshToken);
-        //  프론트에서 로그인으로 이동
-        if (!refreshToken) return { req, res, user };
-        // console.log();
-        const payLoad: any = verifyAccessToken(refreshToken);
-        if (payLoad instanceof Object) {
-          payLoad?.id;
-        }
-        // payLoad.
-        console.log("userpayLoadId", payLoad);
-        // getUserInfo(payLoad!.userId);
-        return { req, res, user };
+      console.log("token", token);
+      let userId = "";
+
+      if (token) {
+        const payload: any = verifyToken(token);
+        if (payload.userId) return { req, res, userId: payload.userId };
       }
 
-      const payUser = verifyAccessToken(token);
-      return { req, res, user: payUser };
+      const refreshToken = req.cookies?.refreshToken;
+      //  프론트에서 로그인으로 이동
+      // console.log("refreshToken", refreshToken);
+      if (!refreshToken) return { req, res, userId };
+      const payload: any = verifyToken(refreshToken);
+      if (payload instanceof Object)
+        if (payload?.userId) return { req, res, userId: payload.userId };
     },
   });
   const app = express();

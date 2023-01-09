@@ -56,24 +56,21 @@ export const graphqlFetcher = async (
 
 export const auth = axios.create({
   baseURL: `${BASE_URL}/graphql`,
+  withCredentials: true,
 });
 
-auth.interceptors.request.use((config: AxiosRequestConfig) => {
-  // const { token, pushNotificationToken } = store.getState().user;
-  // config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
+// auth.interceptors.request.use((config: AxiosRequestConfig) => {
+//   // const { token, pushNotificationToken } = store.getState().user;
+//   // config.headers.Authorization = `Bearer ${token}`;
+//   return config;
+// });
 
 export const authFetcher = async (query: string, variables: {} = {}) => {
   try {
-    const res = await auth.post(
-      "",
-      {
-        query,
-        variables,
-      },
-      { withCredentials: true },
-    );
+    const res = await auth.request({
+      method: "post",
+      data: { query, variables },
+    });
     const data = res.data;
     if (data.errors && data.errors.length) throw data?.errors[0];
     return res.data.data;

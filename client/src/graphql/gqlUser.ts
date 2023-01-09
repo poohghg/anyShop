@@ -1,21 +1,21 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { auth, authFetcher, graphqlFetcher, QueryKeys } from "./../queryClient";
+import { authFetcher, graphqlFetcher, QueryKeys } from "./../queryClient";
 import { useMutation, useQuery } from "react-query";
 import { gql } from "graphql-tag";
-import { setUserInfo } from "../redux/userReducer";
 import { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
+import useUser from "../hoc/useUser";
 
 // interface authTo
 
 export interface User {
   email: string;
   nickName: string;
+  userId: string;
+  userTy: number;
   token?: string;
 }
-
-// type USERINFO = Omit<User, "token">;
 
 export type Users = User[];
 
@@ -25,13 +25,33 @@ export const CHECK_EMAIL = gql`
   }
 `;
 
+export const GET_USER = `
+  query GET_USER {
+    user {
+      userId
+      token
+      email
+      nickName
+      userTy
+    }  
+  }
+`;
+
 export const LOGIN = `
   mutation LOGIN($email: String!, $passWord: String!) {
     login(email: $email, passWord: $passWord) {
+      userId
+      token
       email
       nickName
-      token
+      userTy
     }
+  }
+`;
+
+export const LOGOUT = `  
+  mutation {
+    logout 
   }
 `;
 
@@ -76,16 +96,6 @@ export const DELETE_PRODUCT = gql`
   }
 `;
 
-export const GET_USER = `
-  query GET_USER {
-    user {
-      email
-      nickName
-      token
-    }  
-  }
-`;
-
 export default GET_USER;
 
 // API
@@ -122,7 +132,7 @@ export const singUpMutation = () => {
     {
       onMutate: () => {},
       onSuccess: ({ addUser }: { addUser: User }) => {
-        dispatch(setUserInfo({ ...addUser }));
+        // dispatch(loginUser({ ...addUser }));
       },
       onError: (error) => {
         if (error) console.log(error);
@@ -135,17 +145,14 @@ export const singUpMutation = () => {
 export const useLoginMutation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { onLogin } = useUser();
   return useMutation(
     ({ email, passWord }: { email: string; passWord: string }) =>
       authFetcher(LOGIN, { email, passWord }),
     {
       onMutate: () => {},
       onSuccess: ({ login }: { login: User }) => {
-        if (login.token) {
-          auth.defaults.headers.post["authorization"] = `Bearer ${login.token}`;
-          delete login.token;
-          dispatch(setUserInfo({ ...login }));
-        }
+        if (login.token) onLogin(login);
         navigate(-1);
       },
       onError: (error: AxiosError) => {
@@ -153,7 +160,6 @@ export const useLoginMutation = () => {
           type: "error",
           closeOnClick: false,
         });
-        // console.log("타니?", error.message);
       },
       onSettled: () => {},
     },

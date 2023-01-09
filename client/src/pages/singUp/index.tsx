@@ -20,7 +20,7 @@ export interface UserInfoProps {
 
 const SingUp = () => {
   const [order, setOrder] = useState<number>(1);
-  const [userState, setUserState] = useState<UserInfoProps>({
+  const [userState, loginUserState] = useState<UserInfoProps>({
     email: "",
     passWord: "",
     confirmPassword: "",
@@ -29,7 +29,7 @@ const SingUp = () => {
 
   const handelSetState = useCallback((e: SyntheticEvent) => {
     const { name, value } = e.target as HTMLInputElement;
-    setUserState((prev) => ({ ...prev, [name]: value }));
+    loginUserState((prev) => ({ ...prev, [name]: value }));
   }, []);
 
   const handleSetOrder = useCallback(() => {

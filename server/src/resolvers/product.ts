@@ -39,7 +39,7 @@ const productResolver: Resolver = {
           ...doc.data(),
         }),
       );
-      console.log(" DATA", data);
+      // console.log(" DATA", data);
       return data;
     },
     product: async (parent, { id }) => {

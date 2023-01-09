@@ -11,14 +11,8 @@ type MyToken = {
 const EXPIRE_TOKEN = 1000 * 60 * 60 * 24;
 const EXPIRE_REFRESH_TOKEN = 1000 * 60 * 60 * 24 * 7;
 
-export const generateAccessToken = ({
-  id,
-  nickName,
-}: {
-  id: string;
-  nickName: string;
-}) => {
-  return sign({ user: { userId: id, nickName } }, process.env.JWT_SECRET_KEY!, {
+export const generateAccessToken = (userId: string) => {
+  return sign({ userId }, process.env.JWT_SECRET_KEY!, {
     algorithm: "HS256",
     expiresIn: EXPIRE_TOKEN,
   });
@@ -31,7 +25,7 @@ export const generateRefreshToken = (userId: string) => {
   });
 };
 
-export const verifyAccessToken = (token: string = "") => {
+export const verifyToken = (token: string = "") => {
   return verify(token, process.env.JWT_SECRET_KEY!, (error, data) => {
     if (error) return error;
     return data;

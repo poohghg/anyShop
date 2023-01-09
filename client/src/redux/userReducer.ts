@@ -6,36 +6,30 @@ import { User } from "../graphql/gqlUser";
 interface UserType {
   email: string;
   nickName: string;
+  userId: string;
+  userTy: number;
 }
 
 const initialState: UserType = {
   email: "",
   nickName: "",
+  userId: "",
+  userTy: 0,
 };
 
 const slice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUserInfo: (
-      state,
-      action: PayloadAction<{
-        email?: string;
-        nickName?: string;
-      }>,
-    ) => {
-      const { email, nickName } = action.payload;
-      if (email) state.email = email;
-      if (nickName) state.nickName = nickName;
-    },
-    logOut: (state) => {
-      state.email = "";
-      state.nickName = "";
-    },
+    setUser: (state, action: PayloadAction<UserType>) => ({
+      ...state,
+      ...action.payload,
+    }),
+    initUser: (state) => ({ ...initialState }),
   },
 });
 
-export const { setUserInfo, logOut } = slice.actions;
+export const { setUser, initUser } = slice.actions;
 
 const userReducer = slice.reducer;
 export default userReducer;

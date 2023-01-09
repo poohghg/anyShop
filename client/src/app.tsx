@@ -9,9 +9,10 @@ import GlobalStyle from "./style/globalStyle";
 import { Provider } from "react-redux";
 import store, { persistor, RootState } from "./redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { ToastContainer } from "react-toastify";
 
 import "./style/fonts.css";
-import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const element = useRoutes(routes);
@@ -30,7 +31,9 @@ const App = () => {
               autoClose={1000}
               hideProgressBar={true}
               pauseOnHover={false}
-              closeButton={false}
+              newestOnTop={true}
+              closeOnClick={true}
+              closeButton={true}
             />
           </QueryClientProvider>
         </ThemeProvider>

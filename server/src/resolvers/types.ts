@@ -8,7 +8,7 @@ export type Resolver = {
       context: {
         req: Request;
         res: Response;
-        user: User;
+        userId?: string;
       },
       info: any,
     ) => any;
@@ -16,9 +16,10 @@ export type Resolver = {
 };
 
 export type User = {
+  userId?: string;
   nickName?: string;
   email?: String;
-  token?: string;
+  userTy?: number;
 };
 
 export type Product = {
