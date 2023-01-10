@@ -16,6 +16,7 @@ export const QueryKeys = {
   PRODUCTS: "PRODUCTS",
   CART: "CART",
   USER: "USER",
+  USER_AUTH: "USER_AUTH",
 };
 
 // https://2ham-s.tistory.com/407

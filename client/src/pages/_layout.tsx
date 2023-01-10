@@ -5,11 +5,11 @@ import styled from "styled-components";
 import Gnb from "../components/gnb";
 import GET_USER, { User } from "../graphql/gqlUser";
 import useUser from "../hoc/useUser";
-import { auth, authFetcher, QueryKeys } from "../queryClient";
+import { authFetcher, QueryKeys } from "../queryClient";
 
 const Layout: React.FC = () => {
   const { onLogin } = useUser();
-  useQuery([QueryKeys.USER, "AUTH"], () => authFetcher(GET_USER), {
+  useQuery(QueryKeys.USER_AUTH, () => authFetcher(GET_USER), {
     onSuccess: ({ user }: { user: User }) => {
       onLogin(user);
     },

@@ -5,22 +5,19 @@ import { ApolloServer } from "apollo-server-express";
 import schema from "./schema";
 import resolvers from "./resolvers";
 import cookieParser from "cookie-parser";
-import cors from "cors";
 
 (async () => {
   const port = 8000;
   const server = new ApolloServer({
     typeDefs: schema,
     resolvers: resolvers,
-
     context: async ({ req, res }) => {
       const token = req.headers.authorization?.substring(7) ?? "";
-      console.log("token", token);
       let userId = "";
 
       if (token) {
         const payload: any = verifyToken(token);
-        if (payload.userId) return { req, res, userId: payload.userId };
+        if (payload?.userId) return { req, res, userId: payload.userId };
       }
 
       const refreshToken = req.cookies?.refreshToken;
@@ -30,6 +27,7 @@ import cors from "cors";
       const payload: any = verifyToken(refreshToken);
       if (payload instanceof Object)
         if (payload?.userId) return { req, res, userId: payload.userId };
+      return { req, res, userId };
     },
   });
   const app = express();
