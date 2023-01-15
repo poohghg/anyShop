@@ -66,13 +66,13 @@ const CartList = ({ cart }: Carts) => {
     if (isDelete) deleteCart({ id });
   }, []);
 
-  useEffect(() => {
-    const newPayItems = checkboxRefs.reduce<CartType[]>((acc, cur, i) => {
-      if (cur.current!.checked) acc.push(cart[i]);
-      return acc;
-    }, []);
-    dispatch(setPayItems(newPayItems));
-  }, [checkboxRefs, formData]);
+  // useEffect(() => {
+  //   const newPayItems = checkboxRefs.reduce<CartType[]>((acc, cur, i) => {
+  //     if (cur.current!.checked) acc.push(cart[i]);
+  //     return acc;
+  //   }, []);
+  //   dispatch(setPayItems(newPayItems));
+  // }, [checkboxRefs, formData]);
 
   return cart.length !== 0 ? (
     <>
