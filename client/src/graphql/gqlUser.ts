@@ -150,7 +150,6 @@ export const useLoginMutation = () => {
     ({ email, passWord }: { email: string; passWord: string }) =>
       authFetcher(LOGIN, { email, passWord }),
     {
-      onMutate: () => {},
       onSuccess: ({ login }: { login: User }) => {
         if (login.token) onLogin(login);
         navigate(-1);

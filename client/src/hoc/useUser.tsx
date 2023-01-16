@@ -3,7 +3,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { LOGOUT, User } from "../graphql/gqlUser";
-import { auth, authFetcher } from "../queryClient";
+import { auth, authFetcher, getClient, QueryKeys } from "../queryClient";
 import { initUser, setUser } from "../redux/userReducer";
 
 interface TEST {
@@ -11,12 +11,12 @@ interface TEST {
 }
 
 const useUser = () => {
+  const client = getClient();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onLogin = useCallback((user: User) => {
     auth.defaults.headers.common["authorization"] = `Bearer ${user.token}`;
-    // auth.defaults.headers.
     delete user.token;
     dispatch(setUser(user));
   }, []);
@@ -24,13 +24,19 @@ const useUser = () => {
   const onLogOut = useCallback(async () => {
     const res = await authFetcher(LOGOUT);
     if (res.logout) {
+      console.log("logout");
       auth.defaults.headers.common["authorization"] = "";
+      client.clear();
       dispatch(initUser());
-      navigate("/");
+      return navigate("/");
     }
   }, []);
 
-  return { onLogin, onLogOut };
+  const isAuthFetching = client.isFetching({
+    queryKey: QueryKeys.USER_AUTH,
+  });
+
+  return { onLogin, onLogOut, isAuthFetching };
 };
 
 export default useUser;

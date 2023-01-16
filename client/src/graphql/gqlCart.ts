@@ -1,7 +1,14 @@
-import { getClient, graphqlFetcher, QueryKeys } from "./../queryClient";
+import {
+  authFetcher,
+  getClient,
+  graphqlFetcher,
+  QueryKeys,
+} from "./../queryClient";
 import { useMutation } from "react-query";
 import { gql } from "graphql-tag";
 import { Product } from "./gqlProduct";
+import useToLogin from "../hoc/useToLogin";
+import { toast } from "react-toastify";
 
 export type CartType = {
   id: string;
@@ -11,9 +18,9 @@ export type CartType = {
 
 export type Carts = { cart: CartType[] };
 
-export const GET_CART = gql`
+export const GET_CART = `
   query GET_CART {
-    cart {
+    cart{
       id
       amount
       product {
@@ -28,7 +35,7 @@ export const GET_CART = gql`
   }
 `;
 
-export const ADD_CART = gql`
+export const ADD_CART = `
   mutation ADD_CART($id: ID!) {
     addCart(productId: $id) {
       id
@@ -70,6 +77,23 @@ export const DELETE_CART = gql`
 
 // API
 const client = getClient();
+
+export const useAddCart = () => {
+  const isToLoginPage = useToLogin();
+
+  return useMutation((id: string) => authFetcher(ADD_CART, { id }), {
+    onSuccess: (data, variables, context) => {
+      client.invalidateQueries(QueryKeys.CART);
+      toast("새로운 상품이 추가되었습니다!", {
+        type: "info",
+      });
+    },
+    onError: (error, variables, context) => {
+      isToLoginPage();
+    },
+  });
+};
+
 export const updateMutation = () =>
   useMutation(
     ({ id, amount }: { id: string; amount: number }) =>

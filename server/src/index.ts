@@ -21,9 +21,8 @@ import cookieParser from "cookie-parser";
       }
 
       const refreshToken = req.cookies?.refreshToken;
-      //  프론트에서 로그인으로 이동
-      // console.log("refreshToken", refreshToken);
       if (!refreshToken) return { req, res, userId };
+
       const payload: any = verifyToken(refreshToken);
       if (payload instanceof Object)
         if (payload?.userId) return { req, res, userId: payload.userId };

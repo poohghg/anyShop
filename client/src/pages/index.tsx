@@ -10,11 +10,6 @@ const MainPage: FC = () => {
     <>
       <div> 메인페이지입니다. </div>
       {user.nickName && <div>{user.nickName}</div>}
-      <Container>
-        {Array.from({ length: 10 }).map((_, idx) => (
-          <Content key={idx}>{idx}</Content>
-        ))}
-      </Container>
     </>
   );
 };

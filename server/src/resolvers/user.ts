@@ -98,12 +98,12 @@ const userResolver: Resolver = {
         const result = await addDoc(collection(db, "user"), newUser);
 
         // make token
-        // setRefreshTokenInCookie(ctx.res);
         const token = generateAccessToken(result.id);
-        return { token, nickName, email };
+        setRefreshTokenInCookie(ctx.res, result.id);
+        return { userId: result.id, token, nickName, email, userTy: 9 };
       } catch (error) {
         console.log(error);
-        throw new Error("ee");
+        throw new Error("error");
       }
     },
   },

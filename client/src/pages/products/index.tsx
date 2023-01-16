@@ -5,33 +5,32 @@ import styled from "styled-components";
 import ProductItem from "../../components/productItem";
 import GET_PRODUCTS, { ADD_PRODUCT, Products } from "../../graphql/gqlProduct";
 import { useCallback, useEffect } from "react";
-import { ADD_CART } from "../../graphql/gqlCart";
+import { ADD_CART, useAddCart } from "../../graphql/gqlCart";
+import { useSelector } from "react-redux";
+import { Root } from "react-dom/client";
+import { RootState } from "../../redux";
+import useToLogin from "../../hoc/useToLogin";
 
 const ProductList = () => {
-  // const  getClient();
   const queryClient = useQueryClient();
+  const isToLoginPage = useToLogin();
+  const userId = useSelector((state: RootState) => state.userReducer.userId);
+
   const { data, status } = useQuery<Products>(QueryKeys.PRODUCTS, () =>
     graphqlFetcher(GET_PRODUCTS),
   );
 
-  const { mutate: addCart, status: mutateStatus } = useMutation(
-    (id: string) => graphqlFetcher(ADD_CART, { id }),
-    {
-      onSuccess(data, variables, context) {
-        queryClient.invalidateQueries(QueryKeys.CART);
-      },
-    },
-  );
+  const { mutate: addCart } = useAddCart();
 
   const addCartListener = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
       e.preventDefault();
+      if (!userId) return isToLoginPage();
       addCart(id);
     },
-    [status],
+    [status, userId],
   );
 
-  console.log("status", status, "mutateStatus", mutateStatus);
   return (
     <>
       <Title>상품목록입니다.</Title>

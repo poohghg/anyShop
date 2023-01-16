@@ -17,9 +17,12 @@ import { Product, Resolver } from "./types";
 
 const cartResolver: Resolver = {
   Query: {
-    cart: async (parent, args) => {
+    cart: async (parent, args, { userId }) => {
+      if (!userId) throw Error("userId not exist");
       const cart = collection(db, "cart");
-      const cartSnap = await getDocs(cart);
+      const cartSnap = await getDocs(
+        query(cart, where("userId", "==", userId)),
+      );
       const data: DocumentData[] = [];
       cartSnap.forEach((doc) => {
         const d = doc.data();
@@ -32,12 +35,20 @@ const cartResolver: Resolver = {
     },
   },
   Mutation: {
-    addCart: async (parent, { productId }) => {
+    addCart: async (parent, { productId }, { userId }) => {
+      if (!userId) throw Error("userId not exist");
       if (!productId) throw Error("상품id가 없다!");
+
       const productRef = doc(db, "products", productId);
       const cartCollection = collection(db, "cart");
       const exist = (
-        await getDocs(query(cartCollection, where("product", "==", productRef)))
+        await getDocs(
+          query(
+            cartCollection,
+            where("product", "==", productRef),
+            where("userId", "==", userId),
+          ),
+        )
       ).docs[0];
 
       let cartRef;
@@ -48,6 +59,7 @@ const cartResolver: Resolver = {
         });
       } else {
         cartRef = await addDoc(cartCollection, {
+          userId,
           amount: 1,
           product: productRef,
         });
