@@ -72,13 +72,16 @@ const cartResolver: Resolver = {
       };
     },
 
-    updateCart: async (parent, { cartId, amount }) => {
+    updateCart: async (parent, { cartId, amount }, { userId }) => {
+      if (!userId) throw Error("userId not exist");
       if (amount < 1) throw Error("1 이하로 바꿀 수 없습니다.");
       const cartRef = doc(db, "cart", cartId);
       if (!cartRef) throw Error("장바구니 정보가 없다");
+
       await updateDoc(cartRef, {
         amount,
       });
+
       const cartSnapshot = await getDoc(cartRef);
       return {
         ...cartSnapshot.data(),

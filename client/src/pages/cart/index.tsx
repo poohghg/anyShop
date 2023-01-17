@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import CartList from "../../components/cart/cartList";
 import { Carts, GET_CART } from "../../graphql/gqlCart";
 import { useToLogin, useUser } from "../../hoc";
@@ -9,8 +10,9 @@ import { RootState } from "../../redux";
 
 const Cart = () => {
   // QueryKeys.USER_AUTH;
+  const { pathname } = useLocation();
   const isToLoginPage = useToLogin();
-  // const { isAuthFetching } = useUser();
+  const { isAuthFetching } = useUser();
 
   const userId = useSelector((state: RootState) => state.userReducer.userId);
 
@@ -26,11 +28,12 @@ const Cart = () => {
     },
   );
 
-  // useEffect(() => {
-  //   console.log("useEffect");
-  //   if (!userId && !isAuthFetching) return isToLoginPage(true);
-  // }, [userId, isAuthFetching]);
+  useEffect(() => {
+    if (pathname === "/cart" && !userId && !isAuthFetching)
+      return isToLoginPage(true);
+  }, [userId, isAuthFetching, pathname]);
 
+  // if (!userId && !isAuthFetching) return isToLoginPage(true);
   return <div>{status === "success" && <CartList cart={data?.cart} />}</div>;
 };
 export default Cart;

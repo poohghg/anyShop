@@ -30,10 +30,9 @@ const LoginPage = () => {
       });
       return passWord!.focus();
     }
+
     login({ email: email!.value, passWord: passWord!.value });
   };
-
-  console.log(document.referrer);
   return (
     <Main>
       <Title>안녕하세요</Title>

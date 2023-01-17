@@ -15,7 +15,6 @@ import {
   deleteMutation,
   updateMutation,
 } from "../../graphql/gqlCart";
-import { RootState } from "../../redux";
 import { setPayItems } from "../../redux/stateReducer";
 import { CheckBoxInput, CheckBoxLabel } from "../../style/styledComponents";
 import WillPay from "../pay/willPay";

@@ -24,11 +24,10 @@ const useUser = () => {
   const onLogOut = useCallback(async () => {
     const res = await authFetcher(LOGOUT);
     if (res.logout) {
-      console.log("logout");
       auth.defaults.headers.common["authorization"] = "";
       client.clear();
       dispatch(initUser());
-      return navigate("/");
+      return navigate("/", { replace: true });
     }
   }, []);
 
