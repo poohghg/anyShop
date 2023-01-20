@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { RootState } from "../../redux";
+import TotalPayInfo from "../cart/TotalPayInfo";
 
 interface ToTalInfoType {
   totalPrice: number;
@@ -15,18 +16,6 @@ const WillPay = () => {
     (state: RootState) => state.stateReducer.payItems,
   );
 
-  const PayInfo = payItems.reduce<ToTalInfoType>(
-    (acc, cur) => {
-      acc.totalPrice += cur.amount * cur.product.price;
-      acc.numOfItem++;
-      return acc;
-    },
-    {
-      totalPrice: 0,
-      numOfItem: 0,
-    },
-  );
-
   const handlePay = () => {
     if (payItems.length) navigate("/payment");
     else alert("선택된 상품이 없습니다.");
@@ -35,7 +24,7 @@ const WillPay = () => {
   console.log("payItems", payItems);
   return (
     <Main>
-      <Label>주문상품 정보 / 총{PayInfo.numOfItem}개</Label>
+      <Label>주문상품 정보 / 총{payItems.length}개</Label>
       <List>
         {payItems.map(({ product, amount }) => (
           <Link
@@ -55,17 +44,7 @@ const WillPay = () => {
           </Link>
         ))}
       </List>
-      <div>
-        <PayInfos>
-          <h4>상품 수</h4>
-          <div>{PayInfo.numOfItem}개</div>
-        </PayInfos>
-        <PayInfos>
-          <h4>총 상품금액</h4>
-          <div>{PayInfo.totalPrice}원</div>
-        </PayInfos>
-      </div>
-      <PayButton onClick={handlePay}>결제하기</PayButton>
+      <TotalPayInfo payItems={payItems} buttonListener={handlePay} />
     </Main>
   );
 };

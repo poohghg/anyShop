@@ -30,7 +30,9 @@ const Gnb = () => {
         <Logo>Logo</Logo>
         {paths.map((path) => (
           <PathItem key={path.to} isActive={`/${path.to}` === pathname}>
-            <Link to={path.to}>{path.pathName}</Link>
+            <Link to={path.to} preventScrollReset={false}>
+              {path.pathName}
+            </Link>
           </PathItem>
         ))}
       </MenuUl>

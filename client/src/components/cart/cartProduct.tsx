@@ -19,20 +19,33 @@ const CartProduct = ({ price, title, imageUrl }: CartProductProps) => {
 export default CartProduct;
 
 const Item = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  font-size: 1rem;
+  font-weight: 300;
 
   div:nth-child(1) {
-    width: 60%;
+    width: 70%;
+    * {
+      font-size: 1rem;
+      font-weight: 350;
+    }
+    p {
+      margin-top: 0.3rem;
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
   }
   div:nth-child(2) {
-    width: 40%;
+    width: 30%;
+    display: flex;
   }
 `;
 
 const Image = styled.img`
-  object-fit: contain;
   width: 100%;
-  height: 55px;
+  height: 95px;
+  object-fit: contain;
 `;

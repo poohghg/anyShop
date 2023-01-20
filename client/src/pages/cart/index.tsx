@@ -13,7 +13,6 @@ const Cart = () => {
   const { pathname } = useLocation();
   const isToLoginPage = useToLogin();
   const { isAuthFetching } = useUser();
-
   const userId = useSelector((state: RootState) => state.userReducer.userId);
 
   const { data, status } = useQuery<Carts>(

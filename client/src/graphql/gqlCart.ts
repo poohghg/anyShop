@@ -52,7 +52,7 @@ export const ADD_CART = `
   }
 `;
 
-export const UPDATE_CART = gql`
+export const UPDATE_CART = `
   mutation UPDATE_CART($id: ID!, $amount: Int!) {
     updateCart(cartId: $id, amount: $amount) {
       id
@@ -69,7 +69,7 @@ export const UPDATE_CART = gql`
   }
 `;
 
-export const DELETE_CART = gql`
+export const DELETE_CART = `
   mutation DELETE_CART($id: ID!) {
     deleteCart(cartId: $id)
   }
@@ -94,10 +94,10 @@ export const useAddCart = () => {
   });
 };
 
-export const updateMutation = () =>
+export const useUpdateMutation = () =>
   useMutation(
     ({ id, amount }: { id: string; amount: number }) =>
-      graphqlFetcher(UPDATE_CART, { id, amount }),
+      authFetcher(UPDATE_CART, { id, amount }),
     {
       onMutate: ({ id, amount }) => {
         client.cancelQueries(QueryKeys.CART);
@@ -131,8 +131,8 @@ export const updateMutation = () =>
     },
   );
 
-export const deleteMutation = () =>
-  useMutation(({ id }: { id: string }) => graphqlFetcher(DELETE_CART, { id }), {
+export const useDeleteMutation = () =>
+  useMutation(({ id }: { id: string }) => authFetcher(DELETE_CART, { id }), {
     onMutate: () => {},
     onSuccess: (data) => {
       client.invalidateQueries(QueryKeys.CART);

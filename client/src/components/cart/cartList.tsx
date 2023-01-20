@@ -1,3 +1,4 @@
+import { log } from "console";
 import React, {
   createRef,
   SyntheticEvent,
@@ -7,33 +8,41 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
   Carts,
   CartType,
-  deleteMutation,
-  updateMutation,
+  useDeleteMutation,
+  useUpdateMutation,
 } from "../../graphql/gqlCart";
+import { RootState } from "../../redux";
 import { setPayItems } from "../../redux/stateReducer";
 import { CheckBoxInput, CheckBoxLabel } from "../../style/styledComponents";
-import WillPay from "../pay/willPay";
 import CartItem from "./cartItem";
+import TotalPayInfo from "./TotalPayInfo";
 
 // interface CartProps extends CartType {}
-
 const CartList = ({ cart }: Carts) => {
+  // 사용변수
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState<FormData>();
-  // 사용변수
+  const payItems = useSelector(
+    (state: RootState) => state.stateReducer.payItems,
+  );
   const checkboxRefs = useMemo(
     () => cart.map(() => createRef<HTMLInputElement>()),
     [cart],
   );
+
   //  뮤테이션
-  const { mutate: updateCart } = updateMutation();
-  const { mutate: deleteCart } = deleteMutation();
+  const { mutate: updateCart } = useUpdateMutation();
+  const { mutate: deleteCart } = useDeleteMutation();
 
   const handleCheckBoxChange = (e: SyntheticEvent) => {
     if (!formRef.current) return;
@@ -65,6 +74,8 @@ const CartList = ({ cart }: Carts) => {
     if (isDelete) deleteCart({ id });
   }, []);
 
+  const toPayPage = useCallback(() => navigate("/payment"), []);
+
   useEffect(() => {
     const newPayItems = checkboxRefs.reduce<CartType[]>((acc, cur, i) => {
       if (cur.current!.checked) acc.push(cart[i]);
@@ -74,16 +85,24 @@ const CartList = ({ cart }: Carts) => {
   }, [checkboxRefs, formData]);
 
   return cart.length !== 0 ? (
-    <>
+    <Main>
+      <Label>결제 상품정보</Label>
       <form ref={formRef} onChange={handleCheckBoxChange}>
         <ul>
-          <CheckBoxInput
-            id="allCheckBox"
-            name="all"
-            type="checkbox"
-            defaultChecked={true}
-          />
-          <CheckBoxLabel htmlFor="allCheckBox" />
+          <TotalCheckBox>
+            <CheckBoxInput
+              id="allCheckBox"
+              name="all"
+              type="checkbox"
+              defaultChecked={true}
+            />
+            <CheckBoxLabel
+              htmlFor="allCheckBox"
+              style={{ paddingLeft: "28px" }}
+            >
+              전체선택
+            </CheckBoxLabel>
+          </TotalCheckBox>
           {cart?.map((item, idx) => (
             <CartItem
               key={item.id}
@@ -95,13 +114,29 @@ const CartList = ({ cart }: Carts) => {
           ))}
         </ul>
       </form>
-      <WillPay />
-    </>
+      <TotalPayInfo payItems={payItems} buttonListener={toPayPage} />
+    </Main>
   ) : null;
 };
 
-const List = styled.ul`
+const Main = styled.div`
   margin: 0 auto;
+  max-width: 720px;
+  padding: 1rem 0;
+  /* border: 1px solid black; */
+  border-radius: 12px;
+  margin-top: 1rem;
+`;
+
+const Label = styled.h4`
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid black;
+  font-size: 1.5rem;
+  font-weight: 600;
+`;
+
+const TotalCheckBox = styled.div`
+  padding: 0.5rem;
 `;
 
 export default CartList;
