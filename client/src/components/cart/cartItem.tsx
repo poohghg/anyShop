@@ -98,7 +98,7 @@ const ControlAmount = styled.div`
   align-items: center;
   border: 1px solid #bcbcbc;
   border-radius: 8px;
-  width: ;
+  /* width: ; */
 
   > div {
     text-align: center;

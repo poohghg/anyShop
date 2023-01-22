@@ -1,34 +1,44 @@
-import React, { useCallback, useState, SyntheticEvent } from "react";
-import { useSelector } from "react-redux";
-import styled from "styled-components";
-import { RootState } from "../../redux";
+import { useState, SyntheticEvent, useRef } from "react";
+import styled, { css } from "styled-components";
+import { payUserInfoType } from "../../pages/payment";
+import NewAddress from "./newAddress";
 
-const ShippingInfo = () => {
-  const [deliveryInfo, setDeliveryInfo] = useState<string>("ori");
-  const { email, nickName, userId } = useSelector(
-    (state: RootState) => state.userReducer,
-  );
+export interface ShippingInfoProps {
+  nickName: string;
+  payUserInfo: payUserInfoType;
+  setPayUserInfo: React.Dispatch<React.SetStateAction<payUserInfoType>>;
+}
 
-  // const handelDeliveryInfo = useCallback((e: SyntheticEvent) => {
-  //   const target = e!.target as HTMLInputElement;
-  //   const { delivery } = target.dataset;
-  //   setDeliveryInfo(deliveryInfo);
-  // }, []);
+const ShippingInfo = ({
+  nickName,
+  payUserInfo,
+  setPayUserInfo,
+}: ShippingInfoProps) => {
+  const [deliveryInfo, setDeliveryInfo] = useState<"ori" | "new">("ori");
 
-  // user.
   return (
     <Main>
       <h3>안녕하세요 </h3>
       <UserMsg>{nickName}님 배송정보를 입력해주세요.</UserMsg>
       <DeliveryInfo>
-        <button onClick={() => setDeliveryInfo("ori")} data-delivery={"ori"}>
+        <DeliveryBtn
+          onClick={() => setDeliveryInfo("ori")}
+          isSelected={deliveryInfo === "ori"}
+        >
           기존 배송지
-        </button>
-        <button onClick={() => setDeliveryInfo("new")} data-delivery={"new"}>
+        </DeliveryBtn>
+        <DeliveryBtn
+          onClick={() => setDeliveryInfo("new")}
+          isSelected={deliveryInfo === "new"}
+        >
           신규 베송지
-        </button>
+        </DeliveryBtn>
       </DeliveryInfo>
-      {deliveryInfo === "ori" ? <div>ori</div> : <div>new</div>}
+      {deliveryInfo === "ori" ? (
+        <div>ori</div>
+      ) : (
+        <NewAddress payUserInfo={payUserInfo} setPayUserInfo={setPayUserInfo} />
+      )}
     </Main>
   );
 };
@@ -39,29 +49,41 @@ const Main = styled.div`
 `;
 
 const UserMsg = styled.h4`
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 300;
 `;
 
 const DeliveryInfo = styled.div`
-  /* width:  70; */
   margin-top: 1rem;
-  border: 1px solid black;
+  border-bottom: 1px solid #bcbcbc;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
-  /* padding: 0.5rem 0; */
-  > button {
-    padding: 0.5rem;
-    width: 50%;
-    text-align: center;
-    font-size: 0.9rem;
-    font-weight: 400;
-  }
-
+  /* padding: 0.5rem; */
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
   button:nth-child(2) {
-    border-left: 2px solid black;
+    border-right: 1px solid #bcbcbc;
   }
+`;
+
+const DeliveryBtn = styled.button<{ isSelected: boolean }>`
+  padding: 0.5rem;
+  width: 40%;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #bcbcbc;
+  border-top: 1px solid #bcbcbc;
+  border-left: 1px solid #bcbcbc;
+  ${({ isSelected }) =>
+    isSelected &&
+    css`
+      color: black;
+    `}
 `;
 
 export default ShippingInfo;

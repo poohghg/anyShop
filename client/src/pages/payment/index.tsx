@@ -1,12 +1,43 @@
+import { SyntheticEvent, useCallback, useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import ShippingInfo from "../../components/pay/ShippingInfo";
+import ShippingInfo from "../../components/pay/shippingInfo";
 import WillPay from "../../components/pay/willPay";
+import { RootState } from "../../redux";
+
+export interface payUserInfoType {
+  recipient: string;
+  address: string;
+  detailedAddress: string;
+}
 
 const PaymentPage = () => {
+  const payItems = useSelector(
+    (state: RootState) => state.stateReducer.payItems,
+  );
+
+  const { email, nickName, userId } = useSelector(
+    (state: RootState) => state.userReducer,
+  );
+
+  const [payUserInfo, setPayUserInfo] = useState<payUserInfoType>({
+    address: "",
+    detailedAddress: "",
+    recipient: "",
+  });
+
+  // const handlePayUserInfo = useCallback((e: SyntheticEvent) => {
+  //   const target = e.target as HTMLInputElement;
+  // }, []);
+
   return (
     <LayOut>
-      <ShippingInfo />
-      <WillPay />
+      <ShippingInfo
+        payUserInfo={payUserInfo}
+        setPayUserInfo={setPayUserInfo}
+        nickName={nickName}
+      />
+      <WillPay payItems={payItems} />
     </LayOut>
   );
 };

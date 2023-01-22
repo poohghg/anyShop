@@ -1,27 +1,21 @@
 import { memo, useCallback } from "react";
-import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { RootState } from "../../redux";
+import { CartType } from "../../graphql/gqlCart";
 import TotalPayInfo from "../cart/TotalPayInfo";
 
-interface ToTalInfoType {
-  totalPrice: number;
-  numOfItem: number;
+interface WillPayProps {
+  payItems: CartType[];
 }
 
-const WillPay = () => {
+const WillPay = ({ payItems }: WillPayProps) => {
   const navigate = useNavigate();
-  const payItems = useSelector(
-    (state: RootState) => state.stateReducer.payItems,
-  );
 
   const handlePay = () => {
     if (payItems.length) navigate("/payment");
     else alert("선택된 상품이 없습니다.");
   };
 
-  console.log("payItems", payItems);
   return (
     <Main>
       <Label>주문상품 정보 / 총{payItems.length}개</Label>
