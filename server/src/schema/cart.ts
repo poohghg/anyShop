@@ -13,7 +13,13 @@ const cartSchema = gql`
     addCart(productId: ID!): CartItem!
     updateCart(cartId: ID!, amount: Int!): CartItem!
     deleteCart(cartId: ID!): ID!
-    executePay(ids: [ID!]): [ID!]
+    executePay(
+      ids: [ID!]
+      checkAddress: Boolean!
+      address: String!
+      recipient: String!
+      detailedAddress: String!
+    ): Boolean!
   }
 `;
 

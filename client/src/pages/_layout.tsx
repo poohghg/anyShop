@@ -18,8 +18,7 @@ const Layout: React.FC = () => {
   });
 
   useEffect(() => {
-    const main = document.getElementById("main") as HTMLDivElement;
-    main.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }, [pathname]);
 
   return (
@@ -35,9 +34,8 @@ const Layout: React.FC = () => {
 };
 
 const MainLayout = styled.div`
-  margin-top: 8vh;
-  height: 92vh;
-  overflow: auto;
+  height: auto;
+  padding-top: 8vh;
   padding-bottom: 3rem;
 `;
 

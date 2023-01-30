@@ -6,15 +6,16 @@ import TotalPayInfo from "../cart/TotalPayInfo";
 
 interface WillPayProps {
   payItems: CartType[];
+  handlePay: () => void;
 }
 
-const WillPay = ({ payItems }: WillPayProps) => {
+const WillPay = ({ payItems, handlePay }: WillPayProps) => {
   const navigate = useNavigate();
 
-  const handlePay = () => {
-    if (payItems.length) navigate("/payment");
-    else alert("선택된 상품이 없습니다.");
-  };
+  // const handlePay = () => {
+  //   if (payItems.length) navigate("/payment");
+  //   else alert("선택된 상품이 없습니다.");
+  // };
 
   return (
     <Main>

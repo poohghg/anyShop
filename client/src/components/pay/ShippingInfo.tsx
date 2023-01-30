@@ -6,16 +6,18 @@ import NewAddress from "./newAddress";
 export interface ShippingInfoProps {
   nickName: string;
   payUserInfo: payUserInfoType;
+  deliveryInfo: "ori" | "new";
   setPayUserInfo: React.Dispatch<React.SetStateAction<payUserInfoType>>;
+  setDeliveryInfo: React.Dispatch<React.SetStateAction<"ori" | "new">>;
 }
 
 const ShippingInfo = ({
   nickName,
   payUserInfo,
+  deliveryInfo,
+  setDeliveryInfo,
   setPayUserInfo,
 }: ShippingInfoProps) => {
-  const [deliveryInfo, setDeliveryInfo] = useState<"ori" | "new">("ori");
-
   return (
     <Main>
       <h3>안녕하세요 </h3>
@@ -44,6 +46,9 @@ const ShippingInfo = ({
 };
 
 const Main = styled.div`
+  position: sticky;
+  top: 9.5vh;
+  height: max-content;
   border-top: 2px solid black;
   padding-top: 1rem;
 `;

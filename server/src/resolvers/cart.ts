@@ -1,4 +1,5 @@
 import { log } from "console";
+import { randomUUID } from "crypto";
 import {
   addDoc,
   collection,
@@ -9,6 +10,8 @@ import {
   getDocs,
   increment,
   query,
+  serverTimestamp,
+  setDoc,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -90,31 +93,38 @@ const cartResolver: Resolver = {
     },
 
     deleteCart: async (parent, { cartId }) => {
-      console.log("   cartId", cartId);
       const cartRef = doc(db, "cart", cartId);
       // if (!cartRef) throw Error("장바구니 정보가 없다");
       await deleteDoc(cartRef);
       return cartId;
     },
 
-    executePay: async (parent, { ids }) => {
-      // createdAt이 비어있지 않은 ids들에 대해서 결제처리가 완료되었다고 가정하고
-      // cart에서 이들 ids를 지워준다.
-      const deleted = [];
+    executePay: async (
+      parent,
+      { ids, checkAddress, address, recipient, detailedAddress },
+      { userId },
+    ) => {
+      const dd = new Date();
+      const payId = dd.getTime().toString() + randomUUID();
+      const payCollection = collection(db, "payment");
       for await (const id of ids) {
         const cartRef = doc(db, "cart", id);
         const cartSnapshot = await getDoc(cartRef);
         const cartData = cartSnapshot.data();
         const productRef = cartData?.product;
-        if (!productRef) throw Error("상품정보가 없다.");
-        const product = (await getDoc(productRef)).data() as Product;
-        if (product.createdAt) {
-          await deleteDoc(cartRef);
-          deleted.push(id);
-        } else {
-        }
+        await deleteDoc(cartRef);
+        await addDoc(payCollection, {
+          address,
+          recipient,
+          detailedAddress,
+          userId,
+          payId,
+          executeAt: serverTimestamp(),
+          product: productRef,
+        });
       }
-      return deleted;
+      return true;
+      // return deleted;
     },
   },
   CartItem: {

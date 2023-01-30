@@ -59,6 +59,7 @@ const Navbar = styled.nav`
   align-items: center;
   background-color: rgba(28, 39, 51, 255);
   padding: 0 2rem;
+  z-index: 10;
 `;
 
 const MenuUl = styled.ul`

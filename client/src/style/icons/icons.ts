@@ -31,3 +31,11 @@ export const MinusIcon = styled(BaseIcon)<CssStyleProps>`
     height: ${props.height ?? "12px"};
   `}
 `;
+
+export const CloseIcon = styled(BaseIcon)<CssStyleProps>`
+  background-image: url(/images/close.svg);
+  ${(props) => css`
+    width: ${props.width ?? "12px"};
+    height: ${props.height ?? "12px"};
+  `}
+`;
