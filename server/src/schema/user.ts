@@ -7,6 +7,12 @@ const userSchema = gql`
     email: String!
     nickName: String!
     userTy: Int!
+    addresses: [Ads!]
+  }
+  type Ads {
+    address: String
+    recipient: String
+    detailedAddress: String
   }
   extend type Query {
     user: User!

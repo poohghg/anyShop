@@ -1,7 +1,9 @@
 import { useState, SyntheticEvent, useRef } from "react";
 import styled, { css } from "styled-components";
+import { Addresses } from "../../graphql/gqlUser";
 import { payUserInfoType } from "../../pages/payment";
 import NewAddress from "./newAddress";
+import OriAddress from "./oriAddress";
 
 export interface ShippingInfoProps {
   nickName: string;
@@ -9,15 +11,18 @@ export interface ShippingInfoProps {
   deliveryInfo: "ori" | "new";
   setPayUserInfo: React.Dispatch<React.SetStateAction<payUserInfoType>>;
   setDeliveryInfo: React.Dispatch<React.SetStateAction<"ori" | "new">>;
+  addresses?: Addresses[];
 }
 
 const ShippingInfo = ({
   nickName,
   payUserInfo,
   deliveryInfo,
+  addresses,
   setDeliveryInfo,
   setPayUserInfo,
 }: ShippingInfoProps) => {
+  console.log(addresses);
   return (
     <Main>
       <h3>안녕하세요 </h3>
@@ -37,7 +42,7 @@ const ShippingInfo = ({
         </DeliveryBtn>
       </DeliveryInfo>
       {deliveryInfo === "ori" ? (
-        <div>ori</div>
+        <OriAddress payUserInfo={payUserInfo} />
       ) : (
         <NewAddress payUserInfo={payUserInfo} setPayUserInfo={setPayUserInfo} />
       )}

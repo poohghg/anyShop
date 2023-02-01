@@ -20,8 +20,9 @@ export const getUserInfo = async (userId: string): Promise<User> => {
 
   return {
     userId,
-    nickName: data?.nickName,
-    userTy: data?.userTy,
-    email: data?.email,
+    ...data,
+    // nickName: data?.nickName,
+    // userTy: data?.userTy,
+    // email: data?.email,
   };
 };

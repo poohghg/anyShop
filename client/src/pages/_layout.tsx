@@ -12,9 +12,7 @@ const Layout: React.FC = () => {
   const { onLogin } = useUser();
 
   useQuery(QueryKeys.USER_AUTH, () => authFetcher(GET_USER), {
-    onSuccess: ({ user }: { user: User }) => {
-      onLogin(user);
-    },
+    onSuccess: ({ user }: { user: User }) => onLogin(user),
   });
 
   useEffect(() => {

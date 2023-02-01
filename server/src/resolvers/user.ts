@@ -28,6 +28,7 @@ const userResolver: Resolver = {
       if (!ctx.userId) throw new Error("userId not exist");
       const token = generateAccessToken(ctx.userId);
       const userInfo = await getUserInfo(ctx.userId);
+      // console.log("userInfo", userInfo);
       return { token, ...userInfo };
     },
 

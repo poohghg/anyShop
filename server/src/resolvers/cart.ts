@@ -104,8 +104,28 @@ const cartResolver: Resolver = {
       { ids, checkAddress, address, recipient, detailedAddress },
       { userId },
     ) => {
-      const dd = new Date();
-      const payId = dd.getTime().toString() + randomUUID();
+      // const dd =
+      if (!userId) throw new Error("userCd error");
+      if (checkAddress) {
+        const userRef = doc(db, "user", userId);
+        const userSnapshot = await getDoc(userRef);
+        const userData = userSnapshot.data();
+        const addresses = [
+          {
+            address,
+            recipient,
+            detailedAddress,
+          },
+        ];
+        if (userData?.addresses) {
+          addresses.push(...userData.addresses);
+          if (addresses.length > 5) addresses.shift();
+        }
+        updateDoc(userRef, {
+          addresses,
+        });
+      }
+      const payId = new Date().getTime().toString() + randomUUID();
       const payCollection = collection(db, "payment");
       for await (const id of ids) {
         const cartRef = doc(db, "cart", id);

@@ -1,4 +1,4 @@
-import { SyntheticEvent, useCallback, useState } from "react";
+import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import ShippingInfo from "../../components/pay/shippingInfo";
@@ -24,7 +24,7 @@ const PaymentPage = () => {
   const payItems = useSelector(
     (state: RootState) => state.stateReducer.payItems,
   );
-  const { email, nickName, userId } = useSelector(
+  const { email, nickName, userId, addresses } = useSelector(
     (state: RootState) => state.userReducer,
   );
   const [payUserInfo, setPayUserInfo] =
@@ -42,13 +42,20 @@ const PaymentPage = () => {
     executePay({ ids, ...payUserInfo });
   };
 
-  const dd = new Date();
-  console.log("test", dd.getTime().toString());
+  useEffect(() => {
+    if (deliveryInfo === "ori" && addresses?.length) {
+      const recentAds = addresses[0];
+      setPayUserInfo(() => ({ checkAddress: false, ...recentAds }));
+    } else {
+      setPayUserInfo(() => initPayUserInfo);
+    }
+  }, [deliveryInfo, addresses]);
 
   return (
     <LayOut>
       <ShippingInfo
         nickName={nickName}
+        addresses={addresses}
         deliveryInfo={deliveryInfo}
         payUserInfo={payUserInfo}
         setDeliveryInfo={setDeliveryInfo}

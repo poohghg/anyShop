@@ -9,12 +9,19 @@ import useUser from "../hoc/useUser";
 
 // interface authTo
 
+export interface Addresses {
+  address: string;
+  recipient: string;
+  detailedAddress: string;
+}
+
 export interface User {
   email: string;
   nickName: string;
   userId: string;
   userTy: number;
   token?: string;
+  addresses?: Addresses[];
 }
 
 export type Users = User[];
@@ -33,6 +40,11 @@ export const GET_USER = `
       email
       nickName
       userTy
+      addresses {
+        detailedAddress
+        recipient
+        address
+      }
     }  
   }
 `;
@@ -45,6 +57,11 @@ export const LOGIN = `
       email
       nickName
       userTy
+      addresses {
+        detailedAddress
+        recipient
+        address
+      }
     }
   }
 `;

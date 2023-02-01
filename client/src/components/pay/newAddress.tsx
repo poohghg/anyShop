@@ -48,12 +48,6 @@ const NewAddress = ({
 
   return (
     <div>
-      <CheckBox
-        onChange={handelPayUserInfo}
-        name="checkAddress"
-        isChecked={checkAddress}
-        label="기본배송지로 저장"
-      />
       <FlexBox>
         <h5>수령인</h5>
         <InputBox
@@ -98,6 +92,12 @@ const NewAddress = ({
           placeholder="상세주소 입력"
         />
       </FlexBox>
+      <CheckBox
+        onChange={handelPayUserInfo}
+        name="checkAddress"
+        isChecked={checkAddress}
+        label="최근 배송지로 저장"
+      />
     </div>
   );
 };
@@ -119,11 +119,12 @@ const FlexBox = styled.div`
 const InputBox = styled.input`
   width: 75%;
   padding: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 400;
   :focus {
     outline: none !important;
     border-color: black;
   }
-
   .popup_foot show {
     display: none !important;
   }
