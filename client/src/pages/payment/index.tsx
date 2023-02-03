@@ -42,14 +42,14 @@ const PaymentPage = () => {
     executePay({ ids, ...payUserInfo });
   };
 
-  useEffect(() => {
-    if (deliveryInfo === "ori" && addresses?.length) {
-      const recentAds = addresses[0];
-      setPayUserInfo(() => ({ checkAddress: false, ...recentAds }));
-    } else {
-      setPayUserInfo(() => initPayUserInfo);
-    }
-  }, [deliveryInfo, addresses]);
+  // useEffect(() => {
+  //   if (deliveryInfo === "ori" && addresses?.length) {
+  //     const recentAds = addresses[0];
+  //     setPayUserInfo(() => ({ checkAddress: false, ...recentAds }));
+  //   } else {
+  //     setPayUserInfo(() => initPayUserInfo);
+  //   }
+  // }, [deliveryInfo, addresses]);
 
   return (
     <LayOut>
