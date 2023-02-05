@@ -18,7 +18,7 @@ export type Products = {
   products: Product[];
 };
 
-const GET_PRODUCTS = gql`
+const GET_PRODUCTS = `
   query GET_PRODUCTS($cursor: ID, $showDeleted: Boolean) {
     products(cursor: $cursor, showDeleted: $showDeleted) {
       id

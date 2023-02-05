@@ -2,6 +2,7 @@ import { memo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Product } from "../graphql/gqlProduct";
+import LazyImg from "./lazyImg";
 
 interface ProductItemProps extends Product {
   addCartListener: (e: React.MouseEvent<HTMLButtonElement>, id: string) => void;
@@ -24,7 +25,7 @@ const ProductItem = ({
       <Link to={`/products/${id}`}>
         <Category>{category}</Category>
         <ImgWrap>
-          <img src={imageUrl} />
+          <LazyImg src={imageUrl} />
         </ImgWrap>
         <Title>{title}</Title>
         <Price>${price}</Price>

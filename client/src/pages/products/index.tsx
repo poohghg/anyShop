@@ -1,24 +1,25 @@
 // 'https://fakestoreapi.com/products'
-import { QueryKeys, graphqlFetcher, getClient } from "../../queryClient";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { QueryKeys, authFetcher } from "../../queryClient";
 import styled from "styled-components";
-import ProductItem from "../../components/productItem";
-import GET_PRODUCTS, { ADD_PRODUCT, Products } from "../../graphql/gqlProduct";
-import { useCallback, useEffect } from "react";
-import { ADD_CART, useAddCart } from "../../graphql/gqlCart";
+
+import GET_PRODUCTS, { Product, Products } from "../../graphql/gqlProduct";
+import { Fragment, useCallback, useRef } from "react";
+import { useAddCart } from "../../graphql/gqlCart";
 import { useSelector } from "react-redux";
-import { Root } from "react-dom/client";
+
 import { RootState } from "../../redux";
 import useToLogin from "../../hoc/useToLogin";
+import useInfiniteQ from "../../hoc/useInfiniteQ";
+import ProductItem from "../../components/productItem";
 
 const ProductList = () => {
-  const queryClient = useQueryClient();
   const isToLoginPage = useToLogin();
   const userId = useSelector((state: RootState) => state.userReducer.userId);
 
-  const { data, status } = useQuery<Products>(QueryKeys.PRODUCTS, () =>
-    graphqlFetcher(GET_PRODUCTS),
-  );
+  const { data, RefDom, status } = useInfiniteQ<Products>({
+    qKey: [QueryKeys.PRODUCTS, "products"],
+    query: GET_PRODUCTS,
+  });
 
   const { mutate: addCart } = useAddCart();
 
@@ -36,15 +37,20 @@ const ProductList = () => {
       <Title>상품목록입니다.</Title>
       {status === "success" && (
         <List>
-          {data?.products.map((product) => (
-            <ProductItem
-              key={product.id}
-              {...product}
-              addCartListener={addCartListener}
-            />
+          {data?.pages.map((page, idx) => (
+            <Fragment key={idx}>
+              {page.products.map((product) => (
+                <ProductItem
+                  key={product.id}
+                  {...product}
+                  addCartListener={addCartListener}
+                />
+              ))}
+            </Fragment>
           ))}
         </List>
       )}
+      <RefDom />
     </>
   );
 };

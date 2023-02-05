@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { fadeIn } from "../../style/animataion";
+import { FadeIn } from "../../style/animataion";
 import { ShippingInfoProps } from "./shippingInfo";
 
 type OriAddressProps = Pick<ShippingInfoProps, "payUserInfo">;
@@ -33,7 +33,7 @@ const OriAddress = ({
 export default OriAddress;
 
 const Main = styled.div`
-  animation: ${fadeIn} 0.1s ease-in-out 0s forwards;
+  animation: ${FadeIn} 0.1s ease-in-out 0s forwards;
 `;
 
 const FlexBox = styled.div`

@@ -30,7 +30,6 @@ const LoginPage = () => {
       });
       return passWord!.focus();
     }
-
     login({ email: email!.value, passWord: passWord!.value });
   };
   return (
