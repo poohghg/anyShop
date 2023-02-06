@@ -108,6 +108,7 @@ export default SingUp;
 
 const Main = styled.section`
   max-width: 720px;
+  padding-top: 10rem;
   margin: 0 auto;
   display: flex;
   align-items: center;

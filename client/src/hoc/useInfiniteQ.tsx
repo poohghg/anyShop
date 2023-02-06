@@ -9,6 +9,7 @@ interface UseInfiniteQProps {
   query: string;
   variables?: {};
 }
+const PAGE_SIZE = 15;
 
 const useInfiniteQ = <T extends { [K: string]: any[] }>({
   qKey,
@@ -18,7 +19,6 @@ const useInfiniteQ = <T extends { [K: string]: any[] }>({
   const [inViewRef, inView] = useInView({
     threshold: 0.3,
   });
-
   const {
     data,
     isSuccess,
@@ -33,7 +33,7 @@ const useInfiniteQ = <T extends { [K: string]: any[] }>({
     {
       getNextPageParam: (lastPage, allPages) => {
         const d = Object.values(lastPage)[0];
-        if (d.length < 15 || !d.at(-1)?.id) return undefined;
+        if (d.length < PAGE_SIZE || !d.at(-1)?.id) return undefined;
         return d.at(-1)?.id;
       },
     },

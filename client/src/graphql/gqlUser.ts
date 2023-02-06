@@ -160,7 +160,7 @@ export const singUpMutation = () => {
 };
 
 export const useLoginMutation = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const { onLogin } = useUser();
   return useMutation(
@@ -172,6 +172,7 @@ export const useLoginMutation = () => {
         navigate(-1);
       },
       onError: (error: AxiosError) => {
+        console.log("error", error);
         toast("이메일을 확인해주세요.", {
           type: "error",
           closeOnClick: false,

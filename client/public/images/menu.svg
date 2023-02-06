@@ -5,9 +5,9 @@
     </g>
     <g id="그룹_3877" data-name="그룹 3877" transform="translate(0 0.5)">
       <g id="그룹_3876" data-name="그룹 3876" transform="translate(0 0)">
-        <path id="패스_49" data-name="패스 49" d="M1392.83,98.2h12" transform="translate(-1060.83 -22.699)" fill="none" stroke="#000" stroke-linecap="round" stroke-width="2"/>
-        <path id="패스_50" data-name="패스 50" d="M1392.83,98.2h18" transform="translate(-1060.83 -15.699)" fill="none" stroke="#000" stroke-linecap="round" stroke-width="2"/>
-        <path id="패스_51" data-name="패스 51" d="M1392.83,98.2h12" transform="translate(-1060.83 -8.699)" fill="none" stroke="#000" stroke-linecap="round" stroke-width="2"/>
+        <path id="패스_49" data-name="패스 49" d="M1392.83,98.2h12" transform="translate(-1060.83 -22.699)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2"/>
+        <path id="패스_50" data-name="패스 50" d="M1392.83,98.2h18" transform="translate(-1060.83 -15.699)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2"/>
+        <path id="패스_51" data-name="패스 51" d="M1392.83,98.2h12" transform="translate(-1060.83 -8.699)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2"/>
       </g>
     </g>
   </g>
