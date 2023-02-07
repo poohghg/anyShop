@@ -1,11 +1,12 @@
-import { Fragment, memo, useMemo } from "react";
+import { Fragment, memo, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import useUser from "../hoc/useUser";
 import { RootState } from "../redux";
+import Mgnb from "./mGnb";
 
-interface Path {
+export interface Path {
   to: string;
   pathName: string;
   iconSrc?: string;
@@ -23,15 +24,15 @@ const Icons: Path[] = [
 ];
 
 const Gnb = () => {
+  const [openMobileMenu, setOpenMobileMenu] = useState<boolean>(false);
   const { pathname } = useLocation();
   const { onLogOut } = useUser();
   const { userId, userTy } = useSelector(
     (state: RootState) => state.userReducer,
   );
-
   return (
     <Navbar>
-      <MenuWrap>
+      <MenuWrap openM={openMobileMenu}>
         <MenuUl>
           {paths.map((path) => (
             <PathItem key={path.to} isActive={`/${path.to}` === pathname}>
@@ -63,10 +64,16 @@ const Gnb = () => {
           </PathItem>
         </MenuUl>
         <MobileMenu>
-          <Link to={"/"}>
-            <Home>MAIN</Home>
-          </Link>
-          <MenuIcon src={`/images/${"menu"}.svg`} alt="" />
+          {openMobileMenu ? (
+            <Mgnb
+              paths={[...paths, ...Icons]}
+              closeMenu={() => setOpenMobileMenu(false)}
+            />
+          ) : (
+            <button onClick={() => setOpenMobileMenu((prev) => !prev)}>
+              <MenuIcon src={`/images/${"menu"}.svg`} alt="" />
+            </button>
+          )}
         </MobileMenu>
       </MenuWrap>
     </Navbar>
@@ -83,17 +90,16 @@ const Navbar = styled.nav`
   left: 0;
   right: 0;
   width: 100%;
-  height: 8vh;
   background-color: rgba(28, 39, 51, 255);
   z-index: 10;
   display: flex;
   align-items: center;
 `;
 
-const MenuWrap = styled.div`
-  margin: auto 0;
+const MenuWrap = styled.div<{ openM: boolean }>`
   width: 100%;
-  padding: 0 2rem;
+  height: 8vh;
+  padding: 0 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -109,7 +115,7 @@ const MenuWrap = styled.div`
       width: 100%;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
     }
   }
 `;

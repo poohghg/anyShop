@@ -23,8 +23,8 @@ const Modal = ({
   return (
     <Portal>
       <Overlay>
-        <Container>{children}</Container>
-        <Dim />
+        {children}
+        <Dim onClick={togleModal} />
       </Overlay>
     </Portal>
   );
@@ -32,14 +32,9 @@ const Modal = ({
 
 export default Modal;
 
-const show = keyframes`
-  from {transform: translateY(100vh);}
-  to {transform: translateY(0);}
-`;
-
 const Overlay = styled.div`
   position: fixed;
-  z-index: 10;
+  z-index: 15;
   top: 0;
   right: 0;
   bottom: 0;
@@ -50,9 +45,7 @@ const Overlay = styled.div`
   justify-content: center;
 `;
 
-const Container = styled.div`
-  animation: ${show} 0.3s ease-in forwards;
-`;
+// const Container = styled.div``;
 
 const Dim = styled.div`
   position: absolute;
