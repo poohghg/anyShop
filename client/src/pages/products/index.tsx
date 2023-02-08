@@ -11,6 +11,7 @@ import { RootState } from "../../redux";
 import useToLogin from "../../hoc/useToLogin";
 import useInfiniteQ from "../../hoc/useInfiniteQ";
 import ProductItem from "../../components/productItem";
+import PageTitle from "../../components/pageTitle";
 
 const ProductList = () => {
   const isToLoginPage = useToLogin();
@@ -34,7 +35,7 @@ const ProductList = () => {
 
   return (
     <>
-      <Title>상품목록입니다.</Title>
+      <PageTitle label="상품목록" />
       {status === "success" && (
         <List>
           {data?.pages.map((page, idx) => (

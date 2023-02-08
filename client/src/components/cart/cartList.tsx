@@ -21,6 +21,7 @@ import {
 import { RootState } from "../../redux";
 import { setPayItems } from "../../redux/stateReducer";
 import { CheckBoxInput, CheckBoxLabel } from "../../style/styledComponents";
+import NoData from "../singUp/noData";
 import CartItem from "./cartItem";
 import TotalPayInfo from "./TotalPayInfo";
 
@@ -84,7 +85,9 @@ const CartList = ({ cart }: Carts) => {
     dispatch(setPayItems(newPayItems));
   }, [checkboxRefs, formData]);
 
-  return cart.length !== 0 ? (
+  // console.log(cart, "cart");
+  if (!cart.length) return <NoData label="장바구니가 비었습니다." />;
+  return (
     <Main>
       <Label>결제 상품정보</Label>
       <form ref={formRef} onChange={handleCheckBoxChange}>
@@ -116,7 +119,7 @@ const CartList = ({ cart }: Carts) => {
       </form>
       <TotalPayInfo payItems={payItems} buttonListener={toPayPage} />
     </Main>
-  ) : null;
+  );
 };
 
 const Main = styled.div`

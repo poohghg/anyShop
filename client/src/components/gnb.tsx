@@ -70,7 +70,7 @@ const Gnb = () => {
               closeMenu={() => setOpenMobileMenu(false)}
             />
           ) : (
-            <button onClick={() => setOpenMobileMenu((prev) => !prev)}>
+            <button onClick={() => setOpenMobileMenu(() => true)}>
               <MenuIcon src={`/images/${"menu"}.svg`} alt="" />
             </button>
           )}
@@ -148,6 +148,8 @@ const PathName = styled.span`
 
 const MobileMenu = styled.div`
   display: none;
+  @media screen and (max-width: 720px) {
+  }
 `;
 
 const BaseImgIcon = styled.img`

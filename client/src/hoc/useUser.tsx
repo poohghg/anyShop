@@ -22,6 +22,8 @@ const useUser = () => {
   }, []);
 
   const onLogOut = useCallback(async () => {
+    const isConfirm = confirm("로그아웃 하시겠습니까?");
+    if (!isConfirm) return;
     const res = await authFetcher(LOGOUT);
     if (res.logout) {
       auth.defaults.headers.common["authorization"] = "";

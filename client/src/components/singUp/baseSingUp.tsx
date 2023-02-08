@@ -42,7 +42,7 @@ const BaseUserInfo = ({
 
   return (
     <>
-      <h4>{placeHolder}</h4>
+      <Label>{placeHolder}</Label>
       <Input
         name={name}
         type={type}
@@ -83,6 +83,14 @@ const BaseUserInfo = ({
 
 export default BaseUserInfo;
 
+const Label = styled.h4`
+  max-width: 480px;
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: 450;
+  /* align-self: flex-start; */
+`;
+
 const InfoText = styled.p<{ isTest: boolean }>`
   color: ${({ theme }) => theme.colors.lightGray};
   font-size: 0.9rem;
@@ -98,9 +106,10 @@ const Input = styled.input<{ isTest: boolean }>`
   border: 2px solid ${({ theme }) => theme.colors.lightGray};
   box-shadow: 0px 3px 2px 1px ${({ theme }) => theme.colors.lightGray};
   border-radius: 12px;
-  width: 50%;
-  height: 4vh;
-  margin: 1rem 0;
+  max-width: 480px;
+  width: 100%;
+  height: 48px;
+  margin: 0.5rem 0 1rem 0;
   padding: 0.5rem;
   font-size: 1rem;
   font-weight: 400;
@@ -126,18 +135,19 @@ const Input = styled.input<{ isTest: boolean }>`
 `;
 
 const Button = styled.button`
-  align-self: flex-end;
-  margin-right: 3vw;
+  margin-top: 6vh;
+  max-width: 480px;
+  width: 100%;
+  height: 48px;
   text-align: center;
   font-size: 1.1rem;
   font-weight: 450;
-  width: 100px;
   padding: 0.5rem;
-  border-radius: 50px;
   cursor: pointer;
   color: #3f51b8;
   transition: all 0.2s ease 0s;
   border: 1px solid ${({ theme }) => theme.colors.deepBlue};
+  border-radius: 12px;
   :disabled {
     border: 1px solid ${({ theme }) => theme.colors.lightGray};
     color: ${({ theme }) => theme.colors.lightGray};

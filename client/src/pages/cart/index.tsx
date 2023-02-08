@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import CartList from "../../components/cart/cartList";
+import PageTitle from "../../components/pageTitle";
 import { Carts, GET_CART } from "../../graphql/gqlCart";
 import { useToLogin, useUser } from "../../hoc";
 import { authFetcher, QueryKeys } from "../../queryClient";
@@ -33,6 +34,11 @@ const Cart = () => {
   }, [userId, isAuthFetching, pathname]);
 
   // if (!userId && !isAuthFetching) return isToLoginPage(true);
-  return <div>{status === "success" && <CartList cart={data?.cart} />}</div>;
+  return (
+    <div>
+      <PageTitle label="장바구니" />
+      {status === "success" && <CartList cart={data?.cart} />}
+    </div>
+  );
 };
 export default Cart;

@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 import { Path } from "./gnb";
@@ -14,10 +14,10 @@ const Mgnb = ({ paths, closeMenu }: MgnbProps) => {
   const [isClose, setIsClose] = useState(false);
   const closeModal = () => setIsClose(true);
 
-  const linkTo = (path: string) => {
+  const linkTo = useCallback((path: string) => {
     closeModal();
     navigate(path);
-  };
+  }, []);
 
   const onAnimationEnd = () => {
     if (isClose) closeMenu(true);
@@ -26,6 +26,7 @@ const Mgnb = ({ paths, closeMenu }: MgnbProps) => {
   return (
     <Modal togleModal={closeModal}>
       <Wrap isClose={isClose} onAnimationEnd={onAnimationEnd}>
+        <CloseBtn onClick={closeModal}>x</CloseBtn>
         <MenuUl>
           {paths.map(({ to, pathName }) => (
             <PathItem key={to}>
@@ -52,11 +53,11 @@ const close = keyframes`
 
 const Wrap = styled.div<{ isClose: boolean }>`
   animation: ${show} 0.2s ease-in forwards;
-  position: fixed;
-  top: 7.5vh;
+  position: relative;
   width: 100%;
-  height: 92.5vh;
-  overflow: auto;
+  margin-top: 7vh;
+  height: 93vh;
+  /* overflow: auto; */
   border: 1px solid;
   border-radius: 12px;
   z-index: 15;
@@ -75,20 +76,25 @@ const MenuUl = styled.ul`
   flex-direction: column;
   /* justify-content: center; */
   gap: 1rem;
-
   z-index: 15;
 `;
 
 const PathItem = styled.li<{ isActive?: boolean }>`
-  a {
-    color: rgb(156 163 175);
-    font-size: 1.2rem;
-    font-weight: 300;
-    color: rgba(28, 39, 51, 255);
-    display: flex;
-    align-items: center;
+  button {
+    font-size: 1.1rem;
+    font-weight: 400;
+    cursor: pointer;
   }
-  a:hover {
-    font-size: 1.5rem;
-  }
+`;
+
+const CloseBtn = styled.button`
+  position: fixed;
+  top: -4.5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 32px;
+  width: 32px;
+  background-color: #fff;
+  border-radius: 50%;
+  z-index: 20;
 `;

@@ -141,10 +141,12 @@ export const singUpMutation = () => {
       email,
       passWord,
       nickName,
+      userTy
     }: {
       email: string;
       passWord: string;
       nickName: string;
+      userTy:number;
     }) => graphqlFetcher(ADD_USER, { email, nickName, passWord }),
     {
       onMutate: () => {},
