@@ -60,12 +60,6 @@ export const auth = axios.create({
   withCredentials: true,
 });
 
-// auth.interceptors.request.use((config: AxiosRequestConfig) => {
-//   // const { token, pushNotificationToken } = store.getState().user;
-//   // config.headers.Authorization = `Bearer ${token}`;
-//   return config;
-// });
-
 export const authFetcher = async (query: string, variables: {} = {}) => {
   try {
     const res = await auth.request({

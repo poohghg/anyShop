@@ -1,12 +1,12 @@
 import { memo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Product } from "../graphql/gqlProduct";
-import LazyImg from "./lazyImg";
+import { Product } from "../../graphql/gqlProduct";
+import LazyImg from "../lazyImg";
+import AddCart from "./addCart";
+import AddLike from "./addLike";
 
-interface ProductItemProps extends Product {
-  addCartListener: (e: React.MouseEvent<HTMLButtonElement>, id: string) => void;
-}
+interface ProductItemProps extends Product {}
 
 const ProductItem = ({
   id,
@@ -18,7 +18,6 @@ const ProductItem = ({
   category = "category",
   rate = 1,
   hit = 1,
-  addCartListener,
 }: ProductItemProps) => {
   return (
     <Item>
@@ -32,7 +31,9 @@ const ProductItem = ({
         <span>별점: {rate}</span>
         <span>조회수: {hit}</span>
         <div>
-          <button onClick={(e) => addCartListener(e, id)}>장바구니</button>
+          <AddCart productId={id} />
+          <AddLike productId={id} />
+          {/* <button onClick={(e) => addCartListener(e, id)}>장바구니</button> */}
         </div>
       </Link>
     </Item>

@@ -9,7 +9,7 @@ const PageTitle = ({ label }: PageTitleProps) => <Title>{label}</Title>;
 export default PageTitle;
 
 const Title = styled.h2`
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
   padding-bottom: 0.5rem;
   font-size: 1.6rem;
   font-weight: 600;

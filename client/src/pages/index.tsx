@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import PageTitle from "../components/pageTitle";
 import { RootState } from "../redux";
 
 const MainPage: FC = () => {
@@ -8,7 +9,7 @@ const MainPage: FC = () => {
 
   return (
     <>
-      <div> 메인페이지입니다. </div>
+      <PageTitle label="메인" />
       {user.nickName && <div>{user.nickName}</div>}
     </>
   );

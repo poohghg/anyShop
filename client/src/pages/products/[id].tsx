@@ -5,10 +5,15 @@ import { QueryKeys, graphqlFetcher } from "../../queryClient";
 
 const ProductsDetail = () => {
   const { id } = useParams();
-  const { data } = useQuery<Product>([QueryKeys.PRODUCTS, id], () =>
-    graphqlFetcher(GET_PRODUCT, { id }),
+  const { data } = useQuery<Product>(
+    [QueryKeys.PRODUCTS, id],
+    () => graphqlFetcher(GET_PRODUCT, { id }),
+    {
+      refetchOnMount: true,
+      staleTime: 0,
+    },
   );
-  // console.log(data);
+  console.log("ProductsDetail", data);
   return <div>상세 {id} 페이지입니다.</div>;
 };
 

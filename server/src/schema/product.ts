@@ -11,6 +11,7 @@ const productSchema = gql`
     category: String!
     rate: Int
     hit: Int
+    like: Int
   }
   extend type Query {
     products(cursor: ID, showDeleted: Boolean): [Product!]
@@ -32,6 +33,7 @@ const productSchema = gql`
       description: String
     ): Product!
     deleteProduct(id: ID!): ID!
+    likeProduct(productId: ID!): Boolean!
   }
 `;
 

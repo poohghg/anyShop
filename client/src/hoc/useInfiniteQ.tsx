@@ -31,6 +31,8 @@ const useInfiniteQ = <T extends { [K: string]: any[] }>({
     ({ pageParam = "" }) =>
       authFetcher(query, { cursor: pageParam, ...variables }),
     {
+      refetchOnMount: true,
+      staleTime: 0,
       getNextPageParam: (lastPage, allPages) => {
         const d = Object.values(lastPage)[0];
         if (d.length < PAGE_SIZE || !d.at(-1)?.id) return undefined;

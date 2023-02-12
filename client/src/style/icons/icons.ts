@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 interface CssProps {
   width?: number;
   height?: number;
-  withStyle?: { [key: string]: string };
+  withStyle?: { [key: string]: string | number };
 }
 
 type CssStyleProps = Omit<CssProps, "withStyle">;
@@ -14,6 +14,7 @@ const BaseIcon = styled.i`
   background-position: center center;
   vertical-align: middle;
   opacity: 1;
+  background-size: contain;
 `;
 
 export const PlusIcon = styled(BaseIcon)<CssStyleProps>`
@@ -37,5 +38,29 @@ export const CloseIcon = styled(BaseIcon)<CssStyleProps>`
   ${(props) => css`
     width: ${props.width ?? "12px"};
     height: ${props.height ?? "12px"};
+  `}
+`;
+
+export const CartIcon = styled(BaseIcon)<CssStyleProps>`
+  background-image: url(/images/cart.png);
+  ${(props) => css`
+    width: ${props.width ?? "24px"};
+    height: ${props.height ?? "24px"};
+  `}
+`;
+
+export const HeartIcon = styled(BaseIcon)<CssStyleProps>`
+  background-image: url(/images/active_heart.png);
+  ${(props) => css`
+    width: ${props.width ?? "24px"};
+    height: ${props.height ?? "24px"};
+  `}
+`;
+
+export const NotHeartIcon = styled(BaseIcon)<CssStyleProps>`
+  background-image: url(/images/unactive_heart.png);
+  ${(props) => css`
+    width: ${props.width ?? "24px"};
+    height: ${props.height ?? "24px"};
   `}
 `;

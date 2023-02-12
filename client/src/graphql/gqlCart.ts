@@ -52,6 +52,12 @@ export const ADD_CART = `
   }
 `;
 
+export const LIKE_PRODUCT = `
+  mutation LIKE_PRODUCT($productId: ID!) {
+    likeProduct(productId: $productId) 
+  }
+`;
+
 export const UPDATE_CART = `
   mutation UPDATE_CART($id: ID!, $amount: Int!) {
     updateCart(cartId: $id, amount: $amount) {
@@ -77,22 +83,6 @@ export const DELETE_CART = `
 
 // API
 const client = getClient();
-
-export const useAddCart = () => {
-  const isToLoginPage = useToLogin();
-
-  return useMutation((id: string) => authFetcher(ADD_CART, { id }), {
-    onSuccess: (data, variables, context) => {
-      client.invalidateQueries(QueryKeys.CART);
-      toast("새로운 상품이 추가되었습니다!", {
-        type: "info",
-      });
-    },
-    onError: (error, variables, context) => {
-      isToLoginPage();
-    },
-  });
-};
 
 export const useUpdateMutation = () =>
   useMutation(
@@ -141,3 +131,36 @@ export const useDeleteMutation = () =>
       if (error) console.log(error);
     },
   });
+
+export const useAddCart = () => {
+  const isToLoginPage = useToLogin();
+  return useMutation((id: string) => authFetcher(ADD_CART, { id }), {
+    onSuccess: (data, variables, context) => {
+      client.invalidateQueries(QueryKeys.CART);
+      toast("새로운 상품이 추가되었습니다!", {
+        type: "info",
+      });
+    },
+    onError: (error, variables, context) => {
+      isToLoginPage();
+    },
+  });
+};
+
+export const useLikeProduct = () => {
+  const isToLoginPage = useToLogin();
+  return useMutation(
+    (productId: string) => authFetcher(LIKE_PRODUCT, { productId }),
+    {
+      onSuccess: (data, variables, context) => {
+        client.invalidateQueries(QueryKeys.CART);
+        toast("관심상품에 추가되었습니다.", {
+          type: "info",
+        });
+      },
+      onError: (error, variables, context) => {
+        isToLoginPage();
+      },
+    },
+  );
+};

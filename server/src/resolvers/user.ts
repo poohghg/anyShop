@@ -84,28 +84,21 @@ const userResolver: Resolver = {
     logout: (parent, args, ctx) => {
       ctx.res.clearCookie("refreshToken");
       return true;
-      // ctx.req.headers.set
     },
 
-    addUser: async (parent, { email, passWord, nickName }, ctx) => {
-      try {
-        const newUser = {
-          email,
-          passWord: await hash(passWord, 5),
-          nickName,
-          userTy: 1,
-          createdAt: serverTimestamp(),
-        };
-        const result = await addDoc(collection(db, "user"), newUser);
-
-        // make token
-        const token = generateAccessToken(result.id);
-        setRefreshTokenInCookie(ctx.res, result.id);
-        return { userId: result.id, token, nickName, email, userTy: 9 };
-      } catch (error) {
-        console.log(error);
-        throw new Error("error");
-      }
+    addUser: async (parent, { email, passWord, nickName, userTy }, ctx) => {
+      const newUser = {
+        email,
+        passWord: await hash(passWord, 5),
+        nickName,
+        userTy,
+        createdAt: serverTimestamp(),
+      };
+      const result = await addDoc(collection(db, "user"), newUser);
+      // make token
+      const token = generateAccessToken(result.id);
+      setRefreshTokenInCookie(ctx.res, result.id);
+      return { userId: result.id, token, nickName, email, userTy };
     },
   },
 };

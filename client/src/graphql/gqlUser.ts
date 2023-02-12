@@ -27,7 +27,7 @@ export interface User {
 export type Users = User[];
 
 export const CHECK_EMAIL = gql`
-  query GET_PRODUCTS($email: String!) {
+  query CHECK_EMAIL($email: String!) {
     checkEmail(email: $email)
   }
 `;
@@ -72,44 +72,13 @@ export const LOGOUT = `
   }
 `;
 
-export const ADD_USER = gql`
-  mutation ADD_USER($email: String!, $passWord: String!, $nickName: String!) {
-    addUser(email: $email, passWord: $passWord, nickName: $nickName) {
+export const ADD_USER = `
+  mutation ADD_USER($email: String!, $passWord: String!, $nickName: String!, $userTy:Int!) {
+    addUser(email: $email, passWord: $passWord, nickName: $nickName, userTy: $userTy) {
       email
       nickName
       token
     }
-  }
-`;
-
-export const UPDATE_PRODUCT = gql`
-  mutation UPDATE_PRODUCT(
-    $id: ID!
-    $imageUrl: String
-    $price: Int
-    $title: String
-    $description: String
-  ) {
-    updateProduct(
-      id: $id
-      imageUrl: $imageUrl
-      price: $price
-      title: $title
-      description: $description
-    ) {
-      id
-      imageUrl
-      price
-      title
-      description
-      createdAt
-    }
-  }
-`;
-
-export const DELETE_PRODUCT = gql`
-  mutation DELETE_PRODUCT($id: ID!) {
-    deleteProduct(id: $id)
   }
 `;
 
@@ -147,16 +116,10 @@ export const singUpMutation = () => {
       passWord: string;
       nickName: string;
       userTy:number;
-    }) => graphqlFetcher(ADD_USER, { email, nickName, passWord }),
+    }) => authFetcher(ADD_USER, { email, nickName, passWord, userTy }),
     {
       onMutate: () => {},
-      onSuccess: ({ addUser }: { addUser: User }) => {
-        // dispatch(loginUser({ ...addUser }));
-      },
-      onError: (error) => {
-        if (error) console.log(error);
-      },
-      onSettled: () => navigate("/"),
+      onSettled: () => location.replace("/") 
     },
   );
 };
