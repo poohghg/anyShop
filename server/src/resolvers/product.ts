@@ -2,6 +2,7 @@ import { Resolver } from "./types";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   DocumentData,
   getDoc,
@@ -17,12 +18,17 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { getIsLike, getLikeCnt } from "../util/service";
 
 const PAGE_SIZE = 15;
 
 const productResolver: Resolver = {
   Query: {
-    products: async (parent, { cursor = "", showDeleted = false }) => {
+    products: async (
+      parent,
+      { cursor = "", showDeleted = false },
+      { userId },
+    ) => {
       const products = collection(db, "products");
       const queryOptions = [orderBy("createdAt", "desc")];
       if (cursor) {
@@ -34,16 +40,25 @@ const productResolver: Resolver = {
 
       // 기본 쿼리
       const q = query(products, ...queryOptions, limit(PAGE_SIZE));
-      // 서버에서 최시정보를 가져온다
+      // 서버에서 최신정보를 가져온다
       const snapshot = await getDocs(q);
-      const data: DocumentData[] = [];
-      snapshot.forEach((doc) =>
-        data.push({
-          id: doc.id,
-          ...doc.data(),
-        }),
-      );
-      return data;
+      const items: DocumentData[] = [];
+
+      for (let i = 0; i < snapshot.docs.length; i++) {
+        const currDoc = snapshot.docs[i];
+        const output = await Promise.all([
+          getLikeCnt(currDoc.id),
+          getIsLike(userId || "", currDoc.id),
+        ]);
+        const [likes, isLike] = output;
+        items.push({
+          id: currDoc.id,
+          likes,
+          isLike: !!isLike,
+          ...currDoc.data(),
+        });
+      }
+      return items;
     },
 
     product: async (parent, { id }) => {
@@ -105,23 +120,19 @@ const productResolver: Resolver = {
 
     likeProduct: async (parent, { productId }, { userId }) => {
       if (!userId) throw Error("userId not exist");
-      // const likeCollection = doc(db, "likeProduct", userId);
-      // // const stateQuery = query(likeCollection, where("state", "==", "CA"));
-      // console.log("likeCollection", likeCollection.);
-      // const exist = (
-      //   await getDocs(
-      //     query(likeCollection, where("productId", "==", productId)),
-      //   )
-      // ).docs[0];
-      // if (exist) {
-      // } else {
-      //   console.log("???");
-      //   await setDoc(doc(likeCollection), {
-      //     productId,
-      //     createdAt: serverTimestamp(),
-      //   });
-      // }
-      return true;
+      const likeCollection = collection(db, "likeProduct");
+      const existId = await getIsLike(userId, productId);
+      if (existId) {
+        await deleteDoc(doc(db, "likeProduct", existId));
+      } else {
+        const productRef = doc(db, "products", productId);
+        await addDoc(likeCollection, {
+          userId,
+          product: productRef,
+          createdAt: serverTimestamp(),
+        });
+      }
+      return !!existId;
     },
   },
 };

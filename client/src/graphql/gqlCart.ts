@@ -52,12 +52,6 @@ export const ADD_CART = `
   }
 `;
 
-export const LIKE_PRODUCT = `
-  mutation LIKE_PRODUCT($productId: ID!) {
-    likeProduct(productId: $productId) 
-  }
-`;
-
 export const UPDATE_CART = `
   mutation UPDATE_CART($id: ID!, $amount: Int!) {
     updateCart(cartId: $id, amount: $amount) {
@@ -145,22 +139,4 @@ export const useAddCart = () => {
       isToLoginPage();
     },
   });
-};
-
-export const useLikeProduct = () => {
-  const isToLoginPage = useToLogin();
-  return useMutation(
-    (productId: string) => authFetcher(LIKE_PRODUCT, { productId }),
-    {
-      onSuccess: (data, variables, context) => {
-        client.invalidateQueries(QueryKeys.CART);
-        toast("관심상품에 추가되었습니다.", {
-          type: "info",
-        });
-      },
-      onError: (error, variables, context) => {
-        isToLoginPage();
-      },
-    },
-  );
 };

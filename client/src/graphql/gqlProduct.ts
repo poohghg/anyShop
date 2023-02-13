@@ -1,4 +1,8 @@
 import { gql } from "graphql-tag";
+import { useMutation } from "react-query";
+import { toast } from "react-toastify";
+import { useToLogin } from "../hoc";
+import { authFetcher, getClient, QueryKeys } from "../queryClient";
 
 export interface Product {
   id: string;
@@ -10,7 +14,8 @@ export interface Product {
   category?: string;
   rate?: number;
   hit?: number;
-  like?: number;
+  likes?: number;
+  isLike?: boolean;
 }
 
 export type MutableProduct = Omit<Product, "id" | "createdAt">; // 지정한 타입을 뺀 나머지 타입.
@@ -31,7 +36,8 @@ const GET_PRODUCTS = `
       category
       rate
       hit
-      like
+      likes
+      isLike
     }
   }
 `;
@@ -112,4 +118,38 @@ export const DELETE_PRODUCT = gql`
   }
 `;
 
+export const LIKE_PRODUCT = `
+  mutation LIKE_PRODUCT($productId: ID!) {
+    likeProduct(productId: $productId) 
+  }
+`;
+
 export default GET_PRODUCTS;
+
+// API
+const client = getClient();
+
+export const useLikeProduct = () => {
+  const isToLoginPage = useToLogin();
+  return useMutation(
+    (productId: string) => authFetcher(LIKE_PRODUCT, { productId }),
+    {
+      onSuccess: (
+        { likeProduct }: { likeProduct: boolean },
+        variables,
+        context,
+      ) => {
+        client.invalidateQueries(QueryKeys.PRODUCTS);
+        const msg = likeProduct
+          ? "관심상품에 삭제되었습니다."
+          : "관심상품에 추가되었습니다.";
+        toast(msg, {
+          type: "info",
+        });
+      },
+      onError: (error, variables, context) => {
+        isToLoginPage();
+      },
+    },
+  );
+};

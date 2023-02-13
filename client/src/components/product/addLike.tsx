@@ -1,7 +1,6 @@
-import { log } from "console";
 import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
-import { useLikeProduct } from "../../graphql/gqlCart";
+import { useLikeProduct } from "../../graphql/gqlProduct";
 import { useToLogin } from "../../hoc";
 import { RootState } from "../../redux";
 import { HeartIcon } from "../../style/icons/icons";
