@@ -86,6 +86,7 @@ export default memo(Gnb);
 
 const Navbar = styled.nav`
   position: fixed;
+  height: 8vh;
   top: 0;
   left: 0;
   right: 0;

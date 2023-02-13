@@ -75,9 +75,9 @@ const LazyImg = React.memo(
 export default LazyImg;
 
 const InviewImage = styled.img<{ isLoad: boolean }>`
-  ${({ isLoad }) =>
+  /* ${({ isLoad }) =>
     isLoad &&
     css`
       animation: ${FadeIn} 0.2s ease-out 0s;
-    `}
+    `} */
 `;

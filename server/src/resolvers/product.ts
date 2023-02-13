@@ -33,7 +33,7 @@ const productResolver: Resolver = {
       const queryOptions = [orderBy("createdAt", "desc")];
       if (cursor) {
         const snapshot = await getDoc(doc(db, "products", cursor));
-        // 특정 아이디 이후에 데이터를 가졍옴
+        // 특정 아이디 이후에 데이터를 가져옴
         queryOptions.push(startAfter(snapshot));
       }
       // if (!showDeleted) queryOptions.unshift(where("createdAt", "!=", null));
@@ -61,15 +61,22 @@ const productResolver: Resolver = {
       return items;
     },
 
-    product: async (parent, { id }) => {
+    product: async (parent, { id }, { userId }) => {
       const productRef = doc(db, "products", id);
       await updateDoc(productRef, {
         hit: increment(1),
       });
       const snapshot = await getDoc(doc(db, "products", id));
+      const output = await Promise.all([
+        getLikeCnt(id),
+        getIsLike(userId || "", id),
+      ]);
+      const [likes, isLike] = output;
       return {
         ...snapshot.data(),
         id: snapshot.id,
+        likes,
+        isLike: !!isLike,
       };
     },
   },

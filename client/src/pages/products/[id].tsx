@@ -1,20 +1,27 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import PageTitle from "../../components/pageTitle";
+import ProductDetail from "../../components/product/productDetail";
 import { GET_PRODUCT, Product } from "../../graphql/gqlProduct";
-import { QueryKeys, graphqlFetcher } from "../../queryClient";
+import { QueryKeys, authFetcher } from "../../queryClient";
 
-const ProductsDetail = () => {
+const ProductsDetailPage = () => {
   const { id } = useParams();
-  const { data } = useQuery<Product>(
+  const { data, status } = useQuery<{ product: Product }>(
     [QueryKeys.PRODUCTS, id],
-    () => graphqlFetcher(GET_PRODUCT, { id }),
+    () => authFetcher(GET_PRODUCT, { id }),
     {
       refetchOnMount: true,
       staleTime: 0,
     },
   );
   console.log("ProductsDetail", data);
-  return <div>상세 {id} 페이지입니다.</div>;
+  if (status !== "success") return null;
+  return (
+    <>
+      <ProductDetail product={data.product} />
+    </>
+  );
 };
 
-export default ProductsDetail;
+export default ProductsDetailPage;

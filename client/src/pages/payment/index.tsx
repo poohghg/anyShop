@@ -1,8 +1,16 @@
-import { SyntheticEvent, useCallback, useEffect, useState } from "react";
+import {
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import ShippingInfo from "../../components/pay/shippingInfo";
 import WillPay from "../../components/pay/willPay";
+import { CartType } from "../../graphql/gqlCart";
 import { useExecutePay } from "../../graphql/gqlPayMent";
 import { RootState } from "../../redux";
 
@@ -21,12 +29,20 @@ const initPayUserInfo = {
 };
 
 const PaymentPage = () => {
-  const payItems = useSelector(
+  const location = useLocation();
+  const itemFromRedux = useSelector(
     (state: RootState) => state.stateReducer.payItems,
   );
+
+  const payItems: CartType[] = useMemo(() => {
+    if (location.state?.payItem) return location.state?.payItem;
+    return itemFromRedux;
+  }, [location.state, itemFromRedux]);
+
   const { email, nickName, userId, addresses } = useSelector(
     (state: RootState) => state.userReducer,
   );
+
   const [payUserInfo, setPayUserInfo] =
     useState<payUserInfoType>(initPayUserInfo);
   const [deliveryInfo, setDeliveryInfo] = useState<"ori" | "new">("ori");

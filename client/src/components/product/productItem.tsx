@@ -18,6 +18,7 @@ const ProductItem = ({
   category = "category",
   rate = 1,
   hit = 1,
+  isLike,
 }: ProductItemProps) => {
   return (
     <Item>
@@ -28,13 +29,12 @@ const ProductItem = ({
         </ImgWrap>
         <Title>{title}</Title>
         <Price>${price}</Price>
-        <span>별점: {rate}</span>
+        {/* <span>별점: {rate}</span> */}
         <span>조회수: {hit}</span>
-        <div>
+        <FlexBox>
           <AddCart productId={id} />
-          <AddLike productId={id} />
-          {/* <button onClick={(e) => addCartListener(e, id)}>장바구니</button> */}
-        </div>
+          <AddLike productId={id} isLike={isLike} />
+        </FlexBox>
       </Link>
     </Item>
   );
@@ -54,7 +54,9 @@ const Title = styled.p`
   color: ${({ theme }) => theme.colors.mainColor};
   font-weight: 300;
   min-height: 3rem;
+  min-height: 70px;
 `;
+
 const ImgWrap = styled.div`
   height: 20vh;
   border-radius: 16px;
@@ -62,7 +64,7 @@ const ImgWrap = styled.div`
   overflow: hidden;
   /* background-color: #fff; */
   && img {
-    padding: 1rem 0;
+    /* padding: 1rem 0; */
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -74,4 +76,19 @@ const Price = styled.h4`
   font-size: 1.1rem;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.mainColor};
+`;
+
+const FlexBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #bcbcbc;
+  > button {
+    width: 50%;
+    padding: 0.5rem 0;
+    cursor: pointer;
+  }
+  button:nth-child(1) {
+    border-right: 1px solid #bcbcbc;
+  }
 `;

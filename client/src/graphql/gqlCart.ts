@@ -131,7 +131,7 @@ export const useAddCart = () => {
   return useMutation((id: string) => authFetcher(ADD_CART, { id }), {
     onSuccess: (data, variables, context) => {
       client.invalidateQueries(QueryKeys.CART);
-      toast("새로운 상품이 추가되었습니다!", {
+      toast("장바구니에 추가되었습니다!", {
         type: "info",
       });
     },

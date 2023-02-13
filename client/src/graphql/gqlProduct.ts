@@ -11,11 +11,11 @@ export interface Product {
   title: string;
   description: string;
   createdAt: number;
+  isLike: boolean;
   category?: string;
   rate?: number;
   hit?: number;
   likes?: number;
-  isLike?: boolean;
 }
 
 export type MutableProduct = Omit<Product, "id" | "createdAt">; // 지정한 타입을 뺀 나머지 타입.
@@ -42,7 +42,7 @@ const GET_PRODUCTS = `
   }
 `;
 
-export const GET_PRODUCT = gql`
+export const GET_PRODUCT = `
   query GET_PRODUCT($id: ID!) {
     product(id: $id) {
       id
@@ -54,7 +54,8 @@ export const GET_PRODUCT = gql`
       category
       rate
       hit
-      like
+      likes
+      isLike
     }
   }
 `;

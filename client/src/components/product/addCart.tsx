@@ -21,10 +21,24 @@ const AddCart = ({ productId }: { productId: string }) => {
   );
 
   return (
-    <button onClick={addCartListener}>
+    <Button onClick={addCartListener}>
       <CartIcon />
-    </button>
+      <Label>장바구니</Label>
+    </Button>
   );
 };
 
 export default memo(AddCart);
+
+const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Label = styled.span`
+  margin-left: 4px;
+  font-weight: 350;
+  font-size: 0.8rem;
+  transform: translateY(10%);
+`;

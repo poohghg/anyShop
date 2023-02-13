@@ -6,7 +6,7 @@ interface CssProps {
   withStyle?: { [key: string]: string | number };
 }
 
-type CssStyleProps = Omit<CssProps, "withStyle">;
+// type CssStyleProps = Omit<CssProps, "withStyle">;
 
 const BaseIcon = styled.i`
   display: inline-block;
@@ -17,7 +17,7 @@ const BaseIcon = styled.i`
   background-size: contain;
 `;
 
-export const PlusIcon = styled(BaseIcon)<CssStyleProps>`
+export const PlusIcon = styled(BaseIcon)<CssProps>`
   background-image: url(/images/plus.svg);
   ${(props) => css`
     width: ${props.width ?? 12}px;
@@ -25,7 +25,7 @@ export const PlusIcon = styled(BaseIcon)<CssStyleProps>`
   `}
 `;
 
-export const MinusIcon = styled(BaseIcon)<CssStyleProps>`
+export const MinusIcon = styled(BaseIcon)<CssProps>`
   background-image: url(/images/minus.svg);
   ${(props) => css`
     width: ${props.width ?? "12px"};
@@ -33,7 +33,7 @@ export const MinusIcon = styled(BaseIcon)<CssStyleProps>`
   `}
 `;
 
-export const CloseIcon = styled(BaseIcon)<CssStyleProps>`
+export const CloseIcon = styled(BaseIcon)<CssProps>`
   background-image: url(/images/close.svg);
   ${(props) => css`
     width: ${props.width ?? "12px"};
@@ -41,7 +41,7 @@ export const CloseIcon = styled(BaseIcon)<CssStyleProps>`
   `}
 `;
 
-export const CartIcon = styled(BaseIcon)<CssStyleProps>`
+export const CartIcon = styled(BaseIcon)<CssProps>`
   background-image: url(/images/cart.png);
   ${(props) => css`
     width: ${props.width ?? "24px"};
@@ -49,15 +49,16 @@ export const CartIcon = styled(BaseIcon)<CssStyleProps>`
   `}
 `;
 
-export const HeartIcon = styled(BaseIcon)<CssStyleProps>`
+export const HeartIcon = styled(BaseIcon)<CssProps>`
   background-image: url(/images/active_heart.png);
   ${(props) => css`
     width: ${props.width ?? "24px"};
     height: ${props.height ?? "24px"};
+    ${props.withStyle};
   `}
 `;
 
-export const NotHeartIcon = styled(BaseIcon)<CssStyleProps>`
+export const NotHeartIcon = styled(BaseIcon)<CssProps>`
   background-image: url(/images/unactive_heart.png);
   ${(props) => css`
     width: ${props.width ?? "24px"};

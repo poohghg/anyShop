@@ -37,7 +37,7 @@ const ShippingInfo = ({
           onClick={() => setDeliveryInfo("new")}
           isSelected={deliveryInfo === "new"}
         >
-          신규 베송지
+          신규 배송지
         </DeliveryBtn>
       </DeliveryInfo>
       {deliveryInfo === "ori" ? (
