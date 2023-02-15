@@ -47,16 +47,16 @@ const productResolver: Resolver = {
 
       for (let i = 0; i < snapshot.docs.length; i++) {
         const currDoc = snapshot.docs[i];
-        const output = await Promise.all([
-          getLikeCnt(currDoc.id),
-          getIsLike(userId || "", currDoc.id),
-        ]);
-        const [likes, isLike] = output;
+        const d = currDoc.data();
+        const isLike =
+          userId && d?.likes?.some((uId: string) => uId === userId);
+        const likes = d?.likeCnt || 0;
+        delete d.likes;
         items.push({
           id: currDoc.id,
           likes,
-          isLike: !!isLike,
-          ...currDoc.data(),
+          isLike,
+          ...d,
         });
       }
       return items;
@@ -69,22 +69,20 @@ const productResolver: Resolver = {
           hit: increment(1),
         });
       }
-
       const snapshot = await getDoc(doc(db, "products", id));
-      const output = await Promise.all([
-        getLikeCnt(id),
-        getIsLike(userId || "", id),
-      ]);
-      const [likes, isLike] = output;
+      const d = snapshot.data();
+      const isLike = userId && d?.likes?.some((uId: string) => uId === userId);
+      const likes = d?.likes?.length || 0;
+      delete d?.likes;
       return {
         ...snapshot.data(),
         id: snapshot.id,
         likes,
-        isLike: !!isLike,
+        isLike,
       };
     },
 
-    orderLikes: async () => {
+    orderPayItems: async () => {
       const payment = collection(db, "payment");
       const snapshot = await getDocs(payment);
       const rankObj: { [key: string]: number } = {};
@@ -106,12 +104,34 @@ const productResolver: Resolver = {
         items.push({
           id: productId,
           cnt,
-          product: { id: productId, ...pData.data() },
+          ...pData.data(),
         });
       }
       return items;
     },
+
+    orderLikes: async () => {
+      const products = collection(db, "products");
+      const queryOptions = [orderBy("likeCnt", "desc")];
+      // 기본 쿼리
+      const q = query(products, ...queryOptions, limit(5));
+      // 서버에서 최신정보를 가져온다
+      const snapshot = await getDocs(q);
+      const items: DocumentData[] = [];
+      snapshot.forEach((doc) => {
+        const d = doc.data();
+        const cnt = d?.likeCnt;
+        delete d?.likes;
+        items.push({
+          id: doc.id,
+          ...d,
+          cnt,
+        });
+      });
+      return items;
+    },
   },
+
   Mutation: {
     addProduct: async (
       parent,
@@ -159,19 +179,32 @@ const productResolver: Resolver = {
 
     likeProduct: async (parent, { productId }, { userId }) => {
       if (!userId) throw Error("userId not exist");
-      const likeCollection = collection(db, "likeProduct");
-      const existId = await getIsLike(userId, productId);
-      if (existId) {
+      const productRef = doc(db, "products", productId);
+      const snapShot = await getDoc(productRef);
+      let likes = snapShot.data()?.likes ?? [];
+      let flag = true;
+
+      if (likes && likes.some((uId: string) => uId === userId)) {
+        likes = likes.filter((uId: string) => uId !== userId);
+        flag = false;
+        const existId = await getIsLike(userId, productId);
         await deleteDoc(doc(db, "likeProduct", existId));
       } else {
+        likes.push(userId);
         const productRef = doc(db, "products", productId);
-        await addDoc(likeCollection, {
+        await addDoc(collection(db, "likeProduct"), {
           userId,
           product: productRef,
           createdAt: serverTimestamp(),
         });
       }
-      return !!existId;
+
+      await updateDoc(productRef, {
+        ...snapShot.data(),
+        likes,
+        likeCnt: likes.length,
+      });
+      return flag;
     },
   },
 };

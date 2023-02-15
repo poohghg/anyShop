@@ -127,17 +127,23 @@ export const LIKE_PRODUCT = `
 
 export const GET_PRODUCT_ORDER = `
   query GET_PRODUCT_ORDER {
-    orderLikes {
+    orderPayItems {
       id
+      imageUrl
+      price
+      title
+      description
+      createdAt
       cnt
-      product {
-        id
-        imageUrl
-        price
-        title
-        description
-        createdAt
-      }
+    }
+    orderLikes{
+      id
+      imageUrl
+      price
+      title
+      description
+      createdAt
+      cnt
     }
   }
 `;

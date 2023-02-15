@@ -3,11 +3,11 @@ import { gql } from "apollo-server-express";
 const productSchema = gql`
   type Product {
     id: ID!
-    imageUrl: String
-    price: Int
-    title: String
-    description: String
-    createdAt: Float
+    imageUrl: String!
+    price: Int!
+    title: String!
+    description: String!
+    createdAt: Float!
     category: String
     rate: Int
     hit: Int
@@ -15,15 +15,12 @@ const productSchema = gql`
     isLike: Boolean
     cnt: Int
   }
-  type OrderItem {
-    id: ID!
-    cnt: Int!
-    product: Product
-  }
+
   extend type Query {
     products(cursor: ID, showDeleted: Boolean): [Product!]
     product(id: ID!, isHitUpdate: Boolean!): Product!
-    orderLikes: [OrderItem]
+    orderPayItems: [Product!]
+    orderLikes: [Product!]
   }
   extend type Mutation {
     addProduct(
