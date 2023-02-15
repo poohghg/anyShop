@@ -131,7 +131,7 @@ const cartResolver: Resolver = {
         const cartRef = doc(db, "cart", id);
         const cartSnapshot = await getDoc(cartRef);
         const cartData = cartSnapshot.data();
-        const productRef = cartData?.product;
+        const productRef = doc(db, "products", cartData?.product.id);
         await deleteDoc(cartRef);
         await addDoc(payCollection, {
           address,

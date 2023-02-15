@@ -118,7 +118,7 @@ export const useUpdateMutation = () =>
 export const useDeleteMutation = () =>
   useMutation(({ id }: { id: string }) => authFetcher(DELETE_CART, { id }), {
     onMutate: () => {},
-    onSuccess: (data) => {
+    onSuccess: (data, variables, context) => {
       client.invalidateQueries(QueryKeys.CART);
     },
     onError: (error) => {

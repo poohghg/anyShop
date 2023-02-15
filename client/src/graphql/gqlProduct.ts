@@ -43,8 +43,8 @@ const GET_PRODUCTS = `
 `;
 
 export const GET_PRODUCT = `
-  query GET_PRODUCT($id: ID!) {
-    product(id: $id) {
+  query GET_PRODUCT($id: ID!, $isHitUpdate: Boolean!) {
+    product(id: $id, isHitUpdate :$isHitUpdate) {
       id
       imageUrl
       price
@@ -125,6 +125,23 @@ export const LIKE_PRODUCT = `
   }
 `;
 
+export const GET_PRODUCT_ORDER = `
+  query GET_PRODUCT_ORDER {
+    orderLikes {
+      id
+      cnt
+      product {
+        id
+        imageUrl
+        price
+        title
+        description
+        createdAt
+      }
+    }
+  }
+`;
+
 export default GET_PRODUCTS;
 
 // API
@@ -142,7 +159,7 @@ export const useLikeProduct = () => {
       ) => {
         client.invalidateQueries(QueryKeys.PRODUCTS);
         const msg = likeProduct
-          ? "관심상품에 삭제되었습니다."
+          ? "관심상품에서 삭제되었습니다."
           : "관심상품에 추가되었습니다.";
         toast(msg, {
           type: "info",

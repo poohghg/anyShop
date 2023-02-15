@@ -2,6 +2,7 @@ import { Resolver } from "./types";
 import {
   addDoc,
   collection,
+  collectionGroup,
   deleteDoc,
   doc,
   DocumentData,
@@ -61,11 +62,14 @@ const productResolver: Resolver = {
       return items;
     },
 
-    product: async (parent, { id }, { userId }) => {
-      const productRef = doc(db, "products", id);
-      await updateDoc(productRef, {
-        hit: increment(1),
-      });
+    product: async (parent, { id, isHitUpdate }, { userId }) => {
+      if (isHitUpdate) {
+        const productRef = doc(db, "products", id);
+        await updateDoc(productRef, {
+          hit: increment(1),
+        });
+      }
+
       const snapshot = await getDoc(doc(db, "products", id));
       const output = await Promise.all([
         getLikeCnt(id),
@@ -78,6 +82,34 @@ const productResolver: Resolver = {
         likes,
         isLike: !!isLike,
       };
+    },
+
+    orderLikes: async () => {
+      const payment = collection(db, "payment");
+      const snapshot = await getDocs(payment);
+      const rankObj: { [key: string]: number } = {};
+
+      snapshot.forEach((doc) => {
+        const d = doc.data();
+        const { product } = d;
+        rankObj[product.id] ? rankObj[product.id]++ : (rankObj[product.id] = 1);
+      });
+
+      const items = [];
+      const rankedArr = Object.entries(rankObj)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
+
+      for (let i = 0; i < rankedArr.length; i++) {
+        const [productId, cnt] = rankedArr[i];
+        const pData = await getDoc(doc(db, "products", productId));
+        items.push({
+          id: productId,
+          cnt,
+          product: { id: productId, ...pData.data() },
+        });
+      }
+      return items;
     },
   },
   Mutation: {

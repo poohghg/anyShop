@@ -8,6 +8,7 @@ const OriAddress = ({
   payUserInfo: { address, recipient, detailedAddress },
 }: OriAddressProps) => {
   const [mainAddress, noAddress] = address.split("/");
+  if (!address) return <div>현재 저장된 주소가 없습니다.</div>;
   return (
     <Main>
       <FlexBox>

@@ -1,12 +1,23 @@
 import { FC } from "react";
+import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import PageTitle from "../components/pageTitle";
+import { GET_PRODUCT_ORDER } from "../graphql/gqlProduct";
+import { authFetcher, QueryKeys } from "../queryClient";
 import { RootState } from "../redux";
 
 const MainPage: FC = () => {
   const user = useSelector((root: RootState) => root.userReducer);
-
+  // useQueries(())
+  useQuery(
+    [QueryKeys.PRODUCTS, { likes: true }],
+    () => authFetcher(GET_PRODUCT_ORDER, {}),
+    {
+      refetchOnMount: true,
+      staleTime: 1000 * 60 * 10,
+    },
+  );
   return (
     <>
       <PageTitle label="메인" />

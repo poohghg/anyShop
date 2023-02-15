@@ -9,19 +9,8 @@ interface ProductDetailProps {
 }
 
 const ProductDetail = ({ product }: ProductDetailProps) => {
-  const {
-    id,
-    description,
-    imageUrl,
-    isLike,
-    price,
-    title,
-    hit,
-    likes,
-    createdAt,
-    category,
-    rate,
-  } = product;
+  const { id, description, imageUrl, isLike, price, title, hit, likes } =
+    product;
 
   const navigate = useNavigate();
 
@@ -55,7 +44,6 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
           <ViewContent>좋아요 {likes}</ViewContent>
         </ViewBox>
       </InfoBox>
-
       <BuyNow onClick={toWillPay}>바로구매하기</BuyNow>
     </Main>
   );
