@@ -19,9 +19,10 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
       state: {
         payItem: [
           {
-            id: "instant",
+            id: id,
             amount: 1,
             product,
+            isInstant: true,
           },
         ],
       },

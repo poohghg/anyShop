@@ -10,13 +10,6 @@ interface WillPayProps {
 }
 
 const WillPay = ({ payItems, handlePay }: WillPayProps) => {
-  const navigate = useNavigate();
-
-  // const handlePay = () => {
-  //   if (payItems.length) navigate("/payment");
-  //   else alert("선택된 상품이 없습니다.");
-  // };
-
   return (
     <Main>
       <Label>주문상품 정보 / 총{payItems.length}개</Label>

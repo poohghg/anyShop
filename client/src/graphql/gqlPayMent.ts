@@ -9,6 +9,7 @@ export const EXECUTE_PAY = `
     $address: String!
     $recipient: String!
     $detailedAddress: String!
+    $isInstant: Boolean!
   ){
     executePay(
       ids: $ids,    
@@ -16,6 +17,7 @@ export const EXECUTE_PAY = `
       address: $address
       recipient: $recipient
       detailedAddress: $detailedAddress
+      isInstant: $isInstant
     )
   }
 `;
@@ -26,6 +28,7 @@ interface payInfo {
   address: string;
   recipient: string;
   detailedAddress: string;
+  isInstant?: boolean;
 }
 
 const client = getClient();
@@ -33,17 +36,26 @@ const client = getClient();
 export const useExecutePay = () => {
   const navigate = useNavigate();
   return useMutation(
-    ({ ids, checkAddress, address, recipient, detailedAddress }: payInfo) =>
+    ({
+      ids,
+      checkAddress,
+      address,
+      recipient,
+      detailedAddress,
+      isInstant = false,
+    }: payInfo) =>
       authFetcher(EXECUTE_PAY, {
         ids,
         checkAddress,
         address,
         recipient,
         detailedAddress,
+        isInstant,
       }),
     {
       onSuccess: () => {
         client.invalidateQueries(QueryKeys.CART);
+        client.invalidateQueries(QueryKeys.PRODUCTS);
         navigate("/");
       },
       onError: (error, variables, context) => {},

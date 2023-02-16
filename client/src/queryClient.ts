@@ -14,6 +14,7 @@ const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 export const QueryKeys = {
   PRODUCTS: "PRODUCTS",
+  PRODUCTS_MAINDATA: ["PRODUCTS", "MAIN"],
   CART: "CART",
   USER: "USER",
   USER_AUTH: "USER_AUTH",

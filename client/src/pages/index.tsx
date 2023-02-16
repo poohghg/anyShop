@@ -1,3 +1,4 @@
+import { log } from "console";
 import { FC } from "react";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
@@ -9,15 +10,15 @@ import { RootState } from "../redux";
 
 const MainPage: FC = () => {
   const user = useSelector((root: RootState) => root.userReducer);
-  // useQueries(())
-  useQuery(
-    [QueryKeys.PRODUCTS, { likes: true }],
+  const { data } = useQuery(
+    QueryKeys.PRODUCTS_MAINDATA,
     () => authFetcher(GET_PRODUCT_ORDER, {}),
     {
       refetchOnMount: true,
       staleTime: 1000 * 60 * 10,
     },
   );
+  console.log("data", data);
   return (
     <>
       <PageTitle label="메인" />

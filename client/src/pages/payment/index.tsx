@@ -21,6 +21,10 @@ export interface payUserInfoType {
   checkAddress: boolean;
 }
 
+interface PayItemType extends CartType {
+  isInstant: boolean;
+}
+
 const initPayUserInfo = {
   address: "",
   detailedAddress: "",
@@ -34,30 +38,26 @@ const PaymentPage = () => {
     (state: RootState) => state.stateReducer.payItems,
   );
 
-  const payItems: CartType[] = useMemo(() => {
-    if (location.state?.payItem) return location.state?.payItem;
-    return itemFromRedux;
-  }, [location.state, itemFromRedux]);
-
-  const { email, nickName, userId, addresses } = useSelector(
+  const { nickName, addresses } = useSelector(
     (state: RootState) => state.userReducer,
   );
-
   const [payUserInfo, setPayUserInfo] =
     useState<payUserInfoType>(initPayUserInfo);
   const [deliveryInfo, setDeliveryInfo] = useState<"ori" | "new">("ori");
 
-  const { mutate: executePay } = useExecutePay();
+  const payItems: PayItemType[] = useMemo(() => {
+    if (location.state?.payItem) return location.state?.payItem;
+    return itemFromRedux;
+  }, [location.state, itemFromRedux]);
 
+  const { mutate: executePay } = useExecutePay();
   const handlePay = () => {
     if (!payUserInfo.address) return alert("주소를 입력해주세요!");
     if (!payUserInfo.recipient) return alert("수령인을 입력해주세요!");
     if (!payUserInfo.detailedAddress) return alert("상세주소를 입력해주세요!");
-
     const ids = payItems.map(({ id }) => id);
-    executePay({ ids, ...payUserInfo });
+    executePay({ ids, ...payUserInfo, isInstant: payItems[0]?.isInstant });
   };
-
   useEffect(() => {
     if (deliveryInfo === "ori" && addresses?.length) {
       const recentAds = addresses[0];

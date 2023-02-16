@@ -165,8 +165,8 @@ export const useLikeProduct = () => {
       ) => {
         client.invalidateQueries(QueryKeys.PRODUCTS);
         const msg = likeProduct
-          ? "관심상품에서 삭제되었습니다."
-          : "관심상품에 추가되었습니다.";
+          ? "관심상품에 추가되었습니다."
+          : "관심상품에서 삭제되었습니다.";
         toast(msg, {
           type: "info",
         });

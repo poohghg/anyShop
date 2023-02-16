@@ -19,6 +19,7 @@ const cartSchema = gql`
       address: String!
       recipient: String!
       detailedAddress: String!
+      isInstant: Boolean
     ): Boolean!
   }
 `;

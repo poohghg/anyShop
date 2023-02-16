@@ -101,7 +101,7 @@ const cartResolver: Resolver = {
 
     executePay: async (
       parent,
-      { ids, checkAddress, address, recipient, detailedAddress },
+      { ids, checkAddress, address, recipient, detailedAddress, isInstant },
       { userId },
     ) => {
       // const dd =
@@ -125,14 +125,13 @@ const cartResolver: Resolver = {
           addresses,
         });
       }
+
       const payId = new Date().getTime().toString() + randomUUID();
       const payCollection = collection(db, "payment");
-      for await (const id of ids) {
-        const cartRef = doc(db, "cart", id);
-        const cartSnapshot = await getDoc(cartRef);
-        const cartData = cartSnapshot.data();
-        const productRef = doc(db, "products", cartData?.product.id);
-        await deleteDoc(cartRef);
+
+      // 즉시결제 처리
+      if (isInstant) {
+        const productRef = doc(db, "products", ids[0]);
         await addDoc(payCollection, {
           address,
           recipient,
@@ -142,7 +141,23 @@ const cartResolver: Resolver = {
           executeAt: serverTimestamp(),
           product: productRef,
         });
-      }
+      } else
+        for await (const id of ids) {
+          const cartRef = doc(db, "cart", id);
+          const cartSnapshot = await getDoc(cartRef);
+          const cartData = cartSnapshot.data();
+          const productRef = doc(db, "products", cartData?.product?.id);
+          await deleteDoc(cartRef);
+          await addDoc(payCollection, {
+            address,
+            recipient,
+            detailedAddress,
+            userId,
+            payId,
+            executeAt: serverTimestamp(),
+            product: productRef,
+          });
+        }
       return true;
       // return deleted;
     },
