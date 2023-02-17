@@ -52,6 +52,12 @@ const GlobalStyle = createGlobalStyle`
       flex: none ;
     }
   }
+  .mainSwiper{
+    padding:0rem 1.5rem !important ;
+  }
+
+  
+
 
  /* 반응형 */
    /* @media only screen and (max-width: 844px) {

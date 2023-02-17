@@ -16,6 +16,7 @@ export interface Product {
   rate?: number;
   hit?: number;
   likes?: number;
+  cnt?: number;
 }
 
 export type MutableProduct = Omit<Product, "id" | "createdAt">; // 지정한 타입을 뺀 나머지 타입.
