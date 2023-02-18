@@ -65,3 +65,45 @@ export const NotHeartIcon = styled(BaseIcon)<CssProps>`
     height: ${props.height ?? "24px"};
   `}
 `;
+
+export const RightMark = styled.div`
+  position: relative;
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+  border: 2px solid rgba(28, 39, 51, 255);
+  border-radius: 50%;
+  padding: 0.3rem;
+  ::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 11px;
+    height: 11px;
+    border-top: 1.5px solid rgba(28, 39, 51, 255);
+    border-right: 1.5px solid rgba(28, 39, 51, 255);
+    transform: translate(-65%, -50%) rotate(45deg);
+  }
+`;
+
+export const LeftMark = styled.div`
+  position: relative;
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+  border: 2px solid rgba(28, 39, 51, 255);
+  border-radius: 50%;
+  padding: 0.3rem;
+  ::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 11px;
+    height: 11px;
+    border-top: 1.5px solid rgba(28, 39, 51, 255);
+    border-left: 1.5px solid rgba(28, 39, 51, 255);
+    transform: translate(-35%, -50%) rotate(315deg);
+  }
+`;

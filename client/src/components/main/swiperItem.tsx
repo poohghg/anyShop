@@ -1,20 +1,35 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Product } from "../../graphql/gqlProduct";
+import LazyImg from "../lazyImg";
 
-interface SwiperItemPorps extends Product {}
+interface SwiperItemPorps extends Product {
+  cntLabel?: string;
+}
 
-const SwiperItem = ({ id, imageUrl, price, title, cnt }: SwiperItemPorps) => {
+const SwiperItem = ({
+  id,
+  imageUrl,
+  price,
+  title,
+  cnt,
+  cntLabel,
+}: SwiperItemPorps) => {
   return (
     <Card>
-      <CardImg>
-        <img src={imageUrl} alt="img" />
-        <Blur />
-      </CardImg>
+      <Link to={`products/${id}`}>
+        <CardImg>
+          <LazyImg src={imageUrl} />
+          <Blur />
+        </CardImg>
+      </Link>
       <ProductTitie>{title}</ProductTitie>
-      <Price>${price}</Price>
       <ViewBox>
-        <span>좋아요</span>
-        <span>{cnt}</span>
+        <Price>${price}</Price>
+        <div>
+          <span>{cntLabel}</span>
+          <span>{cnt}</span>
+        </div>
       </ViewBox>
     </Card>
   );
@@ -26,7 +41,6 @@ const Card = styled.div`
   width: 100%;
   overflow: hidden;
   border-radius: 12px;
-  cursor: pointer;
   /* box-shadow: 8px 16px 16px hsl(0deg 0% 0% / 0.25); */
   padding: 0.5rem 0;
 `;
@@ -35,11 +49,12 @@ const CardImg = styled.div`
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.03);
+  border: 2px solid rgb(248, 249, 250);
   display: flex;
   justify-content: center;
-  padding: 1rem 0;
-  background-color: #fff;
+  padding: 5px;
+  /* background: radial-gradient(#fff 1px, rgb(248, 249, 250) 50%); */
+  cursor: pointer;
   > img {
     height: 20vw;
     max-height: 180px;
@@ -61,6 +76,7 @@ const Blur = styled.div`
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1;
 `;
 
 const ProductTitie = styled.h3`
@@ -82,11 +98,11 @@ const Price = styled.p`
 // const Cnt = styled.span``;
 const ViewBox = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  font-size: 0.9rem;
-  font-weight: 400;
-  > span {
-    margin-left: 0.5rem;
+  span {
+    margin-left: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: 400;
   }
 `;

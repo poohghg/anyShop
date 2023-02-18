@@ -25,7 +25,7 @@ const LazyImg = React.memo(
 
     const getObserver = useCallback(() => {
       const options = {
-        threshold: 0.5,
+        threshold: 0.01,
         ...pOtion,
       };
 

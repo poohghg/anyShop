@@ -27,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
     border-style: none;
     border: none;
     background: none;
-    cursor:auto;
+    cursor:pointer;
   }
 
   h1{}

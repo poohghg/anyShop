@@ -19,14 +19,22 @@ const MainPage: FC = () => {
       staleTime: 1000 * 60 * 10,
     },
   );
-  console.log("data", data);
   if (status !== "success") return null;
   return (
     <>
       <PageTitle label="메인" />
       <Wrap>
         {/* {user.nickName && <div>{user.nickName}</div>} */}
-        <MainSwiper label="좋아요를 많이 받은 상품" data={data?.orderLikes} />
+        <MainSwiper
+          label="좋아요를 많이 받은 상품"
+          data={data?.orderLikes}
+          cntLabel="좋아요"
+        />
+        <MainSwiper
+          label="많이 판매된 상품"
+          data={data?.orderPayItems}
+          cntLabel="판매수"
+        />
       </Wrap>
     </>
   );
