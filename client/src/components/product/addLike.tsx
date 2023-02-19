@@ -11,7 +11,7 @@ const AddLike = ({
   isLike,
 }: {
   productId: string;
-  isLike: boolean;
+  isLike?: boolean;
 }) => {
   const isToLoginPage = useToLogin();
   const { mutate: likeProduct } = useLikeProduct();
@@ -41,7 +41,7 @@ const Button = styled.button`
   align-items: center;
 `;
 
-const Label = styled.span<{ isLike: boolean }>`
+const Label = styled.span<{ isLike?: boolean }>`
   margin-left: 4px;
   font-weight: 350;
   font-size: 0.8rem;

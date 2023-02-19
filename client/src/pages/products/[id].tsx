@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
 import ProductDetail from "../../components/product/productDetail";
 import { GET_PRODUCT, Product } from "../../graphql/gqlProduct";
 import { QueryKeys, authFetcher } from "../../queryClient";

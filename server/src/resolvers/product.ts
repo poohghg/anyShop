@@ -55,7 +55,7 @@ const productResolver: Resolver = {
         items.push({
           id: currDoc.id,
           likes,
-          isLike,
+          isLike: !!isLike,
           ...d,
         });
       }
@@ -145,6 +145,7 @@ const productResolver: Resolver = {
         category,
         rate: 0,
         hit: 0,
+        likeCnt: 0,
         createdAt: serverTimestamp(),
       };
       const result = await addDoc(collection(db, "products"), newProduct);

@@ -29,12 +29,10 @@ const ProductList = ({ data }: ProductListProps) => {
 export default ProductList;
 
 export const List = styled.ul`
-  padding: 1rem 2rem;
   list-style: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 5vh 1vw;
-
+  gap: 7vh 2.5vw;
   @media ${(props) => props.theme.media.mobile} {
     grid-template-columns: repeat(2, 1fr);
   }

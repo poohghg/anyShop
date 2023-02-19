@@ -59,7 +59,7 @@ export default ProductDetail;
 const Main = styled.div`
   position: relative;
   max-width: 720px;
-  min-height: calc(92vh - 3rem);
+  /* min-height: calc(92vh - 3rem); */
   margin: 0 auto;
   padding-top: 2rem;
 `;

@@ -9,6 +9,7 @@ const DynamicProductsId = React.lazy(() => import("./pages/products/[id]"));
 const DynamicPayment = React.lazy(() => import("./pages/payment/index"));
 const DynamicLogin = React.lazy(() => import("./pages/login/index"));
 const DynamicSingUp = React.lazy(() => import("./pages/singUp/index"));
+const DynamicAdmin = React.lazy(() => import("./pages/admin/index"));
 
 export const routes = [
   {
@@ -22,6 +23,7 @@ export const routes = [
       { path: "/payment", element: <DynamicPayment /> },
       { path: "/login", element: <DynamicLogin /> },
       { path: "/singUp", element: <DynamicSingUp /> },
+      { path: "/admin", element: <DynamicAdmin /> },
     ],
   },
 ];

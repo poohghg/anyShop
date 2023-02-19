@@ -23,14 +23,14 @@ const ProductItem = ({
   return (
     <Item>
       <Link to={`/products/${id}`}>
-        <Category>{category}</Category>
+        {/* <Category>{category}</Category> */}
         <ImgWrap>
           <LazyImg src={imageUrl} />
+          <Blur />
         </ImgWrap>
         <Title>{title}</Title>
         <Price>${price}</Price>
-        {/* <span>별점: {rate}</span> */}
-        <span>조회수: {hit}</span>
+        <span>조회수 {hit}</span>
         <FlexBox>
           <AddCart productId={id} />
           <AddLike productId={id} isLike={isLike} />
@@ -53,23 +53,45 @@ const Title = styled.p`
   padding-top: 0.3rem;
   color: ${({ theme }) => theme.colors.mainColor};
   font-weight: 300;
-  min-height: 3rem;
-  min-height: 70px;
+  /* min-height: 3rem; */
+  min-height: 91px;
+  display: -webkit-inline-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
 `;
 
 const ImgWrap = styled.div`
+  position: relative;
   height: 20vh;
-  border-radius: 16px;
-  border: 2.5px solid rgba(0, 0, 0, 0.03);
+  border-radius: 12px;
+  border: 2px solid rgb(248, 249, 250);
   overflow: hidden;
-  /* background-color: #fff; */
+  padding: 0.3rem;
   && img {
     /* padding: 1rem 0; */
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
+  :hover {
+    > div {
+      display: block;
+    }
+  }
 `;
+
+const Blur = styled.div`
+  position: absolute;
+  display: none;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+`;
+
 const Price = styled.h4`
   padding-top: 0.2rem;
   padding-bottom: 0.15rem;
@@ -79,6 +101,7 @@ const Price = styled.h4`
 `;
 
 const FlexBox = styled.div`
+  margin-top: 0.3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -11,7 +11,7 @@ export interface Product {
   title: string;
   description: string;
   createdAt: number;
-  isLike: boolean;
+  isLike?: boolean;
   category?: string;
   rate?: number;
   hit?: number;
@@ -61,7 +61,7 @@ export const GET_PRODUCT = `
   }
 `;
 
-export const ADD_PRODUCT = gql`
+export const ADD_PRODUCT = `
   mutation ADD_PRODUCT(
     $imageUrl: String!
     $price: Int!
@@ -74,7 +74,7 @@ export const ADD_PRODUCT = gql`
       price: $price
       title: $title
       description: $description
-      category: $category
+      category:$category
     ) {
       id
       imageUrl
@@ -174,6 +174,24 @@ export const useLikeProduct = () => {
       },
       onError: (error, variables, context) => {
         isToLoginPage();
+      },
+    },
+  );
+};
+
+export const useAddProduct = () => {
+  return useMutation(
+    ({ category, title, imageUrl, price, description }: MutableProduct) =>
+      authFetcher(ADD_PRODUCT, {
+        category,
+        title,
+        imageUrl,
+        price,
+        description,
+      }),
+    {
+      onSuccess: () => {
+        client.invalidateQueries(QueryKeys.PRODUCTS);
       },
     },
   );
