@@ -6,8 +6,7 @@ import styled from "styled-components";
 
 // Import Swiper styles
 import "swiper/css";
-import { useCallback, useState } from "react";
-import { log } from "console";
+import { useCallback, useEffect, useState } from "react";
 import { LeftMark, RightMark } from "../../style/icons/icons";
 
 interface MainSwiperProps {
@@ -18,6 +17,10 @@ interface MainSwiperProps {
 
 const MainSwiper = ({ data, label, cntLabel }: MainSwiperProps) => {
   const [swiper, setSwiper] = useState<Swiper>();
+  const [swiperLoc, setSwiperLoc] = useState({
+    isBeginning: true,
+    isEnd: false,
+  });
 
   const handelNextSlide = useCallback(
     (to: string) => {
@@ -29,24 +32,43 @@ const MainSwiper = ({ data, label, cntLabel }: MainSwiperProps) => {
     [swiper],
   );
 
+  const onSlideChange = useCallback(
+    (swiper: Swiper) => {
+      if (
+        swiperLoc.isBeginning !== swiper.isBeginning ||
+        swiperLoc.isEnd !== swiper.isEnd
+      ) {
+        const { isBeginning, isEnd } = swiper;
+        setSwiperLoc({ isBeginning, isEnd });
+      }
+    },
+    [swiperLoc],
+  );
+  if (!data.length) return null;
   return (
     <Wrap>
       <FlexBox>
         <Label>{label}</Label>
         <ButtonBox>
-          <Button onClick={() => handelNextSlide("prev")}>
-            <LeftMark />
+          <Button
+            disabled={swiperLoc.isBeginning}
+            onClick={() => handelNextSlide("prev")}
+          >
+            <LeftMark unActive={swiperLoc.isBeginning} />
           </Button>
-          <Button onClick={() => handelNextSlide("next")}>
-            <RightMark />
+          <Button
+            disabled={swiperLoc.isEnd}
+            onClick={() => handelNextSlide("next")}
+          >
+            <RightMark unActive={swiperLoc.isEnd} />
           </Button>
         </ButtonBox>
       </FlexBox>
       <SwiperR
         className="mainSwiper"
-        spaceBetween={30}
-        slidesPerView={3.5}
-        onSlideChange={() => console.log("slide change")}
+        spaceBetween={15}
+        slidesPerView={3.3}
+        onSlideChange={onSlideChange}
         onSwiper={(s) => setSwiper(s)}
         centeredSlides={false}
       >
@@ -63,7 +85,7 @@ export default MainSwiper;
 
 const Wrap = styled.div`
   & + & {
-    margin-top: 3rem;
+    margin-top: 5rem;
   }
 `;
 

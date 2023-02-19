@@ -6,12 +6,14 @@ interface StateType {
   num: number;
   text: String;
   payItems: CartType[];
+  // recnetPrduct: Product[];
 }
 
 const initialState: StateType = {
   num: 0,
   text: "",
   payItems: [],
+  // recnetPrduct: [],
 };
 
 const slice = createSlice({

@@ -1,11 +1,13 @@
 import { log } from "console";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import MainProfile from "../components/main/mainProfile";
 import MainSwiper from "../components/main/mainSwiprer";
 import PageTitle from "../components/pageTitle";
 import { GET_PRODUCT_ORDER } from "../graphql/gqlProduct";
+import useSetRecentProducts from "../hoc/useSetRecentProducts";
 import { authFetcher, QueryKeys } from "../queryClient";
 import { RootState } from "../redux";
 
@@ -19,12 +21,22 @@ const MainPage: FC = () => {
       staleTime: 1000 * 60 * 10,
     },
   );
+  const { recentProducts } = useSetRecentProducts();
+
+  const mainRecentProducts = useMemo(() => {
+    return recentProducts.slice(-10).reverse();
+  }, [recentProducts]);
   if (status !== "success") return null;
   return (
     <>
       <PageTitle label="메인" />
       <Wrap>
-        {/* {user.nickName && <div>{user.nickName}</div>} */}
+        <MainProfile />
+        <MainSwiper
+          label="최근본 상품"
+          data={mainRecentProducts}
+          // ㅊ="판매수"
+        />
         <MainSwiper
           label="좋아요를 많이 받은 상품"
           data={data?.orderLikes}

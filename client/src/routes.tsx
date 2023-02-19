@@ -1,7 +1,8 @@
 import React from "react";
 import GlobalLayout from "./pages/_layout";
 
-const DynamicIndex = React.lazy(() => import("./pages/index"));
+import DynamicIndex from "./pages/index";
+// const DynamicIndex = React.lazy(() => import("./pages/index"));
 const DynamicCartIndex = React.lazy(() => import("./pages/cart/index"));
 const DynamicProductsIndex = React.lazy(() => import("./pages/products/index"));
 const DynamicProductsId = React.lazy(() => import("./pages/products/[id]"));

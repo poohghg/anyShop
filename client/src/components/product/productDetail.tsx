@@ -1,7 +1,8 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Product } from "../../graphql/gqlProduct";
+import useSetRecentProducts from "../../hoc/useSetRecentProducts";
 import AddCart from "./addCart";
 import AddLike from "./addLike";
 interface ProductDetailProps {
@@ -12,6 +13,7 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
   const { id, description, imageUrl, isLike, price, title, hit, likes } =
     product;
 
+  const { setItems } = useSetRecentProducts();
   const navigate = useNavigate();
 
   const toWillPay = useCallback(() => {
@@ -28,6 +30,8 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
       },
     });
   }, []);
+
+  useEffect(() => setItems(product), []);
 
   return (
     <Main>

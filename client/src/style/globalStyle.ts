@@ -56,6 +56,18 @@ const GlobalStyle = createGlobalStyle`
     padding:0rem 1.5rem !important ;
   }
 
+  @media screen and (max-width:1023px) {
+    html{
+      font-size:85% ;
+    }
+  }
+
+  @media screen and (max-width:767px) {
+    html{
+      font-size:75% ;
+    }
+  /* 모바일 */
+  }
   
 
 

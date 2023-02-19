@@ -26,10 +26,12 @@ const SwiperItem = ({
       <ProductTitie>{title}</ProductTitie>
       <ViewBox>
         <Price>${price}</Price>
-        <div>
-          <span>{cntLabel}</span>
-          <span>{cnt}</span>
-        </div>
+        {cntLabel && (
+          <div>
+            <span>{cntLabel}</span>
+            <span>{cnt}</span>
+          </div>
+        )}
       </ViewBox>
     </Card>
   );
@@ -52,11 +54,11 @@ const CardImg = styled.div`
   border: 2px solid rgb(248, 249, 250);
   display: flex;
   justify-content: center;
-  padding: 5px;
+  padding: 0.3rem;
   /* background: radial-gradient(#fff 1px, rgb(248, 249, 250) 50%); */
   cursor: pointer;
   > img {
-    height: 20vw;
+    height: 15vh;
     max-height: 180px;
     max-width: 100%;
     object-fit: contain;
@@ -92,11 +94,11 @@ const ProductTitie = styled.h3`
 const Price = styled.p`
   font-size: 1rem;
   font-weight: 400;
-  margin-top: 0.5rem;
 `;
 
 // const Cnt = styled.span``;
 const ViewBox = styled.div`
+  margin-top: 0.3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

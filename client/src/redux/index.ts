@@ -6,18 +6,21 @@ import persistStore from "redux-persist/es/persistStore";
 import storage from "redux-persist/lib/storage";
 import stateReducer from "./stateReducer";
 import userReducer from "./userReducer";
+import localReducer from "./localReducer";
 
 // config 작성
 const persistConfig = {
   key: "root", // localStorage key
   storage, // localStorage
+  // whiteList:[]
   // 제외할 리듀서
-  blacklist: ["userReducer"],
+  blacklist: ["userReducer", "stateReducer"],
 };
 
 const rootReducer = combineReducers({
   stateReducer,
   userReducer,
+  localReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

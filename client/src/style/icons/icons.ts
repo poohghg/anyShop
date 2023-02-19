@@ -66,33 +66,12 @@ export const NotHeartIcon = styled(BaseIcon)<CssProps>`
   `}
 `;
 
-export const RightMark = styled.div`
+export const LeftMark = styled.div<{ unActive?: boolean }>`
   position: relative;
   width: 32px;
   height: 32px;
   background-color: #fff;
-  border: 2px solid rgba(28, 39, 51, 255);
-  border-radius: 50%;
-  padding: 0.3rem;
-  ::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 11px;
-    height: 11px;
-    border-top: 1.5px solid rgba(28, 39, 51, 255);
-    border-right: 1.5px solid rgba(28, 39, 51, 255);
-    transform: translate(-65%, -50%) rotate(45deg);
-  }
-`;
-
-export const LeftMark = styled.div`
-  position: relative;
-  width: 32px;
-  height: 32px;
-  background-color: #fff;
-  border: 2px solid rgba(28, 39, 51, 255);
+  border: 1px solid rgba(28, 39, 51, 255);
   border-radius: 50%;
   padding: 0.3rem;
   ::after {
@@ -106,4 +85,45 @@ export const LeftMark = styled.div`
     border-left: 1.5px solid rgba(28, 39, 51, 255);
     transform: translate(-35%, -50%) rotate(315deg);
   }
+
+  ${({ unActive }) =>
+    unActive &&
+    css`
+      border: 1px solid #bcbcbc;
+      ::after {
+        border-top: 1.5px solid #bcbcbc;
+        border-left: 1.5px solid #bcbcbc;
+      }
+    `}
+`;
+
+export const RightMark = styled.div<{ unActive?: boolean }>`
+  position: relative;
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+  border: 1px solid rgba(28, 39, 51, 255);
+  border-radius: 50%;
+  padding: 0.3rem;
+  ::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 11px;
+    height: 11px;
+    border-top: 1.5px solid rgba(28, 39, 51, 255);
+    border-right: 1.5px solid rgba(28, 39, 51, 255);
+    transform: translate(-65%, -50%) rotate(45deg);
+  }
+
+  ${({ unActive }) =>
+    unActive &&
+    css`
+      border: 1px solid #bcbcbc;
+      ::after {
+        border-top: 1.5px solid #bcbcbc;
+        border-right: 1.5px solid #bcbcbc;
+      }
+    `}
 `;

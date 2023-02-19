@@ -24,7 +24,7 @@ const Mgnb = ({ paths, closeMenu }: MgnbProps) => {
   };
 
   return (
-    <Modal togleModal={closeModal}>
+    <Modal toggleModal={closeModal}>
       <Wrap isClose={isClose} onAnimationEnd={onAnimationEnd}>
         <CloseBtn onClick={closeModal}>x</CloseBtn>
         <MenuUl>

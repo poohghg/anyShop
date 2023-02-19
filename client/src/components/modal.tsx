@@ -15,16 +15,16 @@ const Portal = ({
 
 const Modal = ({
   children,
-  togleModal,
+  toggleModal,
 }: {
   children: ReactNode;
-  togleModal: () => void;
+  toggleModal: () => void;
 }) => {
   return (
     <Portal>
       <Overlay>
         {children}
-        <Dim onClick={togleModal} />
+        <Dim onClick={toggleModal} />
       </Overlay>
     </Portal>
   );
