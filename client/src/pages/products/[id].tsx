@@ -1,7 +1,7 @@
+import { log } from "console";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import ProductDetail from "../../components/product/productDetail";
 import { GET_PRODUCT, Product } from "../../graphql/gqlProduct";
 import { QueryKeys, authFetcher } from "../../queryClient";
@@ -9,8 +9,9 @@ import { QueryKeys, authFetcher } from "../../queryClient";
 const ProductsDetailPage = () => {
   const { id } = useParams();
   const [isHitUpdate, setIsHitUpdate] = useState<boolean>(false);
+
   const { data, status } = useQuery<{ product: Product }>(
-    [QueryKeys.PRODUCTS, id],
+    [QueryKeys.PRODUCTS, id, { isHitUpdate }],
     () => authFetcher(GET_PRODUCT, { id, isHitUpdate }),
     {
       refetchOnMount: true,
@@ -23,11 +24,7 @@ const ProductsDetailPage = () => {
   }, [status]);
 
   if (status !== "success") return null;
-  return (
-    <>
-      <ProductDetail product={data.product} />
-    </>
-  );
+  return <ProductDetail product={data.product} />;
 };
 
 export default ProductsDetailPage;

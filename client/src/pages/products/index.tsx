@@ -24,13 +24,10 @@ const ProductPage = () => {
 };
 export default ProductPage;
 
-const Title = styled.h2`
-  padding: 0 2rem;
-`;
-
 const Wrap = styled.div`
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
   margin-top: 2rem;
+  padding: 0 1rem;
 `;

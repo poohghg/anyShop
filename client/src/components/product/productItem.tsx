@@ -23,7 +23,6 @@ const ProductItem = ({
   return (
     <Item>
       <Link to={`/products/${id}`}>
-        {/* <Category>{category}</Category> */}
         <ImgWrap>
           <LazyImg src={imageUrl} />
           <Blur />
@@ -53,12 +52,13 @@ const Title = styled.p`
   padding-top: 0.3rem;
   color: ${({ theme }) => theme.colors.mainColor};
   font-weight: 300;
-  /* min-height: 3rem; */
-  min-height: 91px;
+  min-height: 5.7rem;
+  /* max-height: 5rem; */
   display: -webkit-inline-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
   overflow: hidden;
+  white-space: normal;
 `;
 
 const ImgWrap = styled.div`

@@ -36,8 +36,8 @@ export const GET_CART = `
 `;
 
 export const ADD_CART = `
-  mutation ADD_CART($id: ID!) {
-    addCart(productId: $id) {
+  mutation ADD_CART($id: ID!,$amount:Int!) {
+    addCart(productId: $id, amount:$amount) {
       id
       amount
       product {
@@ -128,15 +128,19 @@ export const useDeleteMutation = () =>
 
 export const useAddCart = () => {
   const isToLoginPage = useToLogin();
-  return useMutation((id: string) => authFetcher(ADD_CART, { id }), {
-    onSuccess: (data, variables, context) => {
-      client.invalidateQueries(QueryKeys.CART);
-      toast("장바구니에 추가되었습니다!", {
-        type: "info",
-      });
+  return useMutation(
+    ({ id, amount }: { id: string; amount: number }) =>
+      authFetcher(ADD_CART, { id, amount }),
+    {
+      onSuccess: (data, variables, context) => {
+        client.invalidateQueries(QueryKeys.CART);
+        toast("장바구니에 추가되었습니다!", {
+          type: "info",
+        });
+      },
+      onError: (error, variables, context) => {
+        isToLoginPage();
+      },
     },
-    onError: (error, variables, context) => {
-      isToLoginPage();
-    },
-  });
+  );
 };

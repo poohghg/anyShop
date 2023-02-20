@@ -63,15 +63,12 @@ const CartList = ({ cart }: Carts) => {
     setFormData(new FormData(formRef.current));
   };
 
-  const handleUpdateAmount = useCallback(
-    (e: React.MouseEvent, amount: number, id: string) => {
-      if (amount) updateCart({ id, amount });
-    },
-    [],
-  );
+  const handleUpdateAmount = useCallback((amount: number, id?: string) => {
+    if (id) updateCart({ id, amount });
+  }, []);
 
   const handleDeleteCart = useCallback((e: React.MouseEvent, id: string) => {
-    const isDelete = confirm("해당 제품을 삭제하시겠습니끼?");
+    const isDelete = confirm("해당 상품을 삭제하시겠습니끼?");
     if (isDelete) deleteCart({ id });
   }, []);
 

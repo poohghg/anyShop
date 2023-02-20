@@ -1,5 +1,5 @@
-import { SyntheticEvent, useCallback, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 import { Path } from "./gnb";
 import Modal from "./modal";
@@ -7,9 +7,10 @@ import Modal from "./modal";
 interface MgnbProps {
   paths: Path[];
   closeMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  userId: string | undefined;
 }
 
-const Mgnb = ({ paths, closeMenu }: MgnbProps) => {
+const Mgnb = ({ paths, closeMenu, userId }: MgnbProps) => {
   const navigate = useNavigate();
   const [isClose, setIsClose] = useState(false);
   const closeModal = () => setIsClose(true);
@@ -28,11 +29,13 @@ const Mgnb = ({ paths, closeMenu }: MgnbProps) => {
       <Wrap isClose={isClose} onAnimationEnd={onAnimationEnd}>
         <CloseBtn onClick={closeModal}>x</CloseBtn>
         <MenuUl>
-          {paths.map(({ to, pathName }) => (
-            <PathItem key={to}>
-              <button onClick={() => linkTo(to)}>{pathName}</button>
-            </PathItem>
-          ))}
+          {paths.map(({ to, pathName }) =>
+            !!userId && to === "singUp" ? null : (
+              <PathItem key={to}>
+                <button onClick={() => linkTo(to)}>{pathName}</button>
+              </PathItem>
+            ),
+          )}
         </MenuUl>
       </Wrap>
     </Modal>
@@ -80,8 +83,9 @@ const MenuUl = styled.ul`
 `;
 
 const PathItem = styled.li<{ isActive?: boolean }>`
+  padding: 0.5rem 0;
   button {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     font-weight: 400;
     cursor: pointer;
   }

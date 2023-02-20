@@ -1,10 +1,11 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Product } from "../../graphql/gqlProduct";
 import useSetRecentProducts from "../../hoc/useSetRecentProducts";
 import AddCart from "./addCart";
 import AddLike from "./addLike";
+import ProductAmount from "./productAmount";
 interface ProductDetailProps {
   product: Product;
 }
@@ -13,24 +14,26 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
   const { id, description, imageUrl, isLike, price, title, hit, likes } =
     product;
 
+  const [amount, setAmount] = useState(1);
   const { setItems } = useSetRecentProducts();
   const navigate = useNavigate();
 
-  const toWillPay = useCallback(() => {
+  const toWillPay = () => {
     navigate("/payment", {
       state: {
         payItem: [
           {
             id: id,
-            amount: 1,
+            amount: amount,
             product,
             isInstant: true,
           },
         ],
       },
     });
-  }, []);
+  };
 
+  const handleAmount = useCallback((amount: number) => setAmount(amount), []);
   useEffect(() => setItems(product), []);
 
   return (
@@ -39,9 +42,13 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
       <InfoBox>
         <ProductTitle>{title}</ProductTitle>
         <ProductDesc>{description}</ProductDesc>
-        <Price>${price}</Price>
+        <FlexBox>
+          <Price>${price}</Price>
+          <ProductAmount amount={amount} handleAmount={handleAmount} />
+        </FlexBox>
+
         <BtnBox>
-          <AddCart productId={id} />
+          <AddCart productId={id} amount={amount} />
           <AddLike productId={id} isLike={isLike} />
         </BtnBox>
         <ViewBox>
@@ -88,8 +95,14 @@ const ProductDesc = styled.p`
   white-space: pre-line;
 `;
 
+const FlexBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const Price = styled.p`
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: 400;
   margin-top: 0.5rem;
 `;

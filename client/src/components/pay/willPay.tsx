@@ -26,9 +26,11 @@ const WillPay = ({ payItems, handlePay }: WillPayProps) => {
               </ImgWrap>
               <ItemDetail>
                 <p>{product.title}</p>
-                <p>수량 : {amount}개</p>
               </ItemDetail>
             </Item>
+            <PriceInfo>
+              ${product.price} / 수량 : {amount}개
+            </PriceInfo>
           </Link>
         ))}
       </List>
@@ -94,22 +96,17 @@ const ItemDetail = styled.div`
   }
 `;
 
-const PayInfos = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 10px;
-`;
-
-const PayButton = styled.button`
+const PriceInfo = styled.div`
+  height: 3vh;
   width: 100%;
-  border: 1px solid #fff;
-  background-color: black;
-  font-size: 1.5rem;
-  font-weight: 600;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
-  margin-top: 1.5rem;
-  padding: 1rem 0;
+  font-size: 1rem;
+  font-weight: 300;
+  background-color: #666;
+  border-radius: 4px;
+  margin-bottom: 1vh;
+  /* padding: 1rem; */
 `;

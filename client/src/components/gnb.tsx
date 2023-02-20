@@ -1,4 +1,4 @@
-import { Fragment, memo, useMemo, useState } from "react";
+import { memo, SyntheticEvent, useCallback, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -30,6 +30,17 @@ const Gnb = () => {
   const { userId, userTy } = useSelector(
     (state: RootState) => state.userReducer,
   );
+
+  const handleLink = useCallback(
+    (e: SyntheticEvent, to: string) => {
+      if (to === "cart" && !userId) {
+        e.preventDefault();
+        alert("접근권한이 없습니다.");
+      }
+    },
+    [userId],
+  );
+
   return (
     <Navbar>
       <MenuWrap openM={openMobileMenu}>
@@ -41,14 +52,16 @@ const Gnb = () => {
           ))}
         </MenuUl>
         <MenuUl>
-          {Icons.map(({ pathName, to }) => (
-            <PathItem key={to} isActive={`/${to}` === pathname}>
-              <Link to={to}>
-                <PathName>{pathName}</PathName>
-                <PathIcon src={`/images/${to}.png`} alt="" />
-              </Link>
-            </PathItem>
-          ))}
+          {Icons.map(({ pathName, to }) =>
+            !!userId && to === "singUp" ? null : (
+              <PathItem key={to} isActive={`/${to}` === pathname}>
+                <Link to={to} onClick={(e) => handleLink(e, to)}>
+                  <PathName>{pathName}</PathName>
+                  <PathIcon src={`/images/${to}.png`} alt="" />
+                </Link>
+              </PathItem>
+            ),
+          )}
           <PathItem>
             {!userId ? (
               <Link to={"/login"}>
@@ -68,10 +81,11 @@ const Gnb = () => {
             <Mgnb
               paths={[...paths, ...Icons]}
               closeMenu={() => setOpenMobileMenu(false)}
+              userId={userId}
             />
           ) : (
             <button onClick={() => setOpenMobileMenu(() => true)}>
-              <MenuIcon src={`/images/${"menu"}.svg`} alt="" />
+              <MenuIcon src={`/images/menu.svg`} alt="" />
             </button>
           )}
         </MobileMenu>

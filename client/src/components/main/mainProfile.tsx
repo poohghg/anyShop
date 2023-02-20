@@ -25,7 +25,7 @@ const MainProfile = () => {
       <Container ref={containerRef} id="container" />
       <User>
         <p>안녕하세요</p>
-        <p>{nickName}님</p>
+        <p>{nickName || "손"}님</p>
       </User>
     </Wrap>
   );

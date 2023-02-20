@@ -38,7 +38,7 @@ const cartResolver: Resolver = {
     },
   },
   Mutation: {
-    addCart: async (parent, { productId }, { userId }) => {
+    addCart: async (parent, { productId, amount }, { userId }) => {
       if (!userId) throw Error("userId not exist");
       if (!productId) throw Error("상품id가 없다!");
 
@@ -58,12 +58,12 @@ const cartResolver: Resolver = {
       if (exist) {
         cartRef = doc(db, "cart", exist.id);
         await updateDoc(cartRef, {
-          amount: increment(1),
+          amount: increment(amount),
         });
       } else {
         cartRef = await addDoc(cartCollection, {
           userId,
-          amount: 1,
+          amount: amount ?? 1,
           product: productRef,
         });
       }

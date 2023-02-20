@@ -165,6 +165,7 @@ export const useLikeProduct = () => {
         context,
       ) => {
         client.invalidateQueries(QueryKeys.PRODUCTS);
+        console.log("tiemig");
         const msg = likeProduct
           ? "관심상품에 추가되었습니다."
           : "관심상품에서 삭제되었습니다.";

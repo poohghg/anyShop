@@ -4,9 +4,10 @@ import { MinusIcon, PlusIcon } from "../../style/icons/icons";
 import { CartType } from "../../graphql/gqlCart";
 import CartProduct from "./cartProduct";
 import { CheckBoxInput, CheckBoxLabel } from "../../style/styledComponents";
+import ProductAmount from "../product/productAmount";
 
 interface CartProps extends CartType {
-  handleUpdateAmount: (e: React.MouseEvent, amount: number, id: string) => void;
+  handleUpdateAmount: (amount: number, id?: string) => void;
   handleDeleteCart: (e: React.MouseEvent, id: string) => void;
 }
 
@@ -35,22 +36,12 @@ const CartItem = (
       </ButtonWrap>
       <CartProduct {...product} />
       <PriceWrap>
-        <ControlAmount>
-          <button
-            type="button"
-            onClick={(e) => handleUpdateAmount(e, amount - 1, id)}
-          >
-            <MinusIcon />
-          </button>
-          <div>{amount}</div>
-          <button
-            type="button"
-            onClick={(e) => handleUpdateAmount(e, amount + 1, id)}
-          >
-            <PlusIcon />
-          </button>
-        </ControlAmount>
-        <Price>{product.price * amount}원</Price>
+        <ProductAmount
+          amount={amount}
+          id={id}
+          handleAmount={handleUpdateAmount}
+        />
+        <Price>${product.price * amount}</Price>
       </PriceWrap>
     </CartItemBox>
   );
@@ -92,14 +83,11 @@ const PriceWrap = styled.div`
 `;
 
 const ControlAmount = styled.div`
-  margin-top: 0.5rem;
   width: fit-content;
   display: flex;
   align-items: center;
   border: 1px solid #bcbcbc;
   border-radius: 8px;
-  /* width: ; */
-
   > div {
     text-align: center;
     height: 100%;
@@ -109,10 +97,6 @@ const ControlAmount = styled.div`
     font-size: 1.2rem;
   }
   > button {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 0 0.5rem;
   }
 `;

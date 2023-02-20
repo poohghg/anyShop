@@ -51,6 +51,7 @@ const PaymentPage = () => {
   }, [location.state, itemFromRedux]);
 
   const { mutate: executePay } = useExecutePay();
+
   const handlePay = () => {
     if (!payUserInfo.address) return alert("주소를 입력해주세요!");
     if (!payUserInfo.recipient) return alert("수령인을 입력해주세요!");
@@ -58,6 +59,7 @@ const PaymentPage = () => {
     const ids = payItems.map(({ id }) => id);
     executePay({ ids, ...payUserInfo, isInstant: payItems[0]?.isInstant });
   };
+
   useEffect(() => {
     if (deliveryInfo === "ori" && addresses?.length) {
       const recentAds = addresses[0];
@@ -66,7 +68,6 @@ const PaymentPage = () => {
       setPayUserInfo(() => initPayUserInfo);
     }
   }, [deliveryInfo, addresses]);
-
   return (
     <LayOut>
       <ShippingInfo

@@ -13,9 +13,11 @@ const AddLike = ({
   productId: string;
   isLike?: boolean;
 }) => {
+  const userId = useSelector((state: RootState) => state.userReducer.userId);
+
   const isToLoginPage = useToLogin();
   const { mutate: likeProduct } = useLikeProduct();
-  const userId = useSelector((state: RootState) => state.userReducer.userId);
+
   const likProductListener = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();

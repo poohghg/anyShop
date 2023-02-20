@@ -6,6 +6,7 @@ import ScrollTop from "../lotties/scrollTop.json";
 const ScrollToTopBtn = () => {
   const ref = useRef<HTMLButtonElement>(null);
   const [isShow, setIsShow] = useState(false);
+
   useEffect(() => {
     if (!ref.current) return;
     Lottie.loadAnimation({
@@ -15,15 +16,15 @@ const ScrollToTopBtn = () => {
       autoplay: true,
       animationData: ScrollTop,
     });
-
-    const root = document.querySelector("#main") as HTMLDivElement;
+    // const root = document.querySelector("#main") as HTMLDivElement;
+    let prevY = 0;
     window.addEventListener("scroll", () => {
-      if (window.scrollY > 5) setIsShow(true);
-      else setIsShow(false);
+      if (window.scrollY - prevY > 0 || window.scrollY === 0) setIsShow(false);
+      else setIsShow(true);
+      prevY = window.scrollY;
     });
   }, [ref.current]);
 
-  console.log(isShow);
   return (
     <Wrap isShow={isShow}>
       <Button

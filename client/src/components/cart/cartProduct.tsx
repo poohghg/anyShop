@@ -1,18 +1,19 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Product } from "../../graphql/gqlProduct";
 
 interface CartProductProps extends Product {}
 
-const CartProduct = ({ price, title, imageUrl }: CartProductProps) => {
+const CartProduct = ({ id, price, title, imageUrl }: CartProductProps) => {
   return (
     <Item>
       <div>
         <h4>{title}</h4>
         <p>가격: {price}</p>
       </div>
-      <div>
+      <Link to={`/product/${id}`}>
         <Image src={imageUrl} alt="image" />
-      </div>
+      </Link>
     </Item>
   );
 };
@@ -38,7 +39,7 @@ const Item = styled.div`
       font-weight: 500;
     }
   }
-  div:nth-child(2) {
+  a:nth-child(2) {
     width: 30%;
     display: flex;
   }

@@ -63,7 +63,7 @@ const productResolver: Resolver = {
     },
 
     product: async (parent, { id, isHitUpdate }, { userId }) => {
-      if (isHitUpdate) {
+      if (!isHitUpdate) {
         const productRef = doc(db, "products", id);
         await updateDoc(productRef, {
           hit: increment(1),

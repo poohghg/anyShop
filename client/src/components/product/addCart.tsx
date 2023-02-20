@@ -6,7 +6,13 @@ import { useToLogin } from "../../hoc";
 import { RootState } from "../../redux";
 import { CartIcon } from "../../style/icons/icons";
 
-const AddCart = ({ productId }: { productId: string }) => {
+const AddCart = ({
+  productId,
+  amount,
+}: {
+  productId: string;
+  amount?: number;
+}) => {
   const isToLoginPage = useToLogin();
   const { mutate: addCart } = useAddCart();
   const userId = useSelector((state: RootState) => state.userReducer.userId);
@@ -15,9 +21,10 @@ const AddCart = ({ productId }: { productId: string }) => {
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       if (!userId) return isToLoginPage();
-      addCart(productId);
+      console.log("amount", amount);
+      addCart({ id: productId, amount: amount ?? 1 });
     },
-    [userId, productId],
+    [amount],
   );
 
   return (

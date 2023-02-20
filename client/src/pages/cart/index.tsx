@@ -20,9 +20,6 @@ const Cart = () => {
     QueryKeys.CART,
     () => authFetcher(GET_CART),
     {
-      // staleTime: 1000 * 60 * 10,
-      // cacheTime: 1000 * 60 * 10,
-      // refetchOnMount 전역설정되어 있음.
       enabled: !!userId,
       refetchOnMount: true,
     },
@@ -33,7 +30,6 @@ const Cart = () => {
       return isToLoginPage(true);
   }, [userId, isAuthFetching, pathname]);
 
-  // if (!userId && !isAuthFetching) return isToLoginPage(true);
   return (
     <div>
       <PageTitle label="장바구니" />
