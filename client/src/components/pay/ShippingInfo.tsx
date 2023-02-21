@@ -1,15 +1,15 @@
 import { useState, SyntheticEvent, useRef } from "react";
 import styled, { css } from "styled-components";
 import { Addresses } from "../../graphql/gqlUser";
-import { payUserInfoType } from "../../pages/payment";
+import { PayUserInfoType } from "../../pages/payment";
 import NewAddress from "./newAddress";
 import OriAddress from "./oriAddress";
 
 export interface ShippingInfoProps {
   nickName: string;
-  payUserInfo: payUserInfoType;
+  payUserInfo: PayUserInfoType;
   deliveryInfo: "ori" | "new";
-  setPayUserInfo: React.Dispatch<React.SetStateAction<payUserInfoType>>;
+  setPayUserInfo: React.Dispatch<React.SetStateAction<PayUserInfoType>>;
   setDeliveryInfo: React.Dispatch<React.SetStateAction<"ori" | "new">>;
   addresses?: Addresses[];
 }

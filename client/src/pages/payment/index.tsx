@@ -14,7 +14,7 @@ import { CartType } from "../../graphql/gqlCart";
 import { useExecutePay } from "../../graphql/gqlPayMent";
 import { RootState } from "../../redux";
 
-export interface payUserInfoType {
+export interface PayUserInfoType {
   recipient: string;
   address: string;
   detailedAddress: string;
@@ -42,7 +42,7 @@ const PaymentPage = () => {
     (state: RootState) => state.userReducer,
   );
   const [payUserInfo, setPayUserInfo] =
-    useState<payUserInfoType>(initPayUserInfo);
+    useState<PayUserInfoType>(initPayUserInfo);
   const [deliveryInfo, setDeliveryInfo] = useState<"ori" | "new">("ori");
 
   const payItems: PayItemType[] = useMemo(() => {

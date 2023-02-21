@@ -16,35 +16,41 @@ const NewAddress = ({
 }: NewAddressProps) => {
   const [isShowDaumPost, setIsShowDaumPost] = useState(false);
 
-  const selectAddress = useCallback((data: any) => {
-    let fullAddress = data.address;
-    let extraAddress = "";
-    if (data.addressType === "R") {
-      if (data.bname) extraAddress += data.bname;
-      if (data.buildingName) {
-        extraAddress +=
-          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+  const selectAddress = useCallback(
+    (data: any) => {
+      let fullAddress = data.address;
+      let extraAddress = "";
+      if (data.addressType === "R") {
+        if (data.bname) extraAddress += data.bname;
+        if (data.buildingName) {
+          extraAddress +=
+            extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+        }
+        fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
       }
-      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
-    }
-    const address = `${fullAddress}/${data.zonecode}` as string;
-    setPayUserInfo((prev) => ({
-      ...prev,
-      address,
-    }));
-    setIsShowDaumPost(false);
-  }, []);
+      const address = `${fullAddress}/${data.zonecode}` as string;
+      setPayUserInfo((prev) => ({
+        ...prev,
+        address,
+      }));
+      setIsShowDaumPost(false);
+    },
+    [setPayUserInfo],
+  );
 
-  const handelPayUserInfo = useCallback((e: SyntheticEvent) => {
-    const target = e.target as HTMLInputElement;
-    const { name, value, checked } = target;
-    const newValue = name === "checkAddress" ? checked : value;
+  const handelPayUserInfo = useCallback(
+    (e: SyntheticEvent) => {
+      const target = e.target as HTMLInputElement;
+      const { name, value, checked } = target;
+      const newValue = name === "checkAddress" ? checked : value;
 
-    setPayUserInfo((prev) => ({
-      ...prev,
-      [name]: newValue,
-    }));
-  }, []);
+      setPayUserInfo((prev) => ({
+        ...prev,
+        [name]: newValue,
+      }));
+    },
+    [setPayUserInfo],
+  );
 
   return (
     <div>
