@@ -1,6 +1,7 @@
 import { SyntheticEvent, useCallback, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import styled from "styled-components";
+import { PayUserInfoType } from "../../pages/payment";
 import { CloseIcon } from "../../style/icons/icons";
 import CheckBox from "../checkBox";
 import { ShippingInfoProps } from "./shippingInfo";
@@ -29,7 +30,7 @@ const NewAddress = ({
         fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
       }
       const address = `${fullAddress}/${data.zonecode}` as string;
-      setPayUserInfo((prev) => ({
+      setPayUserInfo((prev: PayUserInfoType) => ({
         ...prev,
         address,
       }));
@@ -44,7 +45,7 @@ const NewAddress = ({
       const { name, value, checked } = target;
       const newValue = name === "checkAddress" ? checked : value;
 
-      setPayUserInfo((prev) => ({
+      setPayUserInfo((prev: PayUserInfoType) => ({
         ...prev,
         [name]: newValue,
       }));
