@@ -45,7 +45,7 @@ export const graphqlFetcher = async (
   query: RequestDocument,
   variables = {},
 ) => {
-  return request(`http://localhost:8000/graphql`, query, variables, {
+  return request(`${BASE_URL}/graphql`, query, variables, {
     // 헤더에 작성된 출처만 브라우저가 리소스를 접근할 수 있도록 허용함
     // *이면 모든 곳에 공개되어 있음을 의미한다.
     "Access-Control-Allow-Origin": "http://localhost:8000",

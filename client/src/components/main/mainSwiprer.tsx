@@ -46,7 +46,7 @@ const MainSwiper = ({ data, label, cntLabel, isSuccess }: MainSwiperProps) => {
     },
     [swiperLoc],
   );
-  if (!data.length) return null;
+  if (isSuccess && !data.length) return null;
   return (
     <Wrap>
       <FlexBox>
