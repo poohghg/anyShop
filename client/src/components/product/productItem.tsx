@@ -105,13 +105,14 @@ const FlexBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #bcbcbc;
+  border: 2px solid rgb(248, 249, 250);
+  border-radius: 8px;
   > button {
     width: 50%;
     padding: 0.5rem 0;
     cursor: pointer;
   }
   button:nth-child(1) {
-    border-right: 1px solid #bcbcbc;
+    border-right: 2px solid rgb(248, 249, 250);
   }
 `;

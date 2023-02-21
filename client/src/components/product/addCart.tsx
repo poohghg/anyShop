@@ -5,6 +5,7 @@ import { useAddCart } from "../../graphql/gqlCart";
 import { useToLogin } from "../../hoc";
 import { RootState } from "../../redux";
 import { CartIcon } from "../../style/icons/icons";
+import AniLoading from "../aniLoading";
 
 const AddCart = ({
   productId,
@@ -14,7 +15,7 @@ const AddCart = ({
   amount?: number;
 }) => {
   const isToLoginPage = useToLogin();
-  const { mutate: addCart } = useAddCart();
+  const { mutate: addCart, isLoading } = useAddCart();
   const userId = useSelector((state: RootState) => state.userReducer.userId);
 
   const addCartListener = useCallback(
@@ -28,10 +29,13 @@ const AddCart = ({
   );
 
   return (
-    <Button onClick={addCartListener}>
-      <CartIcon />
-      <Label>장바구니</Label>
-    </Button>
+    <>
+      <Button onClick={addCartListener} disabled={isLoading}>
+        <CartIcon />
+        <Label>장바구니</Label>
+      </Button>
+      {isLoading && <AniLoading />}
+    </>
   );
 };
 

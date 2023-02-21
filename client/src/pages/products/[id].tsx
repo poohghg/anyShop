@@ -16,6 +16,7 @@ const ProductsDetailPage = () => {
     {
       refetchOnMount: true,
       staleTime: 0,
+      cacheTime: 0,
     },
   );
 

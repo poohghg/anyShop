@@ -1,6 +1,7 @@
 import { FC, useMemo } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
+import AniLoading from "../components/aniLoading";
 import MainProfile from "../components/main/mainProfile";
 import MainSwiper from "../components/main/mainSwiprer";
 import PageTitle from "../components/pageTitle";

@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Gnb from "../components/gnb";
+import AniLoading from "../components/aniLoading";
 import ScrollToTopBtn from "../components/scrollToTopBtn";
 import GET_USER, { User } from "../graphql/gqlUser";
 import useUser from "../hoc/useUser";
@@ -24,7 +25,7 @@ const Layout: React.FC = () => {
     <>
       <Gnb />
       <MainLayout id="main">
-        <Suspense fallback={"loading..."}>
+        <Suspense fallback={<AniLoading />}>
           <Outlet />
           <ScrollToTopBtn />
         </Suspense>

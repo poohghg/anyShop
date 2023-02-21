@@ -85,6 +85,8 @@ const ProductTitle = styled.h3`
   font-size: 1.1rem;
   font-weight: 300;
   margin-top: 0.5rem;
+  line-height: 1.5;
+  min-height: calc(2.2 * 1.5rem);
   display: -webkit-inline-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;

@@ -5,6 +5,7 @@ import { useLikeProduct } from "../../graphql/gqlProduct";
 import { useToLogin } from "../../hoc";
 import { RootState } from "../../redux";
 import { HeartIcon, NotHeartIcon } from "../../style/icons/icons";
+import AniLoading from "../aniLoading";
 
 const AddLike = ({
   productId,
@@ -16,7 +17,7 @@ const AddLike = ({
   const userId = useSelector((state: RootState) => state.userReducer.userId);
 
   const isToLoginPage = useToLogin();
-  const { mutate: likeProduct } = useLikeProduct();
+  const { mutate: likeProduct, isLoading } = useLikeProduct();
 
   const likProductListener = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -28,10 +29,13 @@ const AddLike = ({
   );
 
   return (
-    <Button onClick={likProductListener}>
-      {isLike ? <HeartIcon /> : <NotHeartIcon />}
-      <Label isLike={isLike}>좋아요</Label>
-    </Button>
+    <>
+      <Button onClick={likProductListener} disabled={isLoading}>
+        {isLike ? <HeartIcon /> : <NotHeartIcon />}
+        <Label isLike={isLike}>좋아요</Label>
+      </Button>
+      {isLoading && <AniLoading />}
+    </>
   );
 };
 
