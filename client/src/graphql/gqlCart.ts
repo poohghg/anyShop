@@ -1,9 +1,4 @@
-import {
-  authFetcher,
-  getClient,
-  graphqlFetcher,
-  QueryKeys,
-} from "./../queryClient";
+import { authFetcher, getClient, QueryKeys } from "./../queryClient";
 import { useMutation } from "react-query";
 import { gql } from "graphql-tag";
 import { Product } from "./gqlProduct";

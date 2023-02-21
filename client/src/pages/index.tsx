@@ -23,8 +23,6 @@ const MainPage: FC = () => {
   const mainRecentProducts = useMemo(() => {
     return recentProducts.slice(-10).reverse();
   }, [recentProducts]);
-  if (status !== "success") return null;
-
   return (
     <>
       <PageTitle label="메인" />

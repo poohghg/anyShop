@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { authFetcher, graphqlFetcher, QueryKeys } from "./../queryClient";
+import { authFetcher, QueryKeys } from "./../queryClient";
 import { useMutation, useQuery } from "react-query";
 import { gql } from "graphql-tag";
 import { AxiosError, AxiosResponse } from "axios";
@@ -110,16 +110,16 @@ export const singUpMutation = () => {
       email,
       passWord,
       nickName,
-      userTy
+      userTy,
     }: {
       email: string;
       passWord: string;
       nickName: string;
-      userTy:number;
+      userTy: number;
     }) => authFetcher(ADD_USER, { email, nickName, passWord, userTy }),
     {
       onMutate: () => {},
-      onSettled: () => location.replace("/") 
+      onSettled: () => location.replace("/"),
     },
   );
 };

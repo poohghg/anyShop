@@ -35,7 +35,8 @@ import cookieParser from "cookie-parser";
   // Access-Control-Allow-Credentials: true
   // 를 cors가 해줌
   const corsOptions = {
-    origin: ["http://localhost:3000", "https://studio.apollographql.com"],
+    // origin: ["http://localhost:3000", "https://studio.apollographql.com", "*"],
+    origin: ["*", "https://studio.apollographql.com", "http://localhost:3000"],
     credentials: true,
   };
 
