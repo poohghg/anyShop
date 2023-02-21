@@ -1,8 +1,10 @@
 import styled, { keyframes } from "styled-components";
+import { PayUserInfoType } from "../../pages/payment";
 import { FadeIn } from "../../style/animataion";
-import { ShippingInfoProps } from "./shippingInfo";
 
-type OriAddressProps = Pick<ShippingInfoProps, "payUserInfo">;
+interface OriAddressProps {
+  payUserInfo: PayUserInfoType;
+}
 
 const OriAddress = ({
   payUserInfo: { address, recipient, detailedAddress },

@@ -4,13 +4,11 @@ import styled from "styled-components";
 import { PayUserInfoType } from "../../pages/payment";
 import { CloseIcon } from "../../style/icons/icons";
 import CheckBox from "../checkBox";
-import { ShippingInfoProps } from "./shippingInfo";
 
-type NewAddressProps = Pick<
-  ShippingInfoProps,
-  "setPayUserInfo" | "payUserInfo"
->;
-
+interface NewAddressProps {
+  payUserInfo: PayUserInfoType;
+  setPayUserInfo: React.Dispatch<React.SetStateAction<PayUserInfoType>>;
+}
 const NewAddress = ({
   setPayUserInfo,
   payUserInfo: { recipient, address, detailedAddress, checkAddress },
