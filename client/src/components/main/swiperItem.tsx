@@ -23,7 +23,7 @@ const SwiperItem = ({
           <Blur />
         </CardImg>
       </Link>
-      <ProductTitie>{title}</ProductTitie>
+      <ProductTitle>{title}</ProductTitle>
       <ViewBox>
         <Price>${price}</Price>
         {cntLabel && (
@@ -81,7 +81,7 @@ const Blur = styled.div`
   z-index: 1;
 `;
 
-const ProductTitie = styled.h3`
+const ProductTitle = styled.h3`
   font-size: 1.1rem;
   font-weight: 300;
   margin-top: 0.5rem;
@@ -96,7 +96,6 @@ const Price = styled.p`
   font-weight: 400;
 `;
 
-// const Cnt = styled.span``;
 const ViewBox = styled.div`
   margin-top: 0.3rem;
   display: flex;

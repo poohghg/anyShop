@@ -9,7 +9,7 @@ import useSetRecentProducts from "../hoc/useSetRecentProducts";
 import { authFetcher, QueryKeys } from "../queryClient";
 
 const MainPage: FC = () => {
-  const { data, status } = useQuery(
+  const { data, status, isSuccess } = useQuery(
     QueryKeys.PRODUCTS_MAINDATA,
     () => authFetcher(GET_PRODUCT_ORDER, {}),
     {
@@ -29,16 +29,22 @@ const MainPage: FC = () => {
       <PageTitle label="메인" />
       <Wrap>
         <MainProfile />
-        <MainSwiper label="최근본 상품" data={mainRecentProducts} />
+        <MainSwiper
+          label="최근본 상품"
+          data={mainRecentProducts}
+          isSuccess={isSuccess}
+        />
         <MainSwiper
           label="좋아요를 많이 받은 상품"
           data={data?.orderLikes}
           cntLabel="좋아요"
+          isSuccess={isSuccess}
         />
         <MainSwiper
           label="많이 판매된 상품"
           data={data?.orderPayItems}
           cntLabel="판매수"
+          isSuccess={isSuccess}
         />
       </Wrap>
     </>

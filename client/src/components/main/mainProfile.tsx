@@ -43,6 +43,7 @@ const Wrap = styled.div`
 const Container = styled.div`
   width: 12vh;
   height: 12vh;
+  overflow: hidden;
 `;
 
 const User = styled.div`

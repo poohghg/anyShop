@@ -8,14 +8,16 @@ import styled from "styled-components";
 import "swiper/css";
 import { useCallback, useEffect, useState } from "react";
 import { LeftMark, RightMark } from "../../style/icons/icons";
+import SkleSwiperItem from "./skleSwiperItem";
 
 interface MainSwiperProps {
   data: Product[];
   label: string;
   cntLabel?: string;
+  isSuccess: boolean;
 }
 
-const MainSwiper = ({ data, label, cntLabel }: MainSwiperProps) => {
+const MainSwiper = ({ data, label, cntLabel, isSuccess }: MainSwiperProps) => {
   const [swiper, setSwiper] = useState<Swiper>();
   const [swiperLoc, setSwiperLoc] = useState({
     isBeginning: true,
@@ -72,11 +74,17 @@ const MainSwiper = ({ data, label, cntLabel }: MainSwiperProps) => {
         onSwiper={(s) => setSwiper(s)}
         centeredSlides={false}
       >
-        {data.map((product) => (
-          <SwiperSlide key={product.id}>
-            <SwiperItem {...product} cntLabel={cntLabel} />
-          </SwiperSlide>
-        ))}
+        {isSuccess
+          ? data.map((product) => (
+              <SwiperSlide key={product.id}>
+                <SwiperItem {...product} cntLabel={cntLabel} />
+              </SwiperSlide>
+            ))
+          : Array.from({ length: 5 }).map((_, i) => (
+              <SwiperSlide key={i}>
+                <SkleSwiperItem />
+              </SwiperSlide>
+            ))}
       </SwiperR>
     </Wrap>
   );

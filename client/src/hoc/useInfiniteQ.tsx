@@ -56,7 +56,7 @@ const useInfiniteQ = <T extends { [K: string]: any[] }>({
     );
   }, [isFetchingNextPage, hasNextPage]);
 
-  return { RefDom, data, status };
+  return { RefDom, data, status, isSuccess };
 };
 
 export default useInfiniteQ;

@@ -7,21 +7,27 @@ import { Products } from "../../graphql/gqlProduct";
 import { useToLogin } from "../../hoc";
 import { RootState } from "../../redux";
 import ProductItem from "./productItem";
+import SkleProductItem from "./skleProductItem";
 
 interface ProductListProps {
   data: InfiniteData<Products> | undefined;
+  isSuccess: boolean;
 }
 
-const ProductList = ({ data }: ProductListProps) => {
+const ProductList = ({ data, isSuccess }: ProductListProps) => {
   return (
     <List>
-      {data?.pages.map((page, idx) => (
-        <Fragment key={idx}>
-          {page.products.map((product) => (
-            <ProductItem key={product.id} {...product} />
+      {isSuccess
+        ? data?.pages.map((page, idx) => (
+            <Fragment key={idx}>
+              {page.products.map((product) => (
+                <ProductItem key={product.id} {...product} />
+              ))}
+            </Fragment>
+          ))
+        : Array.from({ length: 9 }).map((_, idx) => (
+            <SkleProductItem key={idx} />
           ))}
-        </Fragment>
-      ))}
     </List>
   );
 };

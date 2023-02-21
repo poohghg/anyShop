@@ -8,7 +8,7 @@ import PageTitle from "../../components/pageTitle";
 import ProductList from "../../components/product/productList";
 
 const ProductPage = () => {
-  const { data, RefDom, status } = useInfiniteQ<Products>({
+  const { data, RefDom, status, isSuccess } = useInfiniteQ<Products>({
     qKey: [QueryKeys.PRODUCTS, "products"],
     query: GET_PRODUCTS,
   });
@@ -16,7 +16,7 @@ const ProductPage = () => {
     <>
       <PageTitle label="상품목록" />
       <Wrap>
-        {status === "success" && <ProductList data={data} />}
+        <ProductList data={data} isSuccess={isSuccess} />
         <RefDom />
       </Wrap>
     </>
