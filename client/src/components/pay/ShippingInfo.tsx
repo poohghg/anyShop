@@ -40,11 +40,11 @@ const ShippingInfo = ({
           신규 배송지
         </DeliveryBtn>
       </DeliveryInfo>
-      {deliveryInfo === "ori" ? (
+      {/* {deliveryInfo === "ori" ? (
         <OriAddress payUserInfo={payUserInfo} />
       ) : (
         <NewAddress payUserInfo={payUserInfo} setPayUserInfo={setPayUserInfo} />
-      )}
+      )} */}
     </Main>
   );
 };
