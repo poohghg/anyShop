@@ -36,7 +36,12 @@ import cookieParser from "cookie-parser";
   // 를 cors가 해줌
   const corsOptions = {
     // origin: ["http://localhost:3000", "https://studio.apollographql.com", "*"],
-    origin: ["*", "https://studio.apollographql.com", "http://localhost:3000"],
+    origin: [
+      "*",
+      "https://studio.apollographql.com",
+      "http://localhost:3000",
+      "https://any-shop-client.vercel.app",
+    ],
     credentials: true,
   };
 
