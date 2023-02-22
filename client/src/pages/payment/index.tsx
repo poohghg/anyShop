@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import ShippingInfo from "../../components/pay/shippingInfo";
 import styled from "styled-components";
-// import ShippingInfo from "../../components/pay/shippingInfo";
 import WillPay from "../../components/pay/willPay";
 import { CartType } from "../../graphql/gqlCart";
 import { useExecutePay } from "../../graphql/gqlPayMent";
