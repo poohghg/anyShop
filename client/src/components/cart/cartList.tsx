@@ -82,7 +82,6 @@ const CartList = ({ cart }: Carts) => {
     dispatch(setPayItems(newPayItems));
   }, [checkboxRefs, formData]);
 
-  // console.log(cart, "cart");
   if (!cart.length) return <NoData label="장바구니가 비었습니다." />;
   return (
     <Main>

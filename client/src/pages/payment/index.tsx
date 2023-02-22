@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import AniLoading from "../../components/aniLoading";
 import AddressInfo from "../../components/pay/addressInfo";
 import WillPay from "../../components/pay/willPay";
 import { CartType } from "../../graphql/gqlCart";
@@ -49,7 +50,7 @@ const PaymentPage = () => {
     return itemFromRedux;
   }, [location.state, itemFromRedux]);
 
-  const { mutate: executePay } = useExecutePay();
+  const { mutate: executePay, isLoading } = useExecutePay();
 
   const handlePay = () => {
     if (!payUserInfo.address) return alert("주소를 입력해주세요!");
@@ -74,19 +75,25 @@ const PaymentPage = () => {
       navigate("/");
     }
   }, [payItems]);
-
   return (
-    <LayOut>
-      <AddressInfo
-        nickName={nickName}
-        addresses={addresses}
-        deliveryInfo={deliveryInfo}
-        payUserInfo={payUserInfo}
-        setDeliveryInfo={setDeliveryInfo}
-        setPayUserInfo={setPayUserInfo}
-      />
-      <WillPay payItems={payItems} handlePay={handlePay} />
-    </LayOut>
+    <>
+      {isLoading && <AniLoading />}
+      <LayOut>
+        <AddressInfo
+          nickName={nickName}
+          addresses={addresses}
+          deliveryInfo={deliveryInfo}
+          payUserInfo={payUserInfo}
+          setDeliveryInfo={setDeliveryInfo}
+          setPayUserInfo={setPayUserInfo}
+        />
+        <WillPay
+          payItems={payItems}
+          handlePay={handlePay}
+          isLoading={isLoading}
+        />
+      </LayOut>
+    </>
   );
 };
 

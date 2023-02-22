@@ -7,9 +7,10 @@ import TotalPayInfo from "../cart/TotalPayInfo";
 interface WillPayProps {
   payItems: CartType[];
   handlePay: () => void;
+  isLoading: boolean;
 }
 
-const WillPay = ({ payItems, handlePay }: WillPayProps) => {
+const WillPay = ({ payItems, handlePay, isLoading }: WillPayProps) => {
   return (
     <Main>
       <Label>주문상품 정보 / 총{payItems.length}개</Label>
@@ -34,7 +35,11 @@ const WillPay = ({ payItems, handlePay }: WillPayProps) => {
           </Link>
         ))}
       </List>
-      <TotalPayInfo payItems={payItems} buttonListener={handlePay} />
+      <TotalPayInfo
+        payItems={payItems}
+        buttonListener={handlePay}
+        isLoading={isLoading}
+      />
     </Main>
   );
 };

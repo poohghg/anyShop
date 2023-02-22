@@ -9,6 +9,7 @@ import {
   getDoc,
   getDocs,
   increment,
+  orderBy,
   query,
   serverTimestamp,
   setDoc,
@@ -24,7 +25,11 @@ const cartResolver: Resolver = {
       if (!userId) throw Error("userId not exist");
       const cart = collection(db, "cart");
       const cartSnap = await getDocs(
-        query(cart, where("userId", "==", userId)),
+        query(
+          cart,
+          where("userId", "==", userId),
+          // orderBy("createdAt", "desc"),
+        ),
       );
       const data: DocumentData[] = [];
       cartSnap.forEach((doc) => {
@@ -65,6 +70,7 @@ const cartResolver: Resolver = {
           userId,
           amount: amount ?? 1,
           product: productRef,
+          createdAt: serverTimestamp(),
         });
       }
       const cartSnapshot = await getDoc(cartRef);

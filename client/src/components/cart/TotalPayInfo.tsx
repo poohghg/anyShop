@@ -5,9 +5,14 @@ import { CartType } from "../../graphql/gqlCart";
 interface TotalPayInfoProps {
   payItems: CartType[];
   buttonListener?: () => void;
+  isLoading?: boolean;
 }
 
-const TotalPayInfo = ({ payItems, buttonListener }: TotalPayInfoProps) => {
+const TotalPayInfo = ({
+  payItems,
+  buttonListener,
+  isLoading,
+}: TotalPayInfoProps) => {
   const totalPrice = useMemo(
     () =>
       payItems.reduce(
@@ -27,7 +32,9 @@ const TotalPayInfo = ({ payItems, buttonListener }: TotalPayInfoProps) => {
         <span>결제금액</span>
         <span>{totalPrice}원</span>
       </div>
-      <ToPayButton onClick={buttonListener}>결제하기</ToPayButton>
+      <ToPayButton disabled={isLoading} onClick={buttonListener}>
+        결제하기
+      </ToPayButton>
     </TotalCartInfo>
   );
 };
