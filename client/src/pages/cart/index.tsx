@@ -10,7 +10,6 @@ import { authFetcher, QueryKeys } from "../../queryClient";
 import { RootState } from "../../redux";
 
 const Cart = () => {
-  // QueryKeys.USER_AUTH;
   const { pathname } = useLocation();
   const isToLoginPage = useToLogin();
   const { isAuthFetching } = useUser();
