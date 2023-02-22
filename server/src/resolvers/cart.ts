@@ -28,7 +28,7 @@ const cartResolver: Resolver = {
         query(
           cart,
           where("userId", "==", userId),
-          // orderBy("createdAt", "desc"),
+          orderBy("createdAt", "desc"),
         ),
       );
       const data: DocumentData[] = [];

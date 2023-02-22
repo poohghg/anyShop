@@ -5,6 +5,7 @@ const cartSchema = gql`
     id: ID!
     amount: Int!
     product: Product!
+    createdAt: Int
   }
   extend type Query {
     cart: [CartItem!]
