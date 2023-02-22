@@ -12,7 +12,7 @@ export interface ShippingInfoProps {
     detailedAddress: string;
     checkAddress: boolean;
   };
-  deliveryInfo: "ori" | "new";
+  deliveryInfo: DeliveryInfoType;
   setPayUserInfo: React.Dispatch<React.SetStateAction<PayUserInfoType>>;
   setDeliveryInfo: React.Dispatch<React.SetStateAction<DeliveryInfoType>>;
   addresses?: Addresses[];
