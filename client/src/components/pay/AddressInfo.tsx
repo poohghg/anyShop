@@ -4,7 +4,7 @@ import { DeliveryInfoType, PayUserInfoType } from "../../pages/payment";
 import NewAddress from "./newAddress";
 import OriAddress from "./oriAddress";
 
-export interface ShippingInfoProps {
+export interface AddressInfoProps {
   nickName: string;
   payUserInfo: {
     recipient: string;
@@ -18,14 +18,14 @@ export interface ShippingInfoProps {
   addresses?: Addresses[];
 }
 
-const ShippingInfo = ({
+const AddressInfo = ({
   nickName,
   payUserInfo,
   deliveryInfo,
   addresses,
   setDeliveryInfo,
   setPayUserInfo,
-}: ShippingInfoProps) => {
+}: AddressInfoProps) => {
   return (
     <Main>
       <h3>안녕하세요 </h3>
@@ -52,6 +52,8 @@ const ShippingInfo = ({
     </Main>
   );
 };
+
+export default AddressInfo;
 
 const Main = styled.div`
   position: sticky;
@@ -98,5 +100,3 @@ const DeliveryBtn = styled.button<{ isSelected: boolean }>`
       color: black;
     `}
 `;
-
-export default ShippingInfo;

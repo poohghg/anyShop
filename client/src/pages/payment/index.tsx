@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import ShippingInfo from "../../components/pay/shippingInfo";
 import styled from "styled-components";
+import AddressInfo from "../../components/pay/AddressInfo";
 import WillPay from "../../components/pay/willPay";
 import { CartType } from "../../graphql/gqlCart";
 import { useExecutePay } from "../../graphql/gqlPayMent";
@@ -67,7 +67,7 @@ const PaymentPage = () => {
 
   return (
     <LayOut>
-      <ShippingInfo
+      <AddressInfo
         nickName={nickName}
         addresses={addresses}
         deliveryInfo={deliveryInfo}
