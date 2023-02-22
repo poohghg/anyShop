@@ -6,7 +6,12 @@ import OriAddress from "./oriAddress";
 
 export interface ShippingInfoProps {
   nickName: string;
-  payUserInfo: PayUserInfoType;
+  payUserInfo: {
+    recipient: string;
+    address: string;
+    detailedAddress: string;
+    checkAddress: boolean;
+  };
   deliveryInfo: "ori" | "new";
   setPayUserInfo: React.Dispatch<React.SetStateAction<PayUserInfoType>>;
   setDeliveryInfo: React.Dispatch<React.SetStateAction<"ori" | "new">>;
