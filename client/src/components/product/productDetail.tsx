@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Product } from "../../graphql/gqlProduct";
+import { useToLogin } from "../../hoc";
 import useSetRecentProducts from "../../hoc/useSetRecentProducts";
+import { RootState } from "../../redux";
 import AddCart from "./addCart";
 import AddLike from "./addLike";
 import ProductAmount from "./productAmount";
@@ -13,12 +16,15 @@ interface ProductDetailProps {
 const ProductDetail = ({ product }: ProductDetailProps) => {
   const { id, description, imageUrl, isLike, price, title, hit, likes } =
     product;
+  const userId = useSelector((state: RootState) => state.userReducer.userId);
+  const isToLoginPage = useToLogin();
 
   const [amount, setAmount] = useState(1);
   const { setItems } = useSetRecentProducts();
   const navigate = useNavigate();
 
   const toWillPay = () => {
+    if (!userId) return isToLoginPage();
     navigate("/payment", {
       state: {
         payItem: [
