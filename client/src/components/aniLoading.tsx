@@ -69,8 +69,9 @@ const Main = styled.div<{ backgroundColor: "white" | "black" }>`
   justify-content: center;
   align-items: center;
   opacity: 0.5;
-  background-color: ${({ backgroundColor }) =>
-    backgroundColor === "white" ? "#fff" : "#000"};
+  background-color: inherit;
+  /* background-color: ${({ backgroundColor }) =>
+    backgroundColor === "white" ? "#fff" : "#000"}; */
 `;
 
 const Wrap = styled.div<{ backgroundColor: "white" | "black" }>`

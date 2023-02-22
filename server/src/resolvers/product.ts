@@ -78,7 +78,7 @@ const productResolver: Resolver = {
         ...snapshot.data(),
         id: snapshot.id,
         likes,
-        isLike,
+        isLike: !!isLike,
       };
     },
 
