@@ -15,6 +15,8 @@ export interface PayUserInfoType {
   checkAddress: boolean;
 }
 
+export type DeliveryInfoType = "ori" | "new";
+
 interface PayItemType extends CartType {
   isInstant: boolean;
 }
@@ -37,7 +39,7 @@ const PaymentPage = () => {
   );
   const [payUserInfo, setPayUserInfo] =
     useState<PayUserInfoType>(initPayUserInfo);
-  const [deliveryInfo, setDeliveryInfo] = useState<"ori" | "new">("ori");
+  const [deliveryInfo, setDeliveryInfo] = useState<DeliveryInfoType>("ori");
 
   const payItems: PayItemType[] = useMemo(() => {
     if (location.state?.payItem) return location.state?.payItem;

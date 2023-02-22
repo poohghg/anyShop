@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Addresses } from "../../graphql/gqlUser";
-import { PayUserInfoType } from "../../pages/payment";
+import { DeliveryInfoType, PayUserInfoType } from "../../pages/payment";
 import NewAddress from "./newAddress";
 import OriAddress from "./oriAddress";
 
@@ -14,7 +14,7 @@ export interface ShippingInfoProps {
   };
   deliveryInfo: "ori" | "new";
   setPayUserInfo: React.Dispatch<React.SetStateAction<PayUserInfoType>>;
-  setDeliveryInfo: React.Dispatch<React.SetStateAction<"ori" | "new">>;
+  setDeliveryInfo: React.Dispatch<React.SetStateAction<DeliveryInfoType>>;
   addresses?: Addresses[];
 }
 
