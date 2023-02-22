@@ -68,7 +68,7 @@ const Main = styled.div<{ backgroundColor: "white" | "black" }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0.5;
+  /* opacity: 0.5; */
   background-color: inherit;
   /* background-color: ${({ backgroundColor }) =>
     backgroundColor === "white" ? "#fff" : "#000"}; */
