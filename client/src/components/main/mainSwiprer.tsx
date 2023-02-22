@@ -9,6 +9,7 @@ import "swiper/css";
 import { useCallback, useEffect, useState } from "react";
 import { LeftMark, RightMark } from "../../style/icons/icons";
 import SkleSwiperItem from "./skleSwiperItem";
+import { log } from "console";
 
 interface MainSwiperProps {
   data: Product[];
@@ -21,7 +22,7 @@ const MainSwiper = ({ data, label, cntLabel, isSuccess }: MainSwiperProps) => {
   const [swiper, setSwiper] = useState<Swiper>();
   const [swiperLoc, setSwiperLoc] = useState({
     isBeginning: true,
-    isEnd: false,
+    isEnd: data?.length < 4 ? true : false,
   });
 
   const handelNextSlide = useCallback(
@@ -44,8 +45,9 @@ const MainSwiper = ({ data, label, cntLabel, isSuccess }: MainSwiperProps) => {
         setSwiperLoc({ isBeginning, isEnd });
       }
     },
-    [swiperLoc],
+    [swiperLoc, swiper],
   );
+
   if (isSuccess && !data.length) return null;
   return (
     <Wrap>

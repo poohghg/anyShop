@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import AddressInfo from "../../components/pay/addressInfo";
 import WillPay from "../../components/pay/willPay";
@@ -30,6 +30,7 @@ const initPayUserInfo = {
 
 const PaymentPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const itemFromRedux = useSelector(
     (state: RootState) => state.stateReducer.payItems,
   );
@@ -39,7 +40,9 @@ const PaymentPage = () => {
   );
   const [payUserInfo, setPayUserInfo] =
     useState<PayUserInfoType>(initPayUserInfo);
-  const [deliveryInfo, setDeliveryInfo] = useState<DeliveryInfoType>("ori");
+  const [deliveryInfo, setDeliveryInfo] = useState<DeliveryInfoType>(
+    addresses ? "ori" : "new",
+  );
 
   const payItems: PayItemType[] = useMemo(() => {
     if (location.state?.payItem) return location.state?.payItem;
@@ -64,6 +67,13 @@ const PaymentPage = () => {
       setPayUserInfo(() => initPayUserInfo);
     }
   }, [deliveryInfo, addresses]);
+
+  useEffect(() => {
+    if (!payItems.length) {
+      alert("주문 상품정보가 초기화 되었습니다 다시 시도해주세요.");
+      navigate("/");
+    }
+  }, [payItems]);
 
   return (
     <LayOut>
