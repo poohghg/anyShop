@@ -1,4 +1,3 @@
-import { useState, SyntheticEvent, useRef } from "react";
 import styled, { css } from "styled-components";
 import { Addresses } from "../../graphql/gqlUser";
 import { PayUserInfoType } from "../../pages/payment";
