@@ -30,7 +30,7 @@ const TotalPayInfo = ({
       </div>
       <div>
         <span>결제금액</span>
-        <span>{totalPrice}원</span>
+        <span>${totalPrice}</span>
       </div>
       <ToPayButton disabled={isLoading} onClick={buttonListener}>
         결제하기
