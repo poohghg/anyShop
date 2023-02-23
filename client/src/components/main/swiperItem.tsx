@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Product } from "../../graphql/gqlProduct";
 import LazyImg from "../lazyImg";
 
-interface SwiperItemPorps extends Product {
+interface SwiperItemProps extends Product {
   cntLabel?: string;
 }
 
@@ -14,7 +14,7 @@ const SwiperItem = ({
   title,
   cnt,
   cntLabel,
-}: SwiperItemPorps) => {
+}: SwiperItemProps) => {
   return (
     <Card>
       <Link to={`products/${id}`}>
@@ -43,7 +43,6 @@ const Card = styled.div`
   width: 100%;
   overflow: hidden;
   border-radius: 12px;
-  /* box-shadow: 8px 16px 16px hsl(0deg 0% 0% / 0.25); */
   padding: 0.5rem 0;
 `;
 
@@ -55,7 +54,6 @@ const CardImg = styled.div`
   display: flex;
   justify-content: center;
   padding: 0.3rem;
-  /* background: radial-gradient(#fff 1px, rgb(248, 249, 250) 50%); */
   cursor: pointer;
   > img {
     height: 15vh;

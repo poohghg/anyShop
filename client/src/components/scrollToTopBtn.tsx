@@ -1,25 +1,32 @@
-import Lottie from "lottie-web";
+import { log } from "console";
+import Lottie, { AnimationItem } from "lottie-web";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import ScrollTop from "../lotties/scrollTop.json";
 
 const ScrollToTopBtn = () => {
   const ref = useRef<HTMLButtonElement>(null);
+  const instance = useRef<AnimationItem>();
   const [isShow, setIsShow] = useState(false);
 
   useEffect(() => {
     if (!ref.current) return;
-    Lottie.loadAnimation({
-      container: ref.current,
-      renderer: "svg",
-      loop: true,
-      autoplay: true,
-      animationData: ScrollTop,
-    });
-    // const root = document.querySelector("#main") as HTMLDivElement;
+    if (!instance.current)
+      instance.current = Lottie.loadAnimation({
+        container: ref.current,
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        animationData: ScrollTop,
+      });
+
     let prevY = 0;
+    const pageY = document.querySelector("#root") as HTMLElement;
     window.addEventListener("scroll", () => {
-      if (window.scrollY - prevY > 0 || window.scrollY === 0) setIsShow(false);
+      if (window.innerHeight + window.scrollY === pageY.scrollHeight)
+        setIsShow(true);
+      else if (window.scrollY - prevY > 0 || window.scrollY === 0)
+        setIsShow(false);
       else setIsShow(true);
       prevY = window.scrollY;
     });
@@ -54,7 +61,7 @@ const Wrap = styled.div<{ isShow: boolean }>`
   padding: 0.3rem;
   z-index: 1;
   background-color: #fff;
-  box-shadow: 8px 16px 16px hsl(0deg 0% 0% / 0.25);
+  box-shadow: 1px 16px 16px hsl(0deg 0% 0% / 0.25);
   justify-content: center;
   align-items: center;
 `;

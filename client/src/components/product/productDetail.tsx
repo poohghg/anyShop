@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Product } from "../../graphql/gqlProduct";
 import { useToLogin } from "../../hoc";
-import useSetRecentProducts from "../../hoc/useSetRecentProducts";
+import useRecentProducts from "../../hoc/useRecentProducts";
 import { RootState } from "../../redux";
 import AddCart from "./addCart";
 import AddLike from "./addLike";
@@ -20,7 +20,7 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
   const isToLoginPage = useToLogin();
 
   const [amount, setAmount] = useState(1);
-  const { setItems } = useSetRecentProducts();
+  const { setItems } = useRecentProducts();
   const navigate = useNavigate();
 
   const toWillPay = () => {

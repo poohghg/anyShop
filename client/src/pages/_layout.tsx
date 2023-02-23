@@ -27,9 +27,9 @@ const Layout: React.FC = () => {
       <MainLayout id="main">
         <Suspense fallback={<AniLoading />}>
           <Outlet />
-          <ScrollToTopBtn />
         </Suspense>
       </MainLayout>
+      <ScrollToTopBtn />
     </>
   );
 };

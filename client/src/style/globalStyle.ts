@@ -7,13 +7,21 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
   }
-
-  body {margin: 0;font-family: 'Noto Sans KR';}
-  /* #root{overflow:hidden} */
-  a {color: #fff; text-decoration: none; outline: none}
-  a:hover, a:active {text-decoration: none; color:#fff; }
+  body {
+    margin: 0;
+    font-family: 'Noto Sans KR';
+  }
+  a {
+    color: #fff; 
+    text-decoration: none; 
+    outline: none
+  }
+  a:hover, a:active {
+    text-decoration: none; 
+    color:#fff; 
+  }
   ul {
-    list-style:none ;
+    list-style:none;
   }
   p {
     font-size:1rem ;
@@ -29,11 +37,12 @@ const GlobalStyle = createGlobalStyle`
     background: none;
     cursor:pointer;
   }
-
-  h1{}
-  h2{font-size:2.2rem;font-weight:700}
-  h4{color:#000}
-  .toast{
+  h2 {
+    font-size:2.2rem;
+    font-weight:700
+  }
+  h4 {color:#000}
+  .toast {
     position:fixed ;
     left:50% ;
     bottom:0 ;
@@ -52,24 +61,20 @@ const GlobalStyle = createGlobalStyle`
       flex: none ;
     }
   }
-  .mainSwiper{
+  .mainSwiper {
     padding:0rem 1.5rem !important ;
   }
-
   @media screen and (max-width:1023px) {
     html{
       font-size:85% ;
     }
   }
-
   @media screen and (max-width:767px) {
     html{
       font-size:75% ;
     }
   /* 모바일 */
   }
-  
-
 
  /* 반응형 */
    /* @media only screen and (max-width: 844px) {

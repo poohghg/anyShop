@@ -5,13 +5,13 @@ import { Product } from "../graphql/gqlProduct";
 import { RootState } from "../redux";
 import { setRecentProducts } from "../redux/localReducer";
 
-// 아이템으 최대 30개까지 보관
-
-const useSetRecentProducts = () => {
+// 아이템은 최대 30개까지 보관
+const useRecentProducts = () => {
   const recentProducts = useSelector(
     (state: RootState) => state.localReducer.recentProducts,
   );
   const dispatch = useDispatch();
+
   const setItems = useCallback(
     (newItem: Product) => {
       const filletedItem = recentProducts.filter(
@@ -26,4 +26,4 @@ const useSetRecentProducts = () => {
   return { recentProducts, setItems };
 };
 
-export default useSetRecentProducts;
+export default useRecentProducts;

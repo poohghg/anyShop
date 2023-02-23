@@ -6,10 +6,9 @@ import styled from "styled-components";
 
 // Import Swiper styles
 import "swiper/css";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { LeftMark, RightMark } from "../../style/icons/icons";
 import SkleSwiperItem from "./skleSwiperItem";
-import { log } from "console";
 
 interface MainSwiperProps {
   data: Product[];
@@ -103,7 +102,6 @@ const FlexBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* padding-left: 1.5rem; */
   padding: 0 1.5rem;
   margin-bottom: 1rem;
 `;

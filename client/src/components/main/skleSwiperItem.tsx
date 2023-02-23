@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import LazyImg from "../lazyImg";
 import Skeleton from "../skeleton";
 
 const SkleSwiperItem = () => {
@@ -30,15 +29,14 @@ const SkleSwiperItem = () => {
 
 export default SkleSwiperItem;
 
-export const Card = styled.div`
+const Card = styled.div`
   width: 100%;
   overflow: hidden;
   border-radius: 12px;
-  /* box-shadow: 8px 16px 16px hsl(0deg 0% 0% / 0.25); */
   padding: 0.5rem 0;
 `;
 
-export const CardImg = styled.div`
+const CardImg = styled.div`
   position: relative;
   border-radius: 12px;
   overflow: hidden;
@@ -61,7 +59,7 @@ export const CardImg = styled.div`
   }
 `;
 
-export const ProductTitle = styled.h3`
+const ProductTitle = styled.h3`
   font-size: 1.1rem;
   font-weight: 300;
   margin-top: 0.5rem;
@@ -72,12 +70,12 @@ export const ProductTitle = styled.h3`
   white-space: normal;
 `;
 
-export const Price = styled.p`
+const Price = styled.p`
   font-size: 1rem;
   font-weight: 400;
 `;
 
-export const ViewBox = styled.div`
+const ViewBox = styled.div`
   margin-top: 0.3rem;
   display: flex;
   justify-content: space-between;
