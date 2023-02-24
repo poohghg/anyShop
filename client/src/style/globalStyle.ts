@@ -50,7 +50,7 @@ const GlobalStyle = createGlobalStyle`
     width: fit-content ;
     opacity:0.85 ;
     border-radius:35px ;
-    & div{  
+    div{  
       display:flex ;
       align-items:center ;
       justify-content:center ;

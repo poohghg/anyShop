@@ -1,11 +1,7 @@
-import { Fragment, useCallback } from "react";
+import { Fragment } from "react";
 import { InfiniteData } from "react-query";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useAddCart } from "../../graphql/gqlCart";
 import { Products } from "../../graphql/gqlProduct";
-import { useToLogin } from "../../hoc";
-import { RootState } from "../../redux";
 import ProductItem from "./productItem";
 import SkleProductItem from "./skleProductItem";
 

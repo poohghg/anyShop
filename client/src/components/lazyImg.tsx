@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useEffect,
-  useMemo,
-  useState,
-  useCallback,
-} from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import styled, { css } from "styled-components";
 import { FadeIn } from "../style/animataion";
 
@@ -47,16 +41,16 @@ const LazyImg = React.memo(
         });
       };
 
-      if (!observerRef.current) {
+      if (!observerRef.current)
         observerRef.current = new IntersectionObserver(callBack, options);
-      }
       return observerRef.current;
-    }, [observerRef.current, pOtion]);
+    }, [observerRef.current]);
 
     useEffect(() => {
       if (imgRef.current) getObserver().observe(imgRef.current);
       return () => getObserver().disconnect();
-    }, [imgRef.current, src]);
+    }, [imgRef.current]);
+
     return (
       <InviewImage
         ref={imgRef}

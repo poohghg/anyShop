@@ -15,7 +15,6 @@ const AddLike = ({
   isLike?: boolean;
 }) => {
   const userId = useSelector((state: RootState) => state.userReducer.userId);
-
   const isToLoginPage = useToLogin();
   const { mutate: likeProduct, isLoading } = useLikeProduct();
 

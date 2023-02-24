@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 import { Path } from "./gnb";
 import Modal from "./modal";
@@ -14,11 +14,7 @@ const Mgnb = ({ paths, closeMenu, userId }: MgnbProps) => {
   const navigate = useNavigate();
   const [isClose, setIsClose] = useState(false);
   const closeModal = () => setIsClose(true);
-
-  const linkTo = useCallback((path: string) => {
-    closeModal();
-    navigate(path);
-  }, []);
+  const handleLink = useCallback(() => closeModal(), []);
 
   const onAnimationEnd = () => {
     if (isClose) closeMenu(true);
@@ -32,7 +28,9 @@ const Mgnb = ({ paths, closeMenu, userId }: MgnbProps) => {
           {paths.map(({ to, pathName }) =>
             !!userId && to === "singUp" ? null : (
               <PathItem key={to}>
-                <button onClick={() => linkTo(to)}>{pathName}</button>
+                <Link to={to} onClick={handleLink}>
+                  {pathName}
+                </Link>
               </PathItem>
             ),
           )}
@@ -60,7 +58,6 @@ const Wrap = styled.div<{ isClose: boolean }>`
   width: 100%;
   margin-top: 7vh;
   height: 93vh;
-  /* overflow: auto; */
   border: 1px solid;
   border-radius: 12px;
   z-index: 15;
@@ -77,14 +74,14 @@ const MenuUl = styled.ul`
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* justify-content: center; */
   gap: 1rem;
   z-index: 15;
 `;
 
 const PathItem = styled.li<{ isActive?: boolean }>`
   padding: 0.5rem 0;
-  button {
+  a {
+    color: #000;
     font-size: 1.5rem;
     font-weight: 400;
     cursor: pointer;

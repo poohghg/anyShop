@@ -22,7 +22,6 @@ const AddCart = ({
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       if (!userId) return isToLoginPage();
-      console.log("amount", amount);
       addCart({ id: productId, amount: amount ?? 1 });
     },
     [amount],

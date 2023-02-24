@@ -13,10 +13,6 @@ const ProductItem = ({
   imageUrl,
   price,
   title,
-  description,
-  createdAt,
-  category = "category",
-  rate = 1,
   hit = 1,
   isLike,
 }: ProductItemProps) => {
@@ -41,19 +37,12 @@ const ProductItem = ({
 export default memo(ProductItem);
 
 const Item = styled.li``;
-const Category = styled.h4`
-  color: ${({ theme }) => theme.colors.mainColor};
-  font-size: 1.15rem;
-  font-weight: 500;
-  padding-bottom: 0.25rem;
-  /* background-color: ; */
-`;
+
 const Title = styled.p`
   padding-top: 0.3rem;
   color: ${({ theme }) => theme.colors.mainColor};
   font-weight: 300;
   min-height: 5.7rem;
-  /* max-height: 5rem; */
   display: -webkit-inline-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
@@ -69,7 +58,6 @@ const ImgWrap = styled.div`
   overflow: hidden;
   padding: 0.3rem;
   && img {
-    /* padding: 1rem 0; */
     width: 100%;
     height: 100%;
     object-fit: contain;

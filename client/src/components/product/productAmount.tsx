@@ -5,7 +5,6 @@ interface ProductAmountProps {
   amount: number;
   id?: string;
   handleAmount: (amount: number, id?: string) => void;
-  // plusFunction: (amount: number, id?: string) => void;
 }
 
 const ProductAmount = ({ amount, id, handleAmount }: ProductAmountProps) => {
@@ -17,7 +16,7 @@ const ProductAmount = ({ amount, id, handleAmount }: ProductAmountProps) => {
       >
         <MinusIcon />
       </button>
-      <div>{amount}</div>
+      <Amount>{amount}</Amount>
       <button type="button" onClick={() => handleAmount(amount + 1, id)}>
         <PlusIcon />
       </button>
@@ -32,15 +31,16 @@ const ControlAmount = styled.div`
   align-items: center;
   border: 1px solid #bcbcbc;
   border-radius: 8px;
-  > div {
-    text-align: center;
-    height: 100%;
-    width: 36px;
-    border-left: 1px solid #bcbcbc;
-    border-right: 1px solid #bcbcbc;
-    font-size: 1.2rem;
-  }
   > button {
     padding: 0 0.5rem;
   }
+`;
+
+const Amount = styled.div`
+  text-align: center;
+  height: 100%;
+  width: 36px;
+  border-left: 1px solid #bcbcbc;
+  border-right: 1px solid #bcbcbc;
+  font-size: 1.2rem;
 `;

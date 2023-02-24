@@ -14,11 +14,11 @@ const SkleProductItem = () => {
         <Skeleton height="1.5rem" width="32px" rounded={true} />
       </Price>
       <span>
-        <Skeleton height="16px" width="62px" rounded={true} />{" "}
+        <Skeleton height="16px" width="62px" rounded={true} />
       </span>
       <FlexBox>
-        <Skeleton height="40px" width="50%" rounded={true} />{" "}
-        <Skeleton height="40px" width="50%" rounded={true} />{" "}
+        <Skeleton height="40px" width="50%" rounded={true} />
+        <Skeleton height="40px" width="50%" rounded={true} />
       </FlexBox>
     </Item>
   );
@@ -27,13 +27,7 @@ const SkleProductItem = () => {
 export default SkleProductItem;
 
 const Item = styled.li``;
-const Category = styled.h4`
-  color: ${({ theme }) => theme.colors.mainColor};
-  font-size: 1.15rem;
-  font-weight: 500;
-  padding-bottom: 0.25rem;
-  /* background-color: ; */
-`;
+
 const Title = styled.p`
   padding-top: 0.3rem;
   color: ${({ theme }) => theme.colors.mainColor};
@@ -54,7 +48,6 @@ const ImgWrap = styled.div`
   overflow: hidden;
   padding: 0.3rem;
   && img {
-    /* padding: 1rem 0; */
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -64,17 +57,6 @@ const ImgWrap = styled.div`
       display: block;
     }
   }
-`;
-
-const Blur = styled.div`
-  position: absolute;
-  display: none;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 1;
 `;
 
 const Price = styled.h4`
@@ -90,7 +72,6 @@ const FlexBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* border: 1px solid #bcbcbc; */
   > button {
     width: 50%;
     padding: 0.5rem 0;

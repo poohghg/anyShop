@@ -16,12 +16,12 @@ interface ProductDetailProps {
 const ProductDetail = ({ product }: ProductDetailProps) => {
   const { id, description, imageUrl, isLike, price, title, hit, likes } =
     product;
-  const userId = useSelector((state: RootState) => state.userReducer.userId);
-  const isToLoginPage = useToLogin();
-
   const [amount, setAmount] = useState(1);
-  const { setItems } = useRecentProducts();
+
+  const userId = useSelector((state: RootState) => state.userReducer.userId);
   const navigate = useNavigate();
+  const { setItems } = useRecentProducts();
+  const isToLoginPage = useToLogin();
 
   const toWillPay = () => {
     if (!userId) return isToLoginPage();
@@ -72,7 +72,6 @@ export default ProductDetail;
 const Main = styled.div`
   position: relative;
   max-width: 720px;
-  /* min-height: calc(92vh - 3rem); */
   margin: 0 auto;
   padding-top: 2rem;
 `;
@@ -84,7 +83,6 @@ const MainImg = styled.img`
 `;
 
 const InfoBox = styled.div`
-  /* width:100 ; */
   padding: 1rem 1.5vw;
 `;
 

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { createPortal } from "react-dom";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 const Portal = ({
   children,
@@ -44,8 +44,6 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
-// const Container = styled.div``;
 
 const Dim = styled.div`
   position: absolute;

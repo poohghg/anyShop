@@ -1,7 +1,7 @@
 import { memo, SyntheticEvent, useCallback, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import useUser from "../hoc/useUser";
 import { RootState } from "../redux";
 import Mgnb from "./mGnb";
@@ -27,9 +27,7 @@ const Gnb = () => {
   const [openMobileMenu, setOpenMobileMenu] = useState<boolean>(false);
   const { pathname } = useLocation();
   const { onLogOut } = useUser();
-  const { userId, userTy } = useSelector(
-    (state: RootState) => state.userReducer,
-  );
+  const userId = useSelector((state: RootState) => state.userReducer.userId);
 
   const handleLink = useCallback(
     (e: SyntheticEvent, to: string) => {
@@ -95,8 +93,6 @@ const Gnb = () => {
 };
 
 export default memo(Gnb);
-
-// const flexBox = st;
 
 const Navbar = styled.nav`
   position: fixed;
@@ -183,12 +179,6 @@ const PathIcon = styled(BaseImgIcon)``;
 const MenuIcon = styled(BaseImgIcon)`
   width: 36px;
   height: 36px; ;
-`;
-
-const Home = styled.h4`
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #fff;
 `;
 
 const LogoutBtn = styled.button`

@@ -1,4 +1,3 @@
-import { log } from "console";
 import Lottie, { AnimationItem } from "lottie-web";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";

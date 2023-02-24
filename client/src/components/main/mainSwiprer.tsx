@@ -3,12 +3,10 @@ import Swiper from "swiper";
 import { Product } from "../../graphql/gqlProduct";
 import SwiperItem from "./swiperItem";
 import styled from "styled-components";
-
-// Import Swiper styles
-import "swiper/css";
 import { useCallback, useState } from "react";
 import { LeftMark, RightMark } from "../../style/icons/icons";
 import SkleSwiperItem from "./skleSwiperItem";
+import "swiper/css";
 
 interface MainSwiperProps {
   data: Product[];
@@ -26,10 +24,9 @@ const MainSwiper = ({ data, label, cntLabel, isSuccess }: MainSwiperProps) => {
 
   const handelNextSlide = useCallback(
     (to: string) => {
-      if (swiper) {
-        if (to === "next") swiper.slideNext(300);
-        else swiper.slidePrev(300);
-      }
+      if (!swiper) return;
+      if (to === "next") swiper.slideNext(300);
+      else swiper.slidePrev(300);
     },
     [swiper],
   );
@@ -81,7 +78,7 @@ const MainSwiper = ({ data, label, cntLabel, isSuccess }: MainSwiperProps) => {
                 <SwiperItem {...product} cntLabel={cntLabel} />
               </SwiperSlide>
             ))
-          : Array.from({ length: 5 }).map((_, i) => (
+          : Array.from({ length: 4 }).map((_, i) => (
               <SwiperSlide key={i}>
                 <SkleSwiperItem />
               </SwiperSlide>
