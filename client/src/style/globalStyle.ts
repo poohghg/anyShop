@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import NotoSansKRThin from "../assets/fonts/NotoSans/NotoSansKR-Thin.woff2";
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -73,15 +72,7 @@ const GlobalStyle = createGlobalStyle`
     html{
       font-size:75% ;
     }
-  /* 모바일 */
   }
-
- /* 반응형 */
-   /* @media only screen and (max-width: 844px) {
-     html {
-       font-size: 13px;
-     }
-   } */
 `;
 
 export default GlobalStyle;

@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useLikeProduct } from "../../graphql/gqlProduct";
 import { useToLogin } from "../../hoc";
 import { RootState } from "../../redux";
-import { HeartIcon, NotHeartIcon } from "../../style/icons/icons";
 import AniLoading from "../aniLoading";
 
 const AddLike = ({
@@ -30,7 +29,9 @@ const AddLike = ({
   return (
     <>
       <Button onClick={likProductListener} disabled={isLoading}>
-        {isLike ? <HeartIcon /> : <NotHeartIcon />}
+        <HeartIcon
+          src={`/images/${isLike ? `active_heart` : `unactive_heart`}.png`}
+        />
         <Label isLike={isLike}>좋아요</Label>
       </Button>
       {isLoading && <AniLoading />}
@@ -52,4 +53,9 @@ const Label = styled.span<{ isLike?: boolean }>`
   font-size: 0.8rem;
   transform: translateY(10%);
   color: ${({ isLike }) => isLike && "rgb(255, 72, 0)"};
+`;
+
+const HeartIcon = styled.img`
+  width: 24px;
+  height: 24px;
 `;

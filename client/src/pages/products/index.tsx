@@ -12,6 +12,7 @@ const ProductPage = () => {
     qKey: [QueryKeys.PRODUCTS, "products"],
     query: GET_PRODUCTS,
   });
+
   return (
     <>
       <PageTitle label="상품목록" />

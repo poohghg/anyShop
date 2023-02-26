@@ -1,10 +1,9 @@
 import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useAddCart } from "../../graphql/gqlCart";
 import { useToLogin } from "../../hoc";
 import { RootState } from "../../redux";
-import { CartIcon } from "../../style/icons/icons";
 import AniLoading from "../aniLoading";
 
 const AddCart = ({
@@ -30,7 +29,7 @@ const AddCart = ({
   return (
     <>
       <Button onClick={addCartListener} disabled={isLoading}>
-        <CartIcon />
+        <CartIcon src="/images/cart.png" />
         <Label>장바구니</Label>
       </Button>
       {isLoading && <AniLoading />}
@@ -51,4 +50,9 @@ const Label = styled.span`
   font-weight: 350;
   font-size: 0.8rem;
   transform: translateY(10%);
+`;
+
+const CartIcon = styled.img`
+  width: 24px;
+  height: 24px;
 `;

@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 import { Path } from "./gnb";
@@ -40,7 +40,7 @@ const Mgnb = ({ paths, closeMenu, userId }: MgnbProps) => {
   );
 };
 
-export default Mgnb;
+export default memo(Mgnb);
 
 const show = keyframes`
   from {transform: translateY(100vh);  opacity: 0;}

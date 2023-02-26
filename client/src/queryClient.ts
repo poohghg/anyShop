@@ -1,14 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { RequestDocument, request, GraphQLClient } from "graphql-request";
 import { QueryClient } from "react-query";
-import Ax from "./modules/axios";
-
-interface FetcherConfig {
-  method: "get" | "post" | "put" | "patch" | "delete";
-  url: string;
-  data?: { [key: string]: any } | string;
-  params?: { [key: string]: any };
-}
 
 const BASE_URL = import.meta.env.VITE_SERVER_URL;
 

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import styled, { keyframes } from "styled-components";
 
 interface AniLoadingProps {
@@ -15,7 +16,7 @@ const AniLoading = ({ backgroundColor = "white" }: AniLoadingProps) => (
   </Main>
 );
 
-export default AniLoading;
+export default memo(AniLoading);
 
 const firstTrans = `translate3d(0px, 0px, 0px) scale(1)`;
 const secondTrans = `translate3d(24px, 0px, 2px) scale(1)`;

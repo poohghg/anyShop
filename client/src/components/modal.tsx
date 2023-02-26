@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 
@@ -30,7 +30,7 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default memo(Modal);
 
 const Overlay = styled.div`
   position: fixed;

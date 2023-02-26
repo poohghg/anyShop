@@ -1,6 +1,5 @@
 import { authFetcher, getClient, QueryKeys } from "./../queryClient";
 import { useMutation } from "react-query";
-import { gql } from "graphql-tag";
 import { Product } from "./gqlProduct";
 import useToLogin from "../hoc/useToLogin";
 import { toast } from "react-toastify";

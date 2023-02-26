@@ -49,23 +49,6 @@ export const CartIcon = styled(BaseIcon)<CssProps>`
   `}
 `;
 
-export const HeartIcon = styled(BaseIcon)<CssProps>`
-  background-image: url(/images/active_heart.png);
-  ${(props) => css`
-    width: ${props.width ?? "24px"};
-    height: ${props.height ?? "24px"};
-    ${props.withStyle};
-  `}
-`;
-
-export const NotHeartIcon = styled(BaseIcon)<CssProps>`
-  background-image: url(/images/unactive_heart.png);
-  ${(props) => css`
-    width: ${props.width ?? "24px"};
-    height: ${props.height ?? "24px"};
-  `}
-`;
-
 export const LeftMark = styled.div<{ unActive?: boolean }>`
   position: relative;
   width: 32px;

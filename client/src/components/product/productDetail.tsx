@@ -17,7 +17,6 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
   const { id, description, imageUrl, isLike, price, title, hit, likes } =
     product;
   const [amount, setAmount] = useState(1);
-
   const userId = useSelector((state: RootState) => state.userReducer.userId);
   const navigate = useNavigate();
   const { setItems } = useRecentProducts();

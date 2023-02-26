@@ -1,3 +1,4 @@
+import { PURGE } from "redux-persist";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartType } from "../graphql/gqlCart";
 
@@ -27,6 +28,9 @@ const slice = createSlice({
     setPayItems: (state, action: PayloadAction<CartType[]>) => {
       state.payItems = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, () => initialState);
   },
 });
 

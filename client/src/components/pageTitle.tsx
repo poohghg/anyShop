@@ -1,3 +1,4 @@
+import { memo } from "react";
 import styled from "styled-components";
 
 interface PageTitleProps {
@@ -6,13 +7,9 @@ interface PageTitleProps {
 
 const PageTitle = ({ label }: PageTitleProps) => <Title>{label}</Title>;
 
-export default PageTitle;
+export default memo(PageTitle);
 
 const Title = styled.h2`
-  /* position: sticky;
-  z-index: 10;
-  top: 8vh; */
-
   padding: 0.5rem 1.5rem;
   padding-bottom: 0.5rem;
   font-size: 1.5rem;

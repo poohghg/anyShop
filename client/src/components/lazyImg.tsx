@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState, useCallback, memo } from "react";
 import styled, { css } from "styled-components";
 import { FadeIn } from "../style/animataion";
 
@@ -66,7 +66,7 @@ const LazyImg = React.memo(
   },
 );
 
-export default LazyImg;
+export default memo(LazyImg);
 
 const InviewImage = styled.img<{ isLoad: boolean }>`
   /* ${({ isLoad }) =>

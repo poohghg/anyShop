@@ -72,7 +72,6 @@ const media = {
   desktop: `(min-width: ${mediaSize.desktop})`,
 };
 
-// 테마와 관련없이 공통으로 사용되는 변수들입니다
 export const Theme = {
   margins,
   paddings,

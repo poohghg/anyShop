@@ -1,5 +1,5 @@
 import Lottie, { AnimationItem } from "lottie-web";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import ScrollTop from "../lotties/scrollTop.json";
 
@@ -47,7 +47,7 @@ const ScrollToTopBtn = () => {
   );
 };
 
-export default ScrollToTopBtn;
+export default memo(ScrollToTopBtn);
 
 const Wrap = styled.div<{ isShow: boolean }>`
   display: ${({ isShow }) => (isShow ? "flex" : "none")};

@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from "react";
+import React, { memo, ReactNode, useMemo } from "react";
 import styled, { css, keyframes } from "styled-components";
 
 interface Props {
@@ -43,7 +43,7 @@ const Skeleton: React.FC<Props> = ({
   );
 };
 
-export default Skeleton;
+export default memo(Skeleton);
 
 const pulseKeyframe = keyframes`
   0% {
