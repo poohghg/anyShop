@@ -33,9 +33,6 @@ const store = configureStore({
 export default store;
 
 export const persistor = persistStore(store); // persist store 내보내기
-
-// persistor.
-
 // 타입스크립트 타입관련
 // https://redux-toolkit.js.org/usage/usage-with-typescript
 export type RootState = ReturnType<typeof store.getState>;

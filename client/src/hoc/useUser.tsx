@@ -3,8 +3,8 @@ import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { LOGOUT, User } from "../graphql/gqlUser";
 import { auth, authFetcher, getClient, QueryKeys } from "../queryClient";
-import { setUser } from "../redux/userReducer";
-import { persistor } from "../redux";
+import { initUser, setUser } from "../redux/userReducer";
+import { initState } from "../redux/stateReducer";
 
 const useUser = () => {
   const client = getClient();
@@ -24,7 +24,9 @@ const useUser = () => {
     if (res.logout) {
       auth.defaults.headers.common["authorization"] = "";
       client.clear();
-      await persistor.purge();
+      dispatch(initUser());
+      dispatch(initState());
+      navigate("/");
     }
   }, []);
 
