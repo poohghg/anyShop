@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { sign, verify, VerifyErrors } from "jsonwebtoken";
-
+import env from "./envLoader";
 type MyToken = {
   userId: string;
   email: string;
@@ -34,11 +34,13 @@ export const verifyToken = (token: string = "") => {
 
 export const setRefreshTokenInCookie = (res: Response, userId: string) => {
   const refreshToken = generateRefreshToken(userId);
+  console.log("env.DOMAIN", env.DOMAIN);
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: true,
-    maxAge: EXPIRE_REFRESH_TOKEN,
     sameSite: "none",
+    maxAge: EXPIRE_REFRESH_TOKEN,
+    domain: env.DOMAIN,
   });
   return refreshToken;
 };

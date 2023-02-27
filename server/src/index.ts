@@ -1,4 +1,3 @@
-import { getUserInfo } from "./util/service";
 import { verifyToken } from "./jwt";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
@@ -18,14 +17,15 @@ import cookieParser from "cookie-parser";
       if (token) {
         const payload: any = verifyToken(token);
         if (payload?.userId) return { req, res, userId: payload.userId };
-      } else {
-        const refreshToken = req.cookies?.refreshToken;
-        if (!refreshToken) return { req, res, userId };
-        const payload: any = verifyToken(refreshToken);
-        if (payload instanceof Object)
-          if (payload?.userId) return { req, res, userId: payload.userId };
-        return { req, res, userId };
       }
+
+      const refreshToken = req.cookies?.refreshToken;
+      if (!refreshToken) return { req, res, userId };
+
+      const payload: any = verifyToken(refreshToken);
+      if (payload instanceof Object)
+        if (payload?.userId) return { req, res, userId: payload.userId };
+      return { req, res, userId };
     },
   });
   const app = express();
