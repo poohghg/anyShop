@@ -36,9 +36,8 @@ import cookieParser from "cookie-parser";
   const corsOptions = {
     // origin: ["http://localhost:3000", "https://studio.apollographql.com", "*"],
     origin: [
-      "*",
-      "https://studio.apollographql.com",
       "http://localhost:3000",
+      "https://studio.apollographql.com",
       "https://any-shop-client.vercel.app",
     ],
     credentials: true,

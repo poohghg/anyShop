@@ -40,7 +40,7 @@ export const setRefreshTokenInCookie = (res: Response, userId: string) => {
     secure: true,
     sameSite: "none",
     maxAge: EXPIRE_REFRESH_TOKEN,
-    domain: env.DOMAIN,
+    // domain: env.DOMAIN,
   });
   return refreshToken;
 };
