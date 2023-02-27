@@ -21,6 +21,7 @@ import {
 import { db } from "../firebase";
 import { Product, Resolver, User } from "./types";
 import { GraphQLError } from "graphql";
+import { env } from "process";
 
 const userResolver: Resolver = {
   Query: {
@@ -82,7 +83,7 @@ const userResolver: Resolver = {
     },
 
     logout: (parent, args, ctx) => {
-      ctx.res.clearCookie("refreshToken");
+      ctx.res.clearCookie("refreshToken", { domain: env.DOMAIN });
       return true;
     },
 
