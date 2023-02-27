@@ -20,7 +20,6 @@ import cookieParser from "cookie-parser";
         if (payload?.userId) return { req, res, userId: payload.userId };
       } else {
         const refreshToken = req.cookies?.refreshToken;
-        console.log("refreshToken", refreshToken);
         if (!refreshToken) return { req, res, userId };
         const payload: any = verifyToken(refreshToken);
         if (payload instanceof Object)
