@@ -5,7 +5,6 @@ import { LOGOUT, User } from "../graphql/gqlUser";
 import { auth, authFetcher, getClient, QueryKeys } from "../queryClient";
 import { initUser, setUser } from "../redux/userReducer";
 import { initState } from "../redux/stateReducer";
-import { log } from "console";
 
 const useUser = () => {
   const client = getClient();
@@ -24,8 +23,6 @@ const useUser = () => {
     const res = await authFetcher(LOGOUT);
     if (res.logout) {
       auth.defaults.headers.common["authorization"] = "";
-      console.log("test", auth.defaults.headers.common.authorization);
-      // auth.defaults.headers.post["authorization"] = "";
       client.clear();
       dispatch(initUser());
       dispatch(initState());

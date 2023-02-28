@@ -4,6 +4,7 @@ import { ApolloServer, CorsOptions } from "apollo-server-express";
 import schema from "./schema";
 import resolvers from "./resolvers";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 (async () => {
   const port = 8000;
@@ -11,7 +12,7 @@ import cookieParser from "cookie-parser";
     typeDefs: schema,
     resolvers: resolvers,
     context: async ({ req, res }) => {
-      console.log("req.hostname", req.hostname);
+      // console.log("req.hostname", req.);
       const token = req.headers.authorization?.substring(7) ?? "";
       let userId = "";
 
@@ -44,8 +45,8 @@ import cookieParser from "cookie-parser";
     credentials: true,
   };
 
-  // app.use(cors(corsOptions));
   app.use(cookieParser());
+  app.use(cors(corsOptions));
   await server.start();
   server.applyMiddleware({
     app,
