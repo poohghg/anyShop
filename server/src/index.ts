@@ -1,6 +1,6 @@
 import { verifyToken } from "./jwt";
 import express from "express";
-import { ApolloServer } from "apollo-server-express";
+import { ApolloServer, CorsOptions } from "apollo-server-express";
 import schema from "./schema";
 import resolvers from "./resolvers";
 import cookieParser from "cookie-parser";
@@ -11,6 +11,7 @@ import cookieParser from "cookie-parser";
     typeDefs: schema,
     resolvers: resolvers,
     context: async ({ req, res }) => {
+      console.log("req.hostname", req.hostname);
       const token = req.headers.authorization?.substring(7) ?? "";
       let userId = "";
 
@@ -33,7 +34,7 @@ import cookieParser from "cookie-parser";
   // Access-Control-Allow-Origin: https://studio.apollographql.com
   // Access-Control-Allow-Credentials: true
   // 를 cors가 해줌
-  const corsOptions = {
+  const corsOptions: CorsOptions = {
     // origin: ["http://localhost:3000", "https://studio.apollographql.com", "*"],
     origin: [
       "http://localhost:3000",
