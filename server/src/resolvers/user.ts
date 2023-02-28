@@ -84,6 +84,8 @@ const userResolver: Resolver = {
 
     logout: (parent, args, ctx) => {
       ctx.res.clearCookie("refreshToken", { domain: `${env.DOMAIN}` });
+      ctx.res.clearCookie("refreshToken");
+      console.log("ctx.res.cookie", ctx.res.cookie);
       return true;
     },
 
